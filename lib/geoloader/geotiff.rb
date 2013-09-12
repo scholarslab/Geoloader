@@ -4,33 +4,31 @@
 module Geoloader
   class Geotiff
 
-    def initialize(file)
-      @dir = File.dirname(file) 
-      @file = File.basename(file)
-      @tmp_file = @file
+    def initialize(path)
+      @path = path
     end
 
-    def remove_border
-      command = "gdalwarp -srcnodata 0 -dstalpha"
-      execute(@tmp_file, '_border', command)
-    end
-
-    def rebuild_header
-      command = "gdal_translate -of GTiff -a_srs EPSG:4326"
-      execute(@tmp_file, '_header', command)
-    end
-
-    def cleanup
-      FileUtils.rm "#{@dir}/#{@file}"
-      FileUtils.mv "#{@dir}/#{@tmp_file}" "#{@dir}/#{@file}"
+    def prepare
+      remove_border
+      rebuild_header
     end
 
     private
 
-    def execute(file, suffix, command)
-      new_file = File.basename(file, ".tif") + "#{suffix}.tif"
-      system command + " #{file} #{@dir}/#{new_file}"
-      @tmp_file = new_file
+    def remove_border
+      system "gdalwarp -srcnodata 0 -dstalpha #{@path}"
+    end
+
+    def rebuild_header
+
+      # Create a temporary copy with a well-formed header.
+      tmp = "#{File.dirname(@path)}/#{File.basename(@path, ".tif")}_4326.tif"
+      system "gdal_translate -of GTiff -a_srs EPSG:4326 #{@path} #{tmp}"
+
+      # Replace the original with the copy.
+      FileUtils.rm @path
+      FileUtils.mv tmp @path
+
     end
 
   end
