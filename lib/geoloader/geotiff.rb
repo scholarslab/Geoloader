@@ -26,7 +26,6 @@ module Geoloader
       # Create a temporary copy with a well-formed EPSG:4326 header.
       tmp = "#{File.dirname(@path)}/#{File.basename(@path, ".tif")}_tmp.tif"
       system "gdal_translate -of GTiff -a_srs EPSG:4326 #{@path} #{tmp}"
-      puts tmp
 
       # Replace the original with the copy.
       FileUtils.rm(@path)
