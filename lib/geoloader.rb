@@ -1,6 +1,9 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
+require 'geoloader/geotiff'
+require 'geoloader/geoserver'
+
 module Geoloader
 
   def add_raster_to_geoserver(file)
