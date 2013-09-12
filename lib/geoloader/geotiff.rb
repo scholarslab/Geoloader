@@ -1,6 +1,8 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
+require 'fileutils'
+
 module Geoloader
   class Geotiff
 
@@ -16,18 +18,19 @@ module Geoloader
     private
 
     def remove_border
-      system "gdalwarp -srcnodata 0 -dstalpha #{@path}"
+      system("gdalwarp -srcnodata 0 -dstalpha #{@path} #{@path}")
     end
 
     def rebuild_header
 
-      # Create a temporary copy with a well-formed header.
-      tmp = "#{File.dirname(@path)}/#{File.basename(@path, ".tif")}_4326.tif"
+      # Create a temporary copy with a well-formed EPSG:4326 header.
+      tmp = "#{File.dirname(@path)}/#{File.basename(@path, ".tif")}_tmp.tif"
       system "gdal_translate -of GTiff -a_srs EPSG:4326 #{@path} #{tmp}"
+      puts tmp
 
       # Replace the original with the copy.
-      FileUtils.rm @path
-      FileUtils.mv tmp @path
+      FileUtils.rm(@path)
+      FileUtils.mv(tmp, @path)
 
     end
 

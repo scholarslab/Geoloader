@@ -22,9 +22,7 @@ Gem::Specification.new do |s|
     "VERSION",
     "geoloader.gemspec",
     "lib/geoloader.rb",
-    "lib/geoloader/geoserver.rb",
-    "lib/geoloader/geotiff.rb",
-    "lib/geoloader/loader.rb"
+    "lib/geoloader/geotiff.rb"
   ]
   s.require_paths = ["lib"]
   s.rubygems_version = "2.0.3"
