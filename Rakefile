@@ -7,5 +7,4 @@ Jeweler::Tasks.new do |gem|
   gem.name    = "geoloader"
   gem.author  = "David McClure"
   gem.email   = "david.mcclure@virginia.edu"
-  gem.summary = "Load GeoTIFFs and Shapefiles into Geonetwork, Geoserver, and PostgreSQL."
 end

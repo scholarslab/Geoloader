@@ -18,27 +18,30 @@ Gem::Specification.new do |s|
     "Gemfile",
     "Gemfile.lock",
     "README.md",
+    "Rakefile",
+    "VERSION",
+    "geoloader.gemspec",
     "lib/geoloader.rb",
     "lib/geoloader/geoserver.rb",
     "lib/geoloader/geotiff.rb"
   ]
   s.require_paths = ["lib"]
   s.rubygems_version = "2.0.3"
-  s.summary = "Load GeoTIFFs and Shapefiles into Geonetwork, Geoserver, and PostgreSQL."
+  s.summary = nil
 
   if s.respond_to? :specification_version then
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<jeweler>, ["~> 1.8.7"])
       s.add_runtime_dependency(%q<gdal>, ["~> 0.0.5"])
-      s.add_runtime_dependency(%q<rspec>, ["~> 2.14.1"])
     else
+      s.add_dependency(%q<jeweler>, ["~> 1.8.7"])
       s.add_dependency(%q<gdal>, ["~> 0.0.5"])
-      s.add_dependency(%q<rspec>, ["~> 2.14.1"])
     end
   else
+    s.add_dependency(%q<jeweler>, ["~> 1.8.7"])
     s.add_dependency(%q<gdal>, ["~> 0.0.5"])
-    s.add_dependency(%q<rspec>, ["~> 2.14.1"])
   end
 end
 
