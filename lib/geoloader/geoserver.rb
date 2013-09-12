@@ -4,7 +4,7 @@
 module Geoloader
   class Geoserver
 
-    def initialize(location, user, password)
+    def initialize
       # TODO
     end
 

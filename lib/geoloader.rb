@@ -6,6 +6,10 @@ require 'geoloader/geoserver'
 
 module Geoloader
 
+  def test
+    puts "hi!"
+  end
+
   def add_raster_to_geoserver(file)
 
     # Prepare the file.

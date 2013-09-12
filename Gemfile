@@ -1,5 +1,4 @@
 source "https://rubygems.org"
 
-gem "gdal",   "~> 0.0.5"
-gem "dotenv", "~> 0.9.0"
-gem "rspec",  "~> 2.14.1"
+gem "jeweler",  "~> 1.8.7"
+gem "gdal",     "~> 0.0.5"
