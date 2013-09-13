@@ -6,31 +6,24 @@ require 'fileutils'
 module Geoloader
   class Geotiff
 
-    def initialize(path)
-      @path = path
+    def initialize path, suffix = "processed"
+      @path = "#{File.dirname(path)}/#{File.basename(path, ".tif")}.#{suffix}.tif"
+      FileUtils.cp path, @path
     end
-
-    def prepare
-      remove_border
-      rebuild_header
-    end
-
-    private
 
     def remove_border
-      system("gdalwarp -srcnodata 0 -dstalpha #{@path} #{@path}")
+      system "gdalwarp -srcnodata 0 -dstalpha #{@path} #{@path}"
     end
 
     def rebuild_header
+      system "gdal_translate -of GTiff -a_srs EPSG:4326 #{@path} #{@path}_"
+      FileUtils.rm @path
+      FileUtils.mv "#{@path}_", @path
+    end
 
-      # Create a temporary copy with a well-formed EPSG:4326 header.
-      tmp = "#{File.dirname(@path)}/#{File.basename(@path, ".tif")}_tmp.tif"
-      system "gdal_translate -of GTiff -a_srs EPSG:4326 #{@path} #{tmp}"
-
-      # Replace the original with the copy.
-      FileUtils.rm(@path)
-      FileUtils.mv(tmp, @path)
-
+    def process
+      remove_border
+      rebuild_header
     end
 
   end
