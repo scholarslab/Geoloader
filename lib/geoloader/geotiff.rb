@@ -6,8 +6,11 @@ require 'fileutils'
 module Geoloader
   class Geotiff
 
+    attr_reader :base, :path
+
     def initialize path, suffix = "processed"
-      @path = "#{File.dirname(path)}/#{File.basename(path, ".tif")}.#{suffix}.tif"
+      @base = File.basename(path, ".tif")
+      @path = "#{File.dirname(path)}/#{@base}.#{suffix}.tif"
       FileUtils.cp path, @path
     end
 
