@@ -14,14 +14,12 @@ login = builder.request { |r|
   r.password "admin"
 }
 
-q1 = geonetwork["xml.user.login"].post(login, :content_type => :xml) { |resp, req, res, &b|
+test = geonetwork["xml.user.login"].post(login, :content_type => :xml) { |resp, req, res, &b|
   if [301, 302, 307].include? resp.code
     resp.follow_redirection(req, res, &b)
   else
     resp.return!(req, res, &b)
   end
 }
-puts q1.body
 
-q2 = geonetwork["xml.info?type=me"].get
-puts q2.body
+puts test.body
