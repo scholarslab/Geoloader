@@ -16,16 +16,19 @@ module Geoloader
       FileUtils.cp path, @path
     end
 
+    # Remove the black borders added by ArcMap.
     def remove_border
       system "gdalwarp -srcnodata 0 -dstalpha #{@path} #{@path}"
     end
 
+    # (Re)build a EPSG:4326 header.
     def build_header
       system "gdal_translate -of GTiff -a_srs EPSG:4326 #{@path} #{@path}_"
       FileUtils.rm @path
       FileUtils.mv "#{@path}_", @path
     end
 
+    # Prepare the file for Geoserver.
     def process
       remove_border
       build_header

@@ -6,6 +6,7 @@ require 'rest_client'
 module Geoloader
   class Geoserver
 
+    # Set connection parameters.
     # @param [OrderedHash] config
     # @param [String] config :url
     # @param [String] config :username
@@ -15,15 +16,23 @@ module Geoloader
       @config = config
     end
 
+    # Create a new coverage store and publish a layer from a GeoTIFF.
     # @param [Geoloader::Geotiff] tiff
     def upload_geotiff tiff
+
+      # Construct the URL.
+      url = "#{@config[:url]}/workspaces/#{@config[:workspace]}"
+      url += "/coveragestores/#{tiff.base}/file.geotiff"
+
+      # Create the store.
       RestClient::Request.new(
         :method   => :put,
-        :user     => config[:username],
-        :password => config[:password],
-        :body     => File.read(tiff.path),
-        :url      => config[:url]
+        :payload  => File.read(tiff.path),
+        :user     => @config[:username],
+        :password => @config[:password],
+        :url      => url
       ).execute
+
     end
 
   end
