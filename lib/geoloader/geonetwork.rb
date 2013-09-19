@@ -12,9 +12,14 @@ module Geoloader
     # @param [String] config :url
     # @param [String] config :username
     # @param [String] config :password
+    # @param [Int] config :group
     def initialize config = {}
       @config = config
-      @resource = RestClient::Resource.new @config[:url]
+      @resource = RestClient::Resource.new(
+        @config[:url],
+        @config[:username],
+        @config[:password]
+      )
     end
 
     # XML services GET.
@@ -28,6 +33,7 @@ module Geoloader
     # @param [String] payload
     # @param [Boolean] login
     def post service, payload
+      puts payload
       @resource[service].post(payload, :content_type => :xml) { |resp, req, res, &b|
         if [301, 302, 307].include? resp.code
           resp.follow_redirection req, res, &b
@@ -37,9 +43,20 @@ module Geoloader
       }
     end
 
-    # Authenticate the user.
-    def authenticate
-      # TODO
+    # Insert a new record.
+    # @param [String] metadata
+    def insert metadata
+      post "metadata.insert", self.class.xml.request { |r|
+
+        # Configuration.
+        r.group @config[:group]
+        r.category "_none_"
+        r.styleSheet "_none_"
+
+        # Record metadata.
+        r.data { |d| d.cdata! metadata }
+
+      }
     end
 
     # Get an XML builder.
