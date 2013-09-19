@@ -9,16 +9,19 @@ geonetwork = RestClient::Resource.new "http://localhost:8080/geonetwork/srv/en"
 builder = Builder::XmlMarkup.new(:indent => 2)
 builder.instruct! :xml, :version => "1.0", :encoding => "UTF-8"
 
-q = builder.request { |r|
-  r.any "africa"
+login = builder.request { |r|
+  r.username "admin"
+  r.password "admin"
 }
 
-test = geonetwork["xml.search"].post(q, :content_type => :xml) { |resp, req, res, &b|
+q1 = geonetwork["xml.user.login"].post(login, :content_type => :xml) { |resp, req, res, &b|
   if [301, 302, 307].include? resp.code
     resp.follow_redirection(req, res, &b)
   else
     resp.return!(req, res, &b)
   end
 }
+puts q1.body
 
-puts test.body
+q2 = geonetwork["xml.info?type=me"].get
+puts q2.body

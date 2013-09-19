@@ -8,6 +8,8 @@ module Geoloader
 
     attr_reader :base, :path
 
+    # @param [String] path
+    # @param [String] suffix
     def initialize path, suffix = "processed"
       @base = File.basename(path, ".tif")
       @path = "#{File.dirname(path)}/#{@base}.#{suffix}.tif"
