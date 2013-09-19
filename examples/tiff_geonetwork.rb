@@ -1,25 +1,13 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require 'rest_client'
-require 'builder'
+require 'geoloader'
 
-geonetwork = RestClient::Resource.new "http://localhost:8080/geonetwork/srv/en"
+geonetwork = Geoloader::Geonetwork.new({
+  :url        => "http://localhost:8080/geonetwork/srv/en",
+  :username   => "admin",
+  :password   => "admin"
+})
 
-builder = Builder::XmlMarkup.new(:indent => 2)
-builder.instruct! :xml, :version => "1.0", :encoding => "UTF-8"
-
-login = builder.request { |r|
-  r.username "admin"
-  r.password "admin"
-}
-
-test = geonetwork["xml.user.login"].post(login, :content_type => :xml) { |resp, req, res, &b|
-  if [301, 302, 307].include? resp.code
-    resp.follow_redirection(req, res, &b)
-  else
-    resp.return!(req, res, &b)
-  end
-}
-
-puts test.body
+response = geonetwork.authenticate
+puts response.body
