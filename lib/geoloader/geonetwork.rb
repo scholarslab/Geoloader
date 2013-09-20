@@ -25,7 +25,6 @@ module Geoloader
     # POST to an XML service.
     # @param [String] service
     # @param [String] payload
-    # @param [Boolean] login
     def post service, payload
       @resource[service].post(payload) { |resp, req, res, &b|
         if [301, 302, 307].include? resp.code
@@ -42,15 +41,10 @@ module Geoloader
     # @param [String] category
     def metadata_insert metadata, style_sheet = "_none_", category = "_none_"
       post "metadata.insert", self.class.xml.request { |r|
-
-        # Configuration.
         r.group @config[:group]
+        r.data { |d| d.cdata! metadata }
         r.category category
         r.styleSheet style_sheet
-
-        # Record metadata.
-        r.data { |d| d.cdata! metadata }
-
       }
     end
 
