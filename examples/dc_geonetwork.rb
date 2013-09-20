@@ -12,10 +12,10 @@ geonetwork = Geoloader::Geonetwork.new({
 
 metadata = <<eot
 <simpledc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/">
-  <dc:title>Geoloader</dc:title>
+  <dc:title>Geoloader 3</dc:title>
   <dc:creator>David McClure</dc:creator>
 </simpledc>
 eot
 
-response = geonetwork.insert metadata
-puts response.body
+response = geonetwork.metadata_insert metadata
+puts response.code
