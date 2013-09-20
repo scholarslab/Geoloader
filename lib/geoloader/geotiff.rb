@@ -8,6 +8,8 @@ module Geoloader
 
     attr_reader :base, :path
 
+    # Copy the file for manipulation.
+    #
     # @param [String] path
     # @param [String] suffix
     def initialize path, suffix = "processed"

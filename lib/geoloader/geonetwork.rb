@@ -8,6 +8,7 @@ module Geoloader
   class Geonetwork
 
     # Set connection parameters.
+    #
     # @param [OrderedHash] config
     # @param [String] config :url
     # @param [String] config :username
@@ -23,8 +24,10 @@ module Geoloader
     end
 
     # POST to an XML service.
+    #
     # @param [String] service
     # @param [String] payload
+    # @return [RestClient::Response]
     def post service, payload
       @resource[service].post(payload) { |resp, req, res, &b|
         if [301, 302, 307].include? resp.code
@@ -36,9 +39,11 @@ module Geoloader
     end
 
     # Insert a new record.
+    #
     # @param [String] metadata
     # @param [String] style_sheet
     # @param [String] category
+    # @return [RestClient::Response]
     def metadata_insert metadata, style_sheet = "_none_", category = "_none_"
       post "metadata.insert", self.class.xml.request { |r|
         r.group @config[:group]
@@ -48,7 +53,8 @@ module Geoloader
       }
     end
 
-    # Get an XML builder.
+    # Get an XML builder instance.
+    # @return [Builder::XmlMarkup]
     def self.xml
       xml = Builder::XmlMarkup.new
       xml.instruct! :xml, :version => "1.0", :encoding => "UTF-8"

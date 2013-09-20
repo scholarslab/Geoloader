@@ -7,6 +7,7 @@ module Geoloader
   class Geoserver
 
     # Set connection parameters.
+    #
     # @param [OrderedHash] config
     # @param [String] config :url
     # @param [String] config :username
@@ -17,7 +18,9 @@ module Geoloader
     end
 
     # Create a new coverage store and publish a layer from a GeoTIFF.
+    #
     # @param [Geoloader::Geotiff] tiff
+    # @return [RestClient::Response]
     def upload_geotiff tiff
 
       # Construct the URL.
