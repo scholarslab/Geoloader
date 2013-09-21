@@ -40,14 +40,14 @@ module Geoloader
 
     # Insert a new record.
     #
-    # @param [String] metadata
+    # @param [String] path
     # @param [String] style_sheet
     # @param [String] category
     # @return [RestClient::Response]
-    def metadata_insert metadata, style_sheet = "_none_", category = "_none_"
+    def metadata_insert path, style_sheet = "_none_", category = "_none_"
       post "metadata.insert", self.class.xml.request { |r|
         r.group @config[:group]
-        r.data { |d| d.cdata! metadata }
+        r.data { |d| d.cdata! File.read(path) }
         r.category category
         r.styleSheet style_sheet
       }
