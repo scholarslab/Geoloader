@@ -3,6 +3,7 @@
 
 require 'geoloader'
 
+Geoloader.configure_from_yaml "../config/testing.yaml"
 geoserver = Geoloader::Geoserver.new
 
 # Strip border and add header.
@@ -10,4 +11,4 @@ tiff = Geoloader::Geotiff.new ARGV[0]
 tiff.process
 
 # Push to GeoServer.
-geoserver.upload_geotiff tiff
+geoserver.add_geotiff tiff

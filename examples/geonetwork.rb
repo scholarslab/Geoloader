@@ -3,6 +3,7 @@
 
 require 'geoloader'
 
+Geoloader.configure_from_yaml "../config/testing.yaml"
 geonetwork = Geoloader::Geonetwork.new
 
 # Push to Geonetwork.
