@@ -16,9 +16,6 @@ GEM
       oauth2
     hashie (2.0.5)
     highline (1.6.19)
-    httparty (0.11.0)
-      multi_json (~> 1.0)
-      multi_xml (>= 0.5.2)
     httpauth (0.2.0)
     jeweler (1.8.7)
       builder
@@ -32,6 +29,7 @@ GEM
     json (1.8.0)
     jwt (0.1.8)
       multi_json (>= 1.5)
+    mime-types (1.23)
     multi_json (1.7.9)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
@@ -47,11 +45,13 @@ GEM
     rake (10.1.0)
     rdoc (4.0.1)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   gdal (~> 0.0.5)
-  httparty (~> 0.11.0)
   jeweler (~> 1.8.7)
+  rest-client (~> 1.6.7)
