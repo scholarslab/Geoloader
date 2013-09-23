@@ -15,6 +15,10 @@ module Geoloader
     # @param [String] config :workspace
     def initialize config = {}
       @config = config
+      @resource = RestClient::Resource.new @config[:url], {
+        :user     => @config[:username],
+        :password => @config[:password]
+      }
     end
 
     # Create a new coverage store and publish a layer from a GeoTIFF.
@@ -22,20 +26,8 @@ module Geoloader
     # @param [Geoloader::Geotiff] tiff
     # @return [RestClient::Response]
     def upload_geotiff tiff
-
-      # Construct the URL.
-      url = "#{@config[:url]}/workspaces/#{@config[:workspace]}"
-      url += "/coveragestores/#{tiff.base}/file.geotiff"
-
-      # Create the store.
-      RestClient::Request.new(
-        :method   => :put,
-        :payload  => File.read(tiff.path),
-        :user     => @config[:username],
-        :password => @config[:password],
-        :url      => url
-      ).execute
-
+      service = "workspaces/#{@config[:workspace]}/coveragestores/#{tiff.base}/file.geotiff"
+      @resource[service].put File.read(tiff.path)
     end
 
   end
