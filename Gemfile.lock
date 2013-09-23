@@ -3,6 +3,7 @@ GEM
   specs:
     addressable (2.3.2)
     builder (3.2.0)
+    confstruct (0.2.5)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
     gdal (0.0.5)
@@ -52,6 +53,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  confstruct (~> 0.2.5)
   gdal (~> 0.0.5)
   jeweler (~> 1.8.7)
   rest-client (~> 1.6.7)

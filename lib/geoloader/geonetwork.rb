@@ -7,18 +7,11 @@ require 'builder'
 module Geoloader
   class Geonetwork
 
-    # Set connection parameters.
-    #
-    # @param [OrderedHash] config
-    # @param [String] config :url
-    # @param [String] config :username
-    # @param [String] config :password
-    # @param [Int] config :group
-    def initialize config = {}
-      @config = config
-      @resource = RestClient::Resource.new @config[:url], {
-        :user     => @config[:username],
-        :password => @config[:password],
+    # Create the REST resource.
+    def initialize
+      @resource = RestClient::Resource.new Config.geonetwork.url, {
+        :user     => Config.geonetwork.username,
+        :password => Config.geonetwork.password,
         :headers  => { :content_type => :xml }
       }
     end
@@ -46,7 +39,7 @@ module Geoloader
     # @return [RestClient::Response]
     def metadata_insert path, style_sheet = "_none_", category = "_none_"
       post "metadata.insert", self.class.xml.request { |r|
-        r.group @config[:group]
+        r.group Config.geonetwork.group
         r.data { |d| d.cdata! File.read(path) }
         r.category category
         r.styleSheet style_sheet
