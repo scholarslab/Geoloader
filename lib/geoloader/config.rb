@@ -13,6 +13,12 @@ module Geoloader
       password  "geoserver"
       workspace "geoloader"
     end
+    geonetwork do
+      url        "http://localhost:8080/geonetwork/srv/en"
+      username   "admin"
+      password   "admin"
+      group      2
+    end
   end
 
   # Set configuration options from any hash-like object.

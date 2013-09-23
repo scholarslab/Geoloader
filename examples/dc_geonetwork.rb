@@ -3,12 +3,7 @@
 
 require 'geoloader'
 
-geonetwork = Geoloader::Geonetwork.new({
-  :url        => "http://localhost:8080/geonetwork/srv/en",
-  :username   => "admin",
-  :password   => "admin",
-  :group      => 2
-})
+geonetwork = Geoloader::Geonetwork.new
 
-response = geonetwork.metadata_insert ARGV[0]
-puts response.code
+# Push to Geonetwork.
+geonetwork.metadata_insert ARGV[0]
