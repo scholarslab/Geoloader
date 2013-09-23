@@ -7,7 +7,7 @@ require 'builder'
 module Geoloader
   class Geonetwork
 
-    # Create Geonetwork resource.
+    # Create the Geonetwork resource.
     def initialize
       @config = Geoloader.config.geonetwork
       @resource = RestClient::Resource.new @config.url, {

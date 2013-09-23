@@ -6,7 +6,7 @@ require 'rest_client'
 module Geoloader
   class Geoserver
 
-    # Create Geoserver resource.
+    # Create the Geoserver resource.
     def initialize
       @config = Geoloader.config.geoserver
       @resource = RestClient::Resource.new @config.url, {
@@ -15,13 +15,13 @@ module Geoloader
       }
     end
 
-    # Create a new coverage store from a GeoTIFF.
+    # Create a new coverage store and layer.
     #
     # @param [Geoloader::Geotiff] tiff
     # @return [RestClient::Response]
     def upload_geotiff tiff
-      service = "workspaces/#{@config.workspace}/coveragestores/#{tiff.base}/file.geotiff"
-      @resource[service].put File.read(tiff.path)
+      url = "workspaces/#{@config.workspace}/coveragestores/#{tiff.base}/file.geotiff"
+      @resource[url].put File.read(tiff.path)
     end
 
   end
