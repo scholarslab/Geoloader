@@ -31,7 +31,7 @@ module Geoloader
     end
 
     # Prepare the file for Geoserver.
-    def prepare
+    def process
       remove_border
       build_header
     end

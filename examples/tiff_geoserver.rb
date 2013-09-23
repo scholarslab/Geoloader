@@ -3,11 +3,16 @@
 
 require 'geoloader'
 
-geoserver = Geoloader::Geoserver.new
+geoserver = Geoloader::Geoserver.new({
+  :url        => "http://admin:geoserver@localhost:8080/geoserver/rest",
+  :username   => "admin",
+  :password   => "geoserver",
+  :workspace  => "geoloader"
+})
 
 # Strip border and add header.
 tiff = Geoloader::Geotiff.new ARGV[0]
-tiff.prepare
+tiff.process
 
 # Push to GeoServer.
 geoserver.upload_geotiff tiff
