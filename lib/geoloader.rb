@@ -29,6 +29,7 @@ module Geoloader
 
 end
 
+require 'geoloader/file'
 require 'geoloader/geoserver'
 require 'geoloader/geonetwork'
 require 'geoloader/geotiff'
