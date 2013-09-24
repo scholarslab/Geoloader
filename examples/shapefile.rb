@@ -4,11 +4,8 @@
 require 'geoloader'
 
 Geoloader.configure_from_yaml "../config/testing.yaml"
-
-# Generate SQL.
-shp = Geoloader::Shapefile.new ARGV[0]
-shp.generate_sql
+postgis = Geoloader::Postgis.new
 
 # Source to Postgis.
-postgis = Geoloader::Postgis.new
-postgis.add_table shp
+shapefile = Geoloader::Shapefile.new ARGV[0]
+postgis.add_table shapefile

@@ -11,7 +11,6 @@ module Geoloader
     # Copy the file for post-processing.
     #
     # @param [String] file_name
-    # @param [Boolean] process
     def initialize file_name
       super file_name
       @processed_path = "#{Geoloader.config.directory}/#{@base_name}.geoloader.tif"
@@ -31,9 +30,10 @@ module Geoloader
     end
 
     # Prepare the file for Geoserver.
-    def prepare
+    def process
       remove_border
       build_header
+      @processed = true
     end
 
   end

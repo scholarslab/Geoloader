@@ -6,7 +6,7 @@ require 'fileutils'
 module Geoloader
   class Asset
 
-    attr_reader :file_name, :file_path, :base_name
+    attr_reader :file_name, :file_path, :base_name, :processed
 
     # Compute the basename and filepath.
     #
@@ -15,6 +15,7 @@ module Geoloader
       @file_name = file_name
       @base_name = File.basename @file_name, ".*"
       @file_path = "#{Geoloader.config.directory}/#{@file_name}"
+      @processed = false
     end
 
   end
