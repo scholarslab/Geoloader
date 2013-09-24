@@ -6,12 +6,12 @@ require 'fileutils'
 module Geoloader
   class Asset
 
-    attr_reader :filename, :filepath, :basename
+    attr_reader :file_name, :file_path, :base_name
 
     def initialize filename
       @file_name = name
-      @file_path = "#{Geoloader.config.directory}/#{@file_name}"
       @base_name = File.basename @file_name, ".*"
+      @file_path = "#{Geoloader.config.directory}/#{@file_name}"
     end
 
   end

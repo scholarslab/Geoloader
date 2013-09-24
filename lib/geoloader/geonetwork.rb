@@ -23,11 +23,11 @@ module Geoloader
     # @param [String] payload
     # @return [RestClient::Response]
     def post service, payload
-      @resource[service].post(payload) { |resp, req, res, &b|
-        if [301, 302, 307].include? resp.code
-          resp.follow_redirection req, res, &b
+      @resource[service].post(payload) { |response, request, result, &block|
+        if [301, 302, 307].include? response.code
+          response.follow_redirection request, result, &block
         else
-          resp.return! req, res, &b
+          response.return! request, result, &block
         end
       }
     end

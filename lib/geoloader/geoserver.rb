@@ -20,8 +20,8 @@ module Geoloader
     # @param [Geoloader::Geotiff] tiff
     # @return [RestClient::Response]
     def add_geotiff tiff
-      url = "workspaces/#{@config.workspace}/coveragestores/#{tiff.base}/file.geotiff"
-      @resource[url].put File.read(tiff.path)
+      url = "workspaces/#{@config.workspace}/coveragestores/#{tiff.base_name}/file.geotiff"
+      @resource[url].put File.read(tiff.processed_path)
     end
 
   end
