@@ -9,9 +9,9 @@ module Geoloader
     attr_reader :filename, :filepath, :basename
 
     def initialize filename
-      @filename = name
-      @filepath = "#{Geoloader.config.directory}/#{@name}"
-      @basename = File.basename @name, ".*"
+      @file_name = name
+      @file_path = "#{Geoloader.config.directory}/#{@file_name}"
+      @base_name = File.basename @file_name, ".*"
     end
 
   end
