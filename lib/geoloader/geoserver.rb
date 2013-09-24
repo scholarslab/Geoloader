@@ -2,6 +2,7 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 require 'rest_client'
+require 'builder'
 
 module Geoloader
   class Geoserver
@@ -17,12 +18,22 @@ module Geoloader
 
     # Create a new coverage store and layer.
     #
-    # @param [Geoloader::Geotiff] tiff
+    # @param [Geoloader::Geotiff] geotiff
     # @return [RestClient::Response]
-    def add_geotiff tiff
-      tiff.process unless tiff.processed
-      url = "workspaces/#{@config.workspace}/coveragestores/#{tiff.base_name}/file.geotiff"
-      @resource[url].put File.read(tiff.processed_path)
+    def upload_geotiff geotiff
+      geotiff.process unless geotiff.processed
+      url = "workspaces/#{@config.workspace}/coveragestores/#{geotiff.base_name}/file.geotiff"
+      @resource[url].put File.read(geotiff.processed_path)
+    end
+
+    # Publish the PostGIS table corresponding to a shapefile.
+    #
+    # @param [Geoloader::Shapefile] shapefile
+    # @return [RestClient::Response]
+    def publish_table shapefile
+      payload = Builder::XmlMarkup.new.featureType { |f| f.name shapefile.base_name }
+      url = "workspaces/#{@config.workspace}/datastores/#{@config.datastore}/featuretypes"
+      @resource[url].post payload, :content_type => :xml
     end
 
   end

@@ -4,7 +4,7 @@
 require 'geoloader'
 
 Geoloader.configure_from_yaml "../config/testing.yaml"
-geonetwork = Geoloader::Geonetwork.new
 
 # Push to Geonetwork.
+geonetwork = Geoloader::Geonetwork.new
 geonetwork.metadata_insert ARGV[0]

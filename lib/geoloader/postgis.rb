@@ -11,7 +11,7 @@ module Geoloader
     # @param [Geoloader::Shapefile] shapefile
     def add_table shapefile
       shapefile.process unless shapefile.processed
-      system "psql -d #{Geoloader.config.postgis.database} -f #{shapfile.sql_path}"
+      system "psql -d #{Geoloader.config.postgis.database} -f #{shapefile.sql_path}"
     end
 
   end

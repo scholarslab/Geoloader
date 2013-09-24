@@ -4,8 +4,12 @@
 require 'geoloader'
 
 Geoloader.configure_from_yaml "../config/testing.yaml"
-postgis = Geoloader::Postgis.new
+shapefile = Geoloader::Shapefile.new ARGV[0]
 
 # Source to Postgis.
-shapefile = Geoloader::Shapefile.new ARGV[0]
+postgis = Geoloader::Postgis.new
 postgis.add_table shapefile
+
+# Publish on Geoserver
+geoserver = Geoloader::Geoserver.new
+geoserver.publish_table shapefile
