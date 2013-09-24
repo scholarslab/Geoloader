@@ -4,7 +4,7 @@
 require 'fileutils'
 
 module Geoloader
-  class File
+  class Asset
 
     attr_reader :filename, :filepath, :basename
 

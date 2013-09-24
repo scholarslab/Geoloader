@@ -4,7 +4,7 @@
 require 'fileutils'
 
 module Geoloader
-  class Geotiff < Geoloader::File
+  class Geotiff < Asset
 
     attr_reader :base, :path
 
