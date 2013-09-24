@@ -8,7 +8,7 @@ geoserver = Geoloader::Geoserver.new
 
 # Strip border and add header.
 tiff = Geoloader::Geotiff.new ARGV[0]
-tiff.process
+tiff.prepare
 
 # Push to GeoServer.
 geoserver.add_geotiff tiff
