@@ -11,10 +11,10 @@ module Geoloader
     # Copy the file for post-processing.
     #
     # @param [String] file_name
-    # @param [String] suffix
-    def initialize file_name, suffix = "processed"
+    # @param [Boolean] process
+    def initialize file_name
       super file_name
-      @processed_path = "#{Geoloader.config.directory}/#{@base_name}.#{suffix}.tif"
+      @processed_path = "#{Geoloader.config.directory}/#{@base_name}.geoloader.tif"
       FileUtils.cp @file_path, @processed_path
     end
 

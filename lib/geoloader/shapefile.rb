@@ -8,8 +8,9 @@ module Geoloader
 
     attr_reader :sql_path
 
+    # Convert the file to SQL for PostGIS.
     def generate_sql
-      @sql_path = "#{Geoloader.config.directory}/#{@base_name}.sql"
+      @sql_path = "#{Geoloader.config.directory}/#{@base_name}.geoloader.sql"
       system "shp2pgsql #{@file_path} > #{@sql_path}"
     end
 

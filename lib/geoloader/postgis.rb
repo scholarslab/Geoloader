@@ -6,8 +6,11 @@ require 'fileutils'
 module Geoloader
   class Postgis
 
-    def add_database
-      # TODO
+    # Source shapefile SQL.
+    #
+    # @param [Geoloader::Shapefile] shapefile
+    def add_table shapefile
+      system "psql -d #{Geoloader.config.postgis.database} -f #{shapfile.sql_path}"
     end
 
   end
