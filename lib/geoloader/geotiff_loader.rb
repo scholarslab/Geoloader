@@ -12,7 +12,7 @@ module Geoloader
       @geoserver = Geoloader::Geoserver.new
     end
 
-    # 
+    # Process and upload the geotiff.
     def work
       begin
         @geoserver.upload_geotiff @geotiff
