@@ -12,7 +12,6 @@ module Geoloader
     #
     # @param [String] file_name
     def initialize file_name
-      @config = Geoloader.config.assets
       @file_name = file_name
       @file_path = "#{@config.pending}/#{@file_name}"
       @base_name = File.basename @file_name, ".*"
@@ -36,11 +35,6 @@ module Geoloader
     # @return [Boolean]
     def processed?
       @processed
-    end
-
-    # Move the asset's files to the processed directory.
-    def dequeue
-      FileUtils.mv Dir.glob("#{@config.pending}/#{@base_name}.*"), @config.processed
     end
 
   end
