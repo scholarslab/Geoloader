@@ -4,22 +4,30 @@
 module Geoloader
   class ShapefileLoader
 
-    # Create file and service instances.
-    #
     # @param [String] file_name
     def initialize file_name
-      @shapefile  = Geoloader::Shapefile.new file_name
-      @postgis    = Geoloader::Postgis.new
-      @geoserver  = Geoloader::Geoserver.new
-      @geonetwork = Geoloader::Geonetwork.new
+      @file_name = file_name
+      #@shapefile  = Geoloader::Shapefile.new file_name
+      #@postgis    = Geoloader::Postgis.new
+      #@geoserver  = Geoloader::Geoserver.new
+      #@geonetwork = Geoloader::Geonetwork.new
     end
 
-    # Process and upload the geotiff.
     def work
       begin
-        @postgis.add_table        @shapefile
-        @geoserver.publish_table  @shapefile
-        #@geonetwork.add_record    @shapefile
+
+        # Create SQL from shapefile.
+        shapefile = Geoloader::Shapefile.new @file_name
+        shapefile.generate_sql
+
+        # Add the table(s) to PostGIS.
+        postgis = Geoloader::Postgis.new
+        postgis.add_table shapefile
+
+        # Push the table to Geoserver.
+        geoserver = Geoloader::Geoserver.new
+        geoserver.publish_table shapefile
+
       rescue
         # TODO: Failure.
       else

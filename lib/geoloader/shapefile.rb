@@ -14,11 +14,5 @@ module Geoloader
       system "shp2pgsql #{@file_path} > #{@sql_path}"
     end
 
-    # Prepare the file for PostGIS.
-    def process
-      generate_sql
-      super
-    end
-
   end
 end

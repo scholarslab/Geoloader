@@ -15,7 +15,6 @@ module Geoloader
       @file_name = file_name
       @file_path = "#{Geoloader.config.directory}/#{@file_name}"
       @base_name = File.basename @file_name, ".*"
-      @processed = false
     end
 
     # Read the corresponding metadata file.
@@ -23,18 +22,6 @@ module Geoloader
     # @return [String]
     def xml
       File.read "#{@file_path}.xml"
-    end
-
-    # Prepare the file for upload.
-    def process
-      @processed = true
-    end
-
-    # Has the file been processed?
-    #
-    # @return [Boolean]
-    def processed?
-      @processed
     end
 
   end

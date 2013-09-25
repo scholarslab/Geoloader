@@ -29,12 +29,5 @@ module Geoloader
       FileUtils.mv "#{@processed_path}_", @processed_path
     end
 
-    # Prepare the file for Geoserver.
-    def process
-      remove_border
-      build_header
-      super
-    end
-
   end
 end
