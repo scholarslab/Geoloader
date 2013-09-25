@@ -8,18 +8,20 @@ module Geoloader
     #
     # @param [String] file_name
     def initialize file_name
-      @geotiff = Geoloader::Geotiff file_name
+      @geotiff = Geoloader::Geotiff.new file_name
       @geoserver = Geoloader::Geoserver.new
+      @geonetwork = Geoloader::Geonetwork.new
     end
 
     # Process and upload the geotiff.
     def work
       begin
         @geoserver.upload_geotiff @geotiff
+        @geonetwork.metadata_insert @geotiff
       rescue
-        puts "Success." # TODO
+        # Failure.
       else
-        puts "Failure." # TODO
+        # Success.
       end
     end
 

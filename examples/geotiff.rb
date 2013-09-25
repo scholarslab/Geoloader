@@ -6,6 +6,5 @@ require 'geoloader'
 Geoloader.configure_from_yaml "../config/testing.yaml"
 
 # Push to GeoServer.
-geoserver = Geoloader::Geoserver.new
-geotiff = Geoloader::Geotiff.new ARGV[0]
-geoserver.upload_geotiff geotiff
+loader = Geoloader::GeotiffLoader.new ARGV[0]
+loader.work

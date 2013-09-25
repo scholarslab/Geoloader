@@ -13,9 +13,16 @@ module Geoloader
     # @param [String] file_name
     def initialize file_name
       @file_name = file_name
-      @base_name = File.basename @file_name, ".*"
       @file_path = "#{Geoloader.config.directory}/#{@file_name}"
+      @base_name = File.basename @file_name, ".*"
       @processed = false
+    end
+
+    # Read the corresponding metadata file.
+    #
+    # @return [String]
+    def xml
+      File.read "#{@file_path}.xml"
     end
 
   end
