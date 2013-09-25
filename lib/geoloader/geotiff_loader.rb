@@ -17,11 +17,11 @@ module Geoloader
     def work
       begin
         @geoserver.upload_geotiff @geotiff
-        @geonetwork.add_record    @geotiff
+        #@geonetwork.add_record    @geotiff
       rescue
-        # Failure.
+        # TODO: Failure.
       else
-        @geotiff.dequeue
+        # TODO: Success.
       end
     end
 

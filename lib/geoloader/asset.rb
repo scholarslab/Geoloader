@@ -13,7 +13,7 @@ module Geoloader
     # @param [String] file_name
     def initialize file_name
       @file_name = file_name
-      @file_path = "#{@config.pending}/#{@file_name}"
+      @file_path = "#{Geoloader.config.directory}/#{@file_name}"
       @base_name = File.basename @file_name, ".*"
       @processed = false
     end

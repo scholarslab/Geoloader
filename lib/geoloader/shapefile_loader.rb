@@ -19,11 +19,11 @@ module Geoloader
       begin
         @postgis.add_table        @shapefile
         @geoserver.publish_table  @shapefile
-        @geonetwork.add_record    @shapefile
+        #@geonetwork.add_record    @shapefile
       rescue
-        # Failure.
+        # TODO: Failure.
       else
-        @shapefile.dequeue
+        # TODO: Success.
       end
     end
 

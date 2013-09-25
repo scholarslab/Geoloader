@@ -4,7 +4,5 @@
 require 'geoloader'
 
 Geoloader.configure_from_yaml "../config/testing.yaml"
-
-# Push to GeoServer.
 loader = Geoloader::GeotiffLoader.new ARGV[0]
 loader.work
