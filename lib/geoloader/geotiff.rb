@@ -13,7 +13,7 @@ module Geoloader
     # @param [String] file_name
     def initialize file_name
       super file_name
-      @processed_path = "#{Geoloader.config.directories.pending}/#{@base_name}.geoloader.tif"
+      @processed_path = "#{Geoloader.config.assets.pending}/#{@base_name}.geoloader.tif"
       FileUtils.cp @file_path, @processed_path
     end
 

@@ -12,8 +12,9 @@ module Geoloader
     #
     # @param [String] file_name
     def initialize file_name
+      @config = Geoloader.config.assets
       @file_name = file_name
-      @file_path = "#{Geoloader.config.directories.pending}/#{@file_name}"
+      @file_path = "#{@config.pending}/#{@file_name}"
       @base_name = File.basename @file_name, ".*"
       @processed = false
     end
@@ -25,16 +26,21 @@ module Geoloader
       File.read "#{@file_path}.xml"
     end
 
-    # Prepared the file for upload.
+    # Prepare the file for upload.
     def process
       @processed = true
     end
 
-    # Has the file been prepared for upload?
+    # Has the file been processed?
     #
     # @return [Boolean]
     def processed?
       @processed
+    end
+
+    # Move the asset's files to the processed directory.
+    def dequeue
+      FileUtils.mv "#{@config.pending}/#{@base_name}.*", @config.processed
     end
 
   end

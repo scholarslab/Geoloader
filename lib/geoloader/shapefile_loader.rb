@@ -23,7 +23,7 @@ module Geoloader
       rescue
         # Failure.
       else
-        # Success.
+        @shapefile.dequeue
       end
     end
 

@@ -21,7 +21,7 @@ module Geoloader
       rescue
         # Failure.
       else
-        # Success.
+        @geotiff.dequeue
       end
     end
 
