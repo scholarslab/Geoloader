@@ -38,7 +38,7 @@ module Geoloader
     # @param [String] style_sheet
     # @param [String] category
     # @return [RestClient::Response]
-    def metadata_insert asset, style_sheet = "_none_", category = "_none_"
+    def add_record asset, style_sheet = "_none_", category = "_none_"
       post "metadata.insert", self.class.xml.request { |r|
         r.group @config.group
         r.data { |d| d.cdata! asset.xml }

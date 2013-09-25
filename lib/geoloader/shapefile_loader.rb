@@ -19,7 +19,7 @@ module Geoloader
       begin
         @postgis.add_table @shapefile
         @geoserver.publish_table @shapefile
-        @geonetwork.metadata_insert @shapefile
+        @geonetwork.add_record @shapefile
       rescue
         # Failure.
       else
