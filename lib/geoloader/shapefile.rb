@@ -17,7 +17,7 @@ module Geoloader
     # Prepare the file for PostGIS.
     def process
       generate_sql
-      @processed = true
+      super
     end
 
   end

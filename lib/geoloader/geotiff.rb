@@ -33,7 +33,7 @@ module Geoloader
     def process
       remove_border
       build_header
-      @processed = true
+      super
     end
 
   end

@@ -23,7 +23,7 @@ module Geoloader
     def upload_geotiff geotiff
 
       # Scrub borders and rebuild header.
-      geotiff.process unless geotiff.processed
+      geotiff.process unless geotiff.processed?
 
       # Create the new coverage store.
       url = "workspaces/#{@config.workspace}/coveragestores/#{geotiff.base_name}/file.geotiff"

@@ -17,9 +17,9 @@ module Geoloader
     # Process and upload the geotiff.
     def work
       begin
-        @postgis.add_table @shapefile
-        @geoserver.publish_table @shapefile
-        @geonetwork.add_record @shapefile
+        @postgis.add_table        @shapefile
+        @geoserver.publish_table  @shapefile
+        @geonetwork.add_record    @shapefile
       rescue
         # Failure.
       else

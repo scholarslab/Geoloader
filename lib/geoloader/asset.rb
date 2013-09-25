@@ -6,7 +6,7 @@ require 'fileutils'
 module Geoloader
   class Asset
 
-    attr_reader :file_name, :file_path, :base_name, :processed
+    attr_reader :file_name, :file_path, :base_name
 
     # Compute the basename and filepath.
     #
@@ -23,6 +23,18 @@ module Geoloader
     # @return [String]
     def xml
       File.read "#{@file_path}.xml"
+    end
+
+    # Prepared the file for upload.
+    def process
+      @processed = true
+    end
+
+    # Has the file been prepared for upload?
+    #
+    # @return [Boolean]
+    def processed?
+      @processed
     end
 
   end
