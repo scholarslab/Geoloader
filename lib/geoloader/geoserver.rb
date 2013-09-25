@@ -21,31 +21,31 @@ module Geoloader
     # @param [Geoloader::Geotiff] geotiff
     # @return [RestClient::Response]
     def upload_geotiff geotiff
-
-      # Scrub borders and rebuild header.
-      geotiff.process unless geotiff.processed?
-
-      # Create the new coverage store.
       url = "workspaces/#{@config.workspace}/coveragestores/#{geotiff.base_name}/file.geotiff"
       @resource[url].put File.read(geotiff.processed_path)
-
     end
 
-    # Publish the PostGIS table corresponding to a shapefile.
+    # Publish the PostGIS database corresponding to a shapefile.
     #
     # @param [Geoloader::Shapefile] shapefile
     # @return [RestClient::Response]
-    def publish_table shapefile
+    def add_datastore shapefile
 
-      # Construct the request payload.
-      payload = Builder::XmlMarkup.new.featureType { |f|
-        f.name shapefile.base_name
-        f.srs @config.srs
-        f.nativeCRS @config.srs
+      # Construct the datastore XML.
+      payload = Builder::XmlMarkup.new.dataStore { |d|
+        d.name shapefile.base_name
+        d.connectionParameters { |c|
+          c.host      Geoserver.config.postgis.host
+          c.port      Geoserver.config.postgis.port
+          c.user      Geoserver.config.postgis.username
+          c.passwd    Geoserver.config.postgis.password
+          c.database  shapefile.base_name
+          c.dbtype    "postgis"
+        }
       }
 
       # Create the new feature type.
-      url = "workspaces/#{@config.workspace}/datastores/#{@config.datastore}/featuretypes"
+      url = "workspaces/#{@config.workspace}/datastores"
       @resource[url].post payload, :content_type => :xml
 
     end

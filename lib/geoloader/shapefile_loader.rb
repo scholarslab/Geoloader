@@ -7,10 +7,6 @@ module Geoloader
     # @param [String] file_name
     def initialize file_name
       @file_name = file_name
-      #@shapefile  = Geoloader::Shapefile.new file_name
-      #@postgis    = Geoloader::Postgis.new
-      #@geoserver  = Geoloader::Geoserver.new
-      #@geonetwork = Geoloader::Geonetwork.new
     end
 
     def work
@@ -22,11 +18,12 @@ module Geoloader
 
         # Add the table(s) to PostGIS.
         postgis = Geoloader::Postgis.new
-        postgis.add_table shapefile
+        postgis.create_database shapefile
+        postgis.source_sql shapefile
 
         # Push the table to Geoserver.
         geoserver = Geoloader::Geoserver.new
-        geoserver.publish_table shapefile
+        geoserver.add_datastore shapefile
 
       rescue
         # TODO: Failure.
