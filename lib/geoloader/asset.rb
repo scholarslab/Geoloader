@@ -40,7 +40,7 @@ module Geoloader
 
     # Move the asset's files to the processed directory.
     def dequeue
-      FileUtils.mv "#{@config.pending}/#{@base_name}.*", @config.processed
+      FileUtils.mv Dir.glob("#{@config.pending}/#{@base_name}.*"), @config.processed
     end
 
   end
