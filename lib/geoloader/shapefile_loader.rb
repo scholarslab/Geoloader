@@ -15,11 +15,8 @@ module Geoloader
         # Create SQL from shapefile.
         shapefile = Geoloader::Shapefile.new @file_name
         shapefile.generate_sql
-
-        # Add PostGIS database.
-        postgis = Geoloader::Postgis.new
-        postgis.create_database shapefile
-        postgis.source_sql shapefile
+        shapefile.create_database
+        shapefile.source_sql
 
         # Add datastore/layers to Geoserver.
         geoserver = Geoloader::Geoserver.new

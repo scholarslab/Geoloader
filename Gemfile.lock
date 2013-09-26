@@ -3,8 +3,11 @@ GEM
   specs:
     addressable (2.3.2)
     builder (3.2.0)
+    dbf (2.0.6)
+      fastercsv (~> 1.5.4)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
+    fastercsv (1.5.5)
     git (1.2.6)
     github_api (0.10.1)
       addressable
@@ -58,6 +61,10 @@ GEM
       vegas (~> 0.1.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    rgeo (0.3.20)
+    rgeo-shapefile (0.2.3)
+      dbf (>= 1.7.0)
+      rgeo (>= 0.3.3)
     sinatra (1.4.3)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -73,3 +80,4 @@ DEPENDENCIES
   jeweler
   resque
   rest-client
+  rgeo-shapefile

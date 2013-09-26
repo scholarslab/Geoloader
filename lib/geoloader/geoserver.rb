@@ -55,8 +55,7 @@ module Geoloader
     # @param [Geoloader::Shapefile] shapefile
     # @return [RestClient::Response]
     def publish_tables shapefile
-      url = "workspaces/#{@config.workspace}/datastores/#{geotiff.base_name}/featuretypes"
-      @resource[url].put File.read(shapefile.file_path)
+      # TODO
     end
 
   end
