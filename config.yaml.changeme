@@ -1,6 +1,4 @@
 
-directory:    "/var/geospatial"
-
 postgis:
   host:       "localhost"
   port:       "5432"
