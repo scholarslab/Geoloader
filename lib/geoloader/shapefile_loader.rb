@@ -18,6 +18,9 @@ module Geoloader
         shapefile.create_database
         shapefile.source_sql
 
+        # TODO|dev
+        shapefile.get_layers
+
         # Add datastore/layers to Geoserver.
         geoserver = Geoloader::Geoserver.new
         geoserver.publish_database shapefile

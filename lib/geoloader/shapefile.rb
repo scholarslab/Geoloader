@@ -16,27 +16,23 @@ module Geoloader
     end
 
     # Create a PostGIS database for a shapefile.
-    #
-    # @param [Geoloader::Shapefile] shapefile
-    def create_database shapefile
+    def create_database
       system "createdb #{@base_name}"
       system "psql -d #{@base_name} -c 'CREATE EXTENSION postgis;'"
     end
 
     # Source shapefile SQL to the new database.
-    #
-    # @param [Geoloader::Shapefile] shapefile
-    def source_sql shapefile
+    def source_sql
       system "psql -d #{@base_name} -f #{@sql_path}"
     end
 
-    # TODO|dev
     # Fetch a list of layers in the database.
     #
-    # @param [Geoloader::Shapefile] shapefile
-    def get_layers shapefile
+    # @return [PG::Result]
+    def get_layers
       conn = PG.connect dbname: @base_name
-      conn.exec "SELECT f_table_name FROM geometry_columns"
+      cols = conn.exec "SELECT * FROM geometry_columns"
+      cols.field_values "f_table_name"
     end
 
   end

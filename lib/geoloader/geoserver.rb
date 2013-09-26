@@ -31,7 +31,7 @@ module Geoloader
     # @return [RestClient::Response]
     def publish_database shapefile
 
-      # Construct the datastore XML.
+      # Construct the API request.
       payload = Builder::XmlMarkup.new.dataStore { |d|
         d.name shapefile.base_name
         d.connectionParameters { |c|
@@ -55,7 +55,20 @@ module Geoloader
     # @param [Geoloader::Shapefile] shapefile
     # @return [RestClient::Response]
     def publish_tables shapefile
-      # TODO
+      shapefile.get_layers.each { |layer|
+
+        # Construct the API request.
+        payload = Builder::XmlMarkup.new.featureType { |f|
+          f.name shapefile.base_name
+          f.srs @config.srs
+          f.nativeCRS @config.srs
+        }
+
+        # Create the new feature type.
+        url = "workspaces/#{@config.workspace}/datastores/#{shapefile.base_name}/featuretypes"
+        @resource[url].post payload, :content_type => :xml
+
+      }
     end
 
   end
