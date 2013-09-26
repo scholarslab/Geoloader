@@ -16,14 +16,15 @@ module Geoloader
         shapefile = Geoloader::Shapefile.new @file_name
         shapefile.generate_sql
 
-        # Add the table(s) to PostGIS.
+        # Add PostGIS database.
         postgis = Geoloader::Postgis.new
         postgis.create_database shapefile
         postgis.source_sql shapefile
 
-        # Push the table to Geoserver.
+        # Add datastore/layers to Geoserver.
         geoserver = Geoloader::Geoserver.new
-        geoserver.add_datastore shapefile
+        geoserver.publish_database shapefile
+        geoserver.publish_tables shapefile
 
       rescue
         # TODO: Failure.

@@ -29,25 +29,34 @@ module Geoloader
     #
     # @param [Geoloader::Shapefile] shapefile
     # @return [RestClient::Response]
-    def add_datastore shapefile
+    def publish_database shapefile
 
       # Construct the datastore XML.
       payload = Builder::XmlMarkup.new.dataStore { |d|
         d.name shapefile.base_name
         d.connectionParameters { |c|
-          c.host      Geoserver.config.postgis.host
-          c.port      Geoserver.config.postgis.port
-          c.user      Geoserver.config.postgis.username
-          c.passwd    Geoserver.config.postgis.password
+          c.host      Geoloader.config.postgis.host
+          c.port      Geoloader.config.postgis.port
+          c.user      Geoloader.config.postgis.username
+          c.passwd    Geoloader.config.postgis.password
           c.database  shapefile.base_name
           c.dbtype    "postgis"
         }
       }
 
-      # Create the new feature type.
+      # Create the new data store.
       url = "workspaces/#{@config.workspace}/datastores"
       @resource[url].post payload, :content_type => :xml
 
+    end
+
+    # Publish layers from the PostGIS tables corresponding to a shapefile.
+    #
+    # @param [Geoloader::Shapefile] shapefile
+    # @return [RestClient::Response]
+    def publish_tables shapefile
+      url = "workspaces/#{@config.workspace}/datastores/#{geotiff.base_name}/featuretypes"
+      @resource[url].put File.read(shapefile.file_path)
     end
 
   end
