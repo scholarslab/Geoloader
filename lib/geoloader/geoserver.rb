@@ -10,26 +10,26 @@ module Geoloader
     # Create the Geoserver resource.
     def initialize
       @config = Geoloader.config.geoserver
-      @resource = RestClient::Resource.new @config.url, {
+      @resource = RestClient::Resource.new(@config.url, {
         :user     => @config.username,
         :password => @config.password
-      }
+      })
     end
 
     # Create a new coverage store and layer.
     #
     # @param [Geoloader::Geotiff] geotiff
     # @return [RestClient::Response]
-    def upload_geotiff geotiff
+    def upload_geotiff(geotiff)
       url = "workspaces/#{@config.workspace}/coveragestores/#{geotiff.base_name}/file.geotiff"
-      @resource[url].put File.read(geotiff.processed_path)
+      @resource[url].put(File.read(geotiff.processed_path))
     end
 
     # Publish the PostGIS database corresponding to a shapefile.
     #
     # @param [Geoloader::Shapefile] shapefile
     # @return [RestClient::Response]
-    def publish_database shapefile
+    def publish_database(shapefile)
 
       # Construct the API request.
       payload = Builder::XmlMarkup.new.dataStore { |d|
@@ -46,7 +46,7 @@ module Geoloader
 
       # Create the new data store.
       url = "workspaces/#{@config.workspace}/datastores"
-      @resource[url].post payload, :content_type => :xml
+      @resource[url].post(payload, :content_type => :xml)
 
     end
 
@@ -54,7 +54,7 @@ module Geoloader
     #
     # @param [Geoloader::Shapefile] shapefile
     # @return [RestClient::Response]
-    def publish_tables shapefile
+    def publish_tables(shapefile)
       shapefile.get_layers.each { |layer|
 
         # Construct the API request.
@@ -66,7 +66,7 @@ module Geoloader
 
         # Create the new feature type.
         url = "workspaces/#{@config.workspace}/datastores/#{shapefile.base_name}/featuretypes"
-        @resource[url].post payload, :content_type => :xml
+        @resource[url].post(payload, :content_type => :xml)
 
       }
     end

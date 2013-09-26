@@ -11,7 +11,7 @@ module Geoloader
 
     # Convert the file to SQL for PostGIS.
     def generate_sql
-      @sql_path = "#{Geoloader.config.directory}/#{@base_name}.geoloader.sql"
+      @sql_path = "#{File.dirname(@file_path)}/#{@base_name}.geoloader.sql"
       system "shp2pgsql #{@file_path} > #{@sql_path}"
     end
 
@@ -30,9 +30,8 @@ module Geoloader
     #
     # @return [PG::Result]
     def get_layers
-      conn = PG.connect dbname: @base_name
-      cols = conn.exec "SELECT * FROM geometry_columns"
-      cols.field_values "f_table_name"
+      conn = PG.connect(dbname: @base_name)
+      conn.exec("SELECT * FROM geometry_columns").field_values("f_table_name")
     end
 
   end

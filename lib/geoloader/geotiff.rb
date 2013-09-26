@@ -10,11 +10,11 @@ module Geoloader
 
     # Copy the file for post-processing.
     #
-    # @param [String] file_name
-    def initialize file_name
-      super file_name
-      @processed_path = "#{Geoloader.config.directory}/#{@base_name}.geoloader.tif"
-      FileUtils.cp @file_path, @processed_path
+    # @param [String] file_path
+    def initialize(file_path)
+      super(file_path)
+      @processed_path = "#{File.dirname(@file_path)}/#{@base_name}.geoloader.tif"
+      FileUtils.cp(@file_path, @processed_path)
     end
 
     # Remove the black borders added by ArcMap.
@@ -25,8 +25,8 @@ module Geoloader
     # (Re)build a EPSG:4326 header.
     def build_header
       system "gdal_translate -of GTiff -a_srs EPSG:4326 #{@processed_path} #{@processed_path}_"
-      FileUtils.rm @processed_path
-      FileUtils.mv "#{@processed_path}_", @processed_path
+      FileUtils.rm(@processed_path)
+      FileUtils.mv("#{@processed_path}_", @processed_path)
     end
 
   end

@@ -10,11 +10,11 @@ module Geoloader
     # Create the Geonetwork resource.
     def initialize
       @config = Geoloader.config.geonetwork
-      @resource = RestClient::Resource.new @config.url, {
+      @resource = RestClient::Resource.new(@config.url, {
         :user     => @config.username,
         :password => @config.password,
         :headers  => { :content_type => :xml }
-      }
+      })
     end
 
     # POST to an XML service.
@@ -22,12 +22,12 @@ module Geoloader
     # @param [String] service
     # @param [String] payload
     # @return [RestClient::Response]
-    def post service, payload
+    def post(service, payload)
       @resource[service].post(payload) { |response, request, result, &block|
-        if [301, 302, 307].include? response.code
-          response.follow_redirection request, result, &block
+        if [301, 302, 307].include?(response.code)
+          response.follow_redirection(request, result, &block)
         else
-          response.return! request, result, &block
+          response.return!(request, result, &block)
         end
       }
     end
@@ -38,13 +38,13 @@ module Geoloader
     # @param [String] style_sheet
     # @param [String] category
     # @return [RestClient::Response]
-    def add_record asset, style_sheet = "_none_", category = "_none_"
-      post "metadata.insert", self.class.xml.request { |r|
+    def add_record(asset, style_sheet = "_none_", category = "_none_")
+      post("metadata.insert", self.class.xml.request { |r|
         r.group @config.group
         r.data { |d| d.cdata! asset.xml }
         r.category category
         r.styleSheet style_sheet
-      }
+      })
     end
 
     # Get an XML builder instance.

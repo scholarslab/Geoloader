@@ -4,22 +4,22 @@
 module Geoloader
   class GeotiffLoader
 
-    # @param [String] file_name
-    def initialize file_name
-      @file_name = file_name
+    # @param [String] file_path
+    def initialize(file_path)
+      @file_path = file_path
     end
 
     def work
       begin
 
         # Prepare the file.
-        geotiff = Geoloader::Geotiff.new @file_name
+        geotiff = Geoloader::Geotiff.new(@file_path)
         geotiff.remove_border
         geotiff.build_header
 
         # Push to Geoserver.
         geoserver = Geoloader::Geoserver.new
-        geoserver.upload_geotiff geotiff
+        geoserver.upload_geotiff(geotiff)
 
       rescue
         # TODO: Failure.

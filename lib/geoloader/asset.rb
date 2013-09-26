@@ -8,20 +8,17 @@ module Geoloader
 
     attr_reader :file_name, :file_path, :base_name
 
-    # Compute the basename and filepath.
-    #
-    # @param [String] file_name
-    def initialize file_name
-      @file_name = file_name
-      @file_path = "#{Geoloader.config.directory}/#{@file_name}"
-      @base_name = File.basename @file_name, ".*"
+    # @param [String] file_path
+    def initialize(file_path)
+      @file_path = file_path
+      @base_name = File.basename(@file_path, ".*")
     end
 
     # Read the corresponding metadata file.
     #
     # @return [String]
     def xml
-      File.read "#{@file_path}.xml"
+      File.read("#{@file_path}.xml")
     end
 
   end
