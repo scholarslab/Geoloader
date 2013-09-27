@@ -12,14 +12,14 @@ command :load do |c|
   c.summary = 'Load a Geotiff (.tif) or Shapefile (.shp).'
   c.action do |args, options|
 
-    Geoloader.configure_from_yaml "~/.geoloader"
+    Geoloader.configure_from_yaml("~/.geoloader")
 
     case File.extname(args[0])
     when ".tif"
-      loader = Geoloader::GeotiffLoader.new args[0]
+      loader = Geoloader::GeotiffLoader.new(args[0])
       loader.work
     when ".shp"
-      loader = Geoloader::ShapefileLoader.new args[0]
+      loader = Geoloader::ShapefileLoader.new(args[0])
       loader.work
     end
 
