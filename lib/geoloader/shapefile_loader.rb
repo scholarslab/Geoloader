@@ -6,28 +6,31 @@ module Geoloader
 
     # @param [String] file_name
     def initialize(file_name)
-      @file_name = file_name
+      @shapefile = Geoloader::Shapefile.new(file_name)
+      @geoserver = Geoloader::Geoserver.new
     end
 
-    def work
+    def load
       begin
 
         # Create SQL from shapefile.
-        shapefile = Geoloader::Shapefile.new(@file_name)
-        shapefile.generate_sql
-        shapefile.create_database
-        shapefile.source_sql
+        @shapefile.generate_sql
+        @shapefile.create_database
+        @shapefile.source_sql
 
         # Add datastore/layers to Geoserver.
-        geoserver = Geoloader::Geoserver.new
-        geoserver.publish_database(shapefile)
-        geoserver.publish_tables(shapefile)
+        @geoserver.publish_database(shapefile)
+        @geoserver.publish_tables(shapefile)
 
       rescue
         # TODO: Failure.
       else
         # TODO: Success.
       end
+    end
+
+    def unload
+      # TODO
     end
 
   end

@@ -19,7 +19,7 @@ module Geoloader
   #
   # @param [String] path
   def self.configure_from_yaml(path)
-    @config.configure(YAML::load(File.read(File.expand_path(path))))
+    @config.configure(YAML::load(File.read(path)))
   end
 
   # Get the configuration object.

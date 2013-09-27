@@ -17,10 +17,10 @@ command :load do |c|
     case File.extname(args[0])
     when ".tif"
       loader = Geoloader::GeotiffLoader.new(args[0])
-      loader.work
+      loader.load
     when ".shp"
       loader = Geoloader::ShapefileLoader.new(args[0])
-      loader.work
+      loader.load
     end
 
   end

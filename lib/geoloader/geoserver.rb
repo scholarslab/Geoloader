@@ -16,13 +16,22 @@ module Geoloader
       })
     end
 
-    # Create a new coverage store and layer.
+    # Create a new coveragestore and layer.
     #
     # @param [Geoloader::Geotiff] geotiff
     # @return [RestClient::Response]
     def upload_geotiff(geotiff)
       url = "workspaces/#{@config.workspace}/coveragestores/#{geotiff.base_name}/file.geotiff"
       @resource[url].put(File.read(geotiff.processed_path))
+    end
+
+    # Delete the coveragestore corresponding to a GeoTIFF.
+    #
+    # @param [Geoloader::Geotiff] geotiff
+    # @return [RestClient::Response]
+    def delete_geotiff(geotiff)
+      url = "workspaces/#{@config.workspace}/coveragestores/#{geotiff.base_name}"
+      @resource[url].delete
     end
 
     # Publish the PostGIS database corresponding to a shapefile.

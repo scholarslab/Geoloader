@@ -6,20 +6,32 @@ module Geoloader
 
     # @param [String] file_path
     def initialize(file_path)
-      @file_path = file_path
+      @geotiff    = Geoloader::Geotiff.new(file_path)
+      @geoserver  = Geoloader::Geoserver.new
     end
 
-    def work
+    def load
       begin
 
         # Prepare the file.
-        geotiff = Geoloader::Geotiff.new(@file_path)
-        geotiff.remove_border
-        geotiff.build_header
+        @geotiff.remove_border
+        @geotiff.build_header
 
         # Push to Geoserver.
-        geoserver = Geoloader::Geoserver.new
-        geoserver.upload_geotiff(geotiff)
+        @geoserver.upload_geotiff(@geotiff)
+
+      rescue
+        # TODO: Failure.
+      else
+        # TODO: Success.
+      end
+    end
+
+    def unload
+      begin
+
+        # Delete from Geoserver.
+        @geoserver.delete_geotiff(@geotiff)
 
       rescue
         # TODO: Failure.
