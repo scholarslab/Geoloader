@@ -54,6 +54,8 @@ geoloader load /var/spatial/nyc.tif
 geoloader load /var/spatial/nyc.shp
 ```
 
+[geotiff]: http://en.wikipedia.org/wiki/Geotiff
+[shapefile]: http://en.wikipedia.org/wiki/Shapefile
 [postgis]: http://postgis.net/
 [geoserver]: http://geoserver.org/
 [geonetwork]: http://geoserver.org/
