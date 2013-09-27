@@ -27,18 +27,5 @@ module Geoloader
       end
     end
 
-    def unload
-      begin
-
-        # Delete from Geoserver.
-        @geoserver.delete_geotiff(@geotiff)
-
-      rescue
-        # TODO: Failure.
-      else
-        # TODO: Success.
-      end
-    end
-
   end
 end

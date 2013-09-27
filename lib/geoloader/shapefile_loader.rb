@@ -29,9 +29,5 @@ module Geoloader
       end
     end
 
-    def unload
-      # TODO
-    end
-
   end
 end

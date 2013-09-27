@@ -19,10 +19,6 @@ describe Geoloader::GeotiffLoader do
 
   end
 
-  after do
-    @loader.unload
-  end
-
   it "should create a new coveragestore on Geoserver" do
     # TODO
   end
