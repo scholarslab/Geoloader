@@ -3,6 +3,8 @@ GEM
   specs:
     addressable (2.3.2)
     builder (3.2.0)
+    commander (4.1.5)
+      highline (~> 1.6.11)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
     git (1.2.6)
@@ -71,6 +73,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  commander
   jeweler
   pg
   resque
