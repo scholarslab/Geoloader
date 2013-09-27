@@ -4,7 +4,7 @@ Geoloader is a simple little gem that automates the process of loading geospatia
 
 ## Usage
 
-First, provide connection parameters in a YAML configuration file:
+First, provide connection parameters in a YAML configuration file (see `.geoloader.example`):
 
 ```yaml
 postgis:
@@ -27,7 +27,7 @@ geonetwork:
   group:      "2"
 ```
 
-And Geoloader programmatically in code:
+Then, use Geoloader programmatically in code:
 
 ```ruby
 require 'geoloader'
