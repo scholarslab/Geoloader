@@ -32,7 +32,7 @@ And Geoloader programmatically in code:
 ```ruby
 require 'geoloader'
 
-# Set a custom configuration file.
+# Point Geoloader at a configuration file.
 Geoloader.config_from_yaml("/path/to/config.yaml")
 
 # Load a GeoTIFF.
@@ -44,11 +44,15 @@ load_shp = Geoloader::ShapefileLoader.new("/path/to/file.shp")
 loader.work
 ```
 
-Or as a command line utility, with global settings in `~/.geoloader`:
+Or as a command line utility, with global YAML settings in `~/.geoloader`:
 
-`geoloader load /var/spatial/nyc.tif`
-`geoloader load /var/spatial/nyc.shp`
+```
+geoloader load /var/spatial/nyc.tif
+```
 
+```
+geoloader load /var/spatial/nyc.shp
+```
 
 [postgis]: http://postgis.net/
 [geoserver]: http://geoserver.org/
