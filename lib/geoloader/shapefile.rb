@@ -17,13 +17,13 @@ module Geoloader
 
     # Create a PostGIS database for a shapefile.
     def create_database
-      system "createdb #{@base_name}"
-      system "psql #{self.psql_options} -d #{@base_name} -c 'CREATE EXTENSION postgis;'"
+      system "createdb #{self.class.psql_options} #{@base_name}"
+      system "psql #{self.class.psql_options} -d #{@base_name} -c 'CREATE EXTENSION postgis;'"
     end
 
     # Source shapefile SQL to the new database.
     def source_sql
-      system "psql #{self.psql_options} -d #{@base_name} -f #{@sql_path}"
+      system "psql #{self.class.psql_options} -d #{@base_name} -f #{@sql_path}"
     end
 
     # Fetch a list of layers in the database.
@@ -34,6 +34,8 @@ module Geoloader
     end
 
     # Get a generic PostgreSQL connection instance.
+    #
+    # @return [PG::Connection]
     def get_connection
       PG.connect(
         :host => Geoloader.config.postgis.host,
@@ -44,6 +46,8 @@ module Geoloader
     end
 
     # Form generic PostgreSQL connection parameters.
+    #
+    # @return [String]
     def self.psql_options
       [
         "-h #{Geoloader.config.postgis.host}",
