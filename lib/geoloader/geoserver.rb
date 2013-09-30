@@ -59,9 +59,8 @@ module Geoloader
 
         # Construct the API request.
         payload = Builder::XmlMarkup.new.featureType { |f|
-          f.name shapefile.base_name
+          f.name layer
           f.srs @config.srs
-          f.nativeCRS @config.srs
         }
 
         # Create the new feature type.
