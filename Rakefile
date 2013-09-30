@@ -4,6 +4,8 @@
 require 'jeweler'
 require 'rake/testtask'
 
+task :default => :test
+
 Jeweler::Tasks.new do |gem|
   gem.name    = "geoloader"
   gem.author  = "David McClure"
@@ -11,6 +13,6 @@ Jeweler::Tasks.new do |gem|
 end
 
 Rake::TestTask.new do |t|
-  t.libs << "test"
-  t.pattern = "test/integration/*.rb"
+  t.libs << "spec"
+  t.pattern = "spec/integration/*.rb"
 end
