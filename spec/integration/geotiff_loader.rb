@@ -7,9 +7,11 @@ describe Geoloader::GeotiffLoader do
 
   before do
 
+    @geoserver = Geoloader::Geoserver.new
+
     # Configure Geoloader.
     yaml = File.expand_path("../config.yaml", File.dirname(__FILE__))
-    Geoloader.configure_from_yaml(yaml)
+    Geoloader.configure(yaml)
 
     # Load the GeoTIFF.
     file = File.expand_path("../fixtures/nyc.tif", File.dirname(__FILE__))
@@ -20,6 +22,7 @@ describe Geoloader::GeotiffLoader do
 
   after do
     # TODO: Delete stores.
+    puts @geoserver
   end
 
   it "should create a new coveragestore on Geoserver" do
