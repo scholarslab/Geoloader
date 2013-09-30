@@ -19,6 +19,10 @@ describe Geoloader::GeotiffLoader do
 
   end
 
+  after do
+    # TODO: Delete stores.
+  end
+
   it "should create a new coveragestore on Geoserver" do
     # TODO
   end
