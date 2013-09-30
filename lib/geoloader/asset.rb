@@ -17,7 +17,7 @@ module Geoloader
     # Read the corresponding metadata file.
     #
     # @return [String]
-    def xml
+    def read_metadata
       File.read("#{@file_path}.xml")
     end
 

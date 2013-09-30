@@ -29,10 +29,7 @@ module Geoloader
 
 end
 
-require 'geoloader/asset'
-require 'geoloader/geoserver'
-require 'geoloader/geonetwork'
-require 'geoloader/geotiff'
-require 'geoloader/geotiff_loader'
-require 'geoloader/shapefile'
-require 'geoloader/shapefile_loader'
+# Require assets.
+Dir["#{File.dirname(__FILE__)}/geoloader/*.rb"].each { |file|
+  require file
+}

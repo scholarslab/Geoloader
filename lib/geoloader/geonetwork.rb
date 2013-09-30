@@ -41,7 +41,7 @@ module Geoloader
     def add_record(asset, style_sheet = "_none_", category = "_none_")
       post("metadata.insert", self.class.xml.request { |r|
         r.group @config.group
-        r.data { |d| d.cdata! asset.xml }
+        r.data { |d| d.cdata! asset.metadata }
         r.category category
         r.styleSheet style_sheet
       })
