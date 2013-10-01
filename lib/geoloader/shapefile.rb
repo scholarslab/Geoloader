@@ -15,7 +15,7 @@ module Geoloader
       system "shp2pgsql #{@file_path} > #{@sql_path}"
     end
 
-    # Create a PostGIS database for a shapefile.
+    # Create a PostGIS database for the shapefile.
     def create_database
       system "createdb #{self.class.psql_options} #{@base_name}"
       system "psql #{self.class.psql_options} -d #{@base_name} -c 'CREATE EXTENSION postgis;'"
@@ -30,7 +30,7 @@ module Geoloader
     #
     # @return [PG::Result]
     def get_layers
-      get_connection.exec("SELECT * FROM geometry_columns").field_values("f_table_name")
+      get_connection.exec("SELECT * FROM geometry_columns").field_values("f_table_name").close
     end
 
     # Get a generic PostgreSQL connection instance.

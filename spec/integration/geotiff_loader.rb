@@ -26,17 +26,16 @@ describe Geoloader::GeotiffLoader do
   end
 
   after do
-
-    # Delete the workspace.
     @geoserver.delete_workspace(@workspace)
-
   end
 
   it "should create a new coveragestore on Geoserver" do
     @geoserver.resource["workspaces/#{@workspace}/coveragestores/nyc"].get.code.must_equal 200
   end
 
-  it "should publish a new layer on Geoserver"
+  it "should publish a new layer on Geoserver" do
+    @geoserver.resource["layers/nyc"].get.code.must_equal 200
+  end
 
 end
 
