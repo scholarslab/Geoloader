@@ -22,15 +22,15 @@ class ShapefileLoaderTest < GeoloaderTest
   end
 
   def test_create_postgis_database
-    # TODO
+    assert_equal ["cville"], @loader.shapefile.get_layers
   end
 
   def test_create_new_datastore
-    # TODO
+    assert_equal 200, @geoserver.resource["workspaces/#{@workspace}/datastores/cville"].get.code
   end
 
   def test_publish_new_layer
-    # TODO
+    assert_equal 200, @geoserver.resource["layers/cville"].get.code
   end
 
 end
