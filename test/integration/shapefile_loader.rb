@@ -10,7 +10,7 @@ class ShapefileLoaderTest < GeoloaderTest
     super
 
     # Load the Shapefile.
-    file_path = File.expand_path("../fixtures/shapefile.shp", File.dirname(__FILE__))
+    file_path = File.expand_path("../fixtures/shp.shp", File.dirname(__FILE__))
     @loader = Geoloader::ShapefileLoader.new(file_path)
     @loader.load
 
@@ -22,15 +22,15 @@ class ShapefileLoaderTest < GeoloaderTest
   end
 
   def test_create_postgis_database
-    assert_equal ["shapefile"], @loader.shapefile.get_layers
+    assert_equal ["shp"], @loader.shapefile.get_layers
   end
 
   def test_create_new_datastore
-    assert_equal 200, @geoserver.resource["workspaces/#{@workspace}/datastores/shapefile"].get.code
+    assert_equal 200, @geoserver.resource["workspaces/#{@workspace}/datastores/shp"].get.code
   end
 
   def test_publish_new_layer
-    assert_equal 200, @geoserver.resource["layers/shapefile"].get.code
+    assert_equal 200, @geoserver.resource["layers/shp"].get.code
   end
 
 end
