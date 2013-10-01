@@ -1,0 +1,18 @@
+postgis:
+  host:       "localhost"
+  port:       "5432"
+  username:   "davidmcclure"
+  password:   "Dclure09"
+
+geoserver:
+  url:        "http://localhost:8080/geoserver/rest"
+  username:   "admin"
+  password:   "geoserver"
+  workspace:  "geoloader_test"
+  srs:        "EPSG:900913"
+
+geonetwork:
+  url:        "http://localhost:8080/geonetwork/srv/en"
+  username:   "admin"
+  password:   "admin"
+  group:      "2"

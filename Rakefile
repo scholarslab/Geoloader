@@ -13,6 +13,6 @@ Jeweler::Tasks.new do |gem|
 end
 
 Rake::TestTask.new do |t|
-  t.libs << "spec"
-  t.pattern = "spec/integration/*.rb"
+  t.libs << "test"
+  t.pattern = "test/integration/*.rb"
 end
