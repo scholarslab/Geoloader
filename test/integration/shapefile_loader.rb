@@ -21,10 +21,6 @@ class ShapefileLoaderTest < GeoloaderTest
     @loader.shapefile.drop_database
   end
 
-  def test_create_postgis_database
-    assert_equal ["shp"], @loader.shapefile.get_layers
-  end
-
   def test_create_new_datastore
     assert_equal 200, @geoserver.resource["workspaces/#{@workspace}/datastores/shp"].get.code
   end

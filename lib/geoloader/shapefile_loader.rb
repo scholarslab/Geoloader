@@ -24,6 +24,9 @@ module Geoloader
         @geoserver.create_datastore(@shapefile)
         @geoserver.create_featuretypes(@shapefile)
 
+        # Disconnect from PostGIS.
+        @shapefile.disconnect
+
       rescue
         # TODO: Failure.
       else

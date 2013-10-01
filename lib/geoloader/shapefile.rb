@@ -15,10 +15,11 @@ module Geoloader
       system "shp2pgsql #{@file_path} > #{@sql_path}"
     end
 
-    # Create a PostGIS database.
+    # Create a PostGIS-enabled database and connect to it.
     def create_database
       system "createdb #{self.class.psql_options} #{@base_name}"
       system "psql #{self.class.psql_options} -d #{@base_name} -c 'CREATE EXTENSION postgis;'"
+      connect
     end
 
     # Drop the PostGIS database.
@@ -35,10 +36,7 @@ module Geoloader
     #
     # @return [Array]
     def get_layers
-      pg = connect
-      layers = pg.exec("SELECT * FROM geometry_columns").field_values("f_table_name")
-      pg.close
-      layers
+      @pg.exec("SELECT * FROM geometry_columns").field_values("f_table_name")
     end
 
     # Form generic PostgreSQL connection parameters.
@@ -56,12 +54,19 @@ module Geoloader
     #
     # @return [PG::Connection]
     def connect
-      PG.connect(
+      @pg = PG.connect(
         :host => Geoloader.config.postgis.host,
         :port => Geoloader.config.postgis.port,
         :user => Geoloader.config.postgis.username,
         :dbname => @base_name
       )
+    end
+
+    # Close the PostgreSQL connection.
+    #
+    # @return [PG::Connection]
+    def disconnect
+      @pg.close
     end
 
   end
