@@ -32,7 +32,7 @@ module Geoloader
     # @param  [String] name
     # @return [RestClient::Response]
     def delete_workspace(name)
-      @resource["workspaces/#{name}"].delete
+      @resource["workspaces/#{name}"].delete({:params => {:recurse => true}})
     end
 
     # Create a new coveragestore and layer for a GeoTIFF.
