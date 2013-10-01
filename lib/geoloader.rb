@@ -6,23 +6,17 @@ require 'yaml'
 
 module Geoloader
 
-  # Set default configuration.
-  @config = Confstruct::Configuration.new(
-    YAML::load(File.read(File.expand_path("../config.yaml", File.dirname(__FILE__))))
-  )
+  @config = Confstruct::Configuration.new
 
-  # Set configuration options from any hash-like object.
+  # Set configuration options.
   #
   # @param [Hash] config
   def self.configure(config)
-    @config.configure(config)
-  end
-
-  # Set configuration options from YAML.
-  #
-  # @param [String] path
-  def self.configure_from_yaml(path)
-    @config.configure(YAML::load(File.read(File.expand_path(path))))
+    if config.is_a? String
+      @config.configure(YAML::load(File.read(File.expand_path(path))))
+    else
+      @config.configure(config)
+    end
   end
 
   # Get the configuration object.

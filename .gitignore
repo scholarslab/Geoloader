@@ -1,3 +1,3 @@
-pkg
 spec/fixtures/*.geoloader.*
-config.yaml
+spec/config.yaml
+pkg
