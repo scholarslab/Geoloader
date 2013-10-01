@@ -10,18 +10,18 @@ class GeotiffLoaderTest < GeoloaderTest
     super
 
     # Load the GeoTIFF.
-    file_path = File.expand_path("../fixtures/geotiff.tif", File.dirname(__FILE__))
+    file_path = File.expand_path("../fixtures/tif.tif", File.dirname(__FILE__))
     @loader = Geoloader::GeotiffLoader.new(file_path)
     @loader.load
 
   end
 
   def test_create_coveragestore
-    assert_equal 200, @geoserver.resource["workspaces/#{@workspace}/coveragestores/geotiff"].get.code
+    assert_equal 200, @geoserver.resource["workspaces/#{@workspace}/coveragestores/tif"].get.code
   end
 
   def test_publish_new_layer
-    assert_equal 200, @geoserver.resource["layers/geotiff"].get.code
+    assert_equal 200, @geoserver.resource["layers/tif"].get.code
   end
 
 end
