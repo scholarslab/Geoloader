@@ -33,21 +33,12 @@ module Geoloader
 
     # Fetch a list of layers in the database.
     #
-    # @return [PG::Result]
+    # @return [Array]
     def get_layers
-      get_connection.exec("SELECT * FROM geometry_columns").field_values("f_table_name").close
-    end
-
-    # Get a generic PostgreSQL connection instance.
-    #
-    # @return [PG::Connection]
-    def get_connection
-      PG.connect(
-        :host => Geoloader.config.postgis.host,
-        :port => Geoloader.config.postgis.port,
-        :user => Geoloader.config.postgis.username,
-        :dbname => @base_name
-      )
+      pg = connect
+      layers = pg.exec("SELECT * FROM geometry_columns").field_values("f_table_name")
+      pg.close
+      layers
     end
 
     # Form generic PostgreSQL connection parameters.
@@ -59,6 +50,18 @@ module Geoloader
         "-p #{Geoloader.config.postgis.port}",
         "-U #{Geoloader.config.postgis.username}"
       ].join(" ")
+    end
+
+    # Get a generic PostgreSQL connection instance.
+    #
+    # @return [PG::Connection]
+    def connect
+      PG.connect(
+        :host => Geoloader.config.postgis.host,
+        :port => Geoloader.config.postgis.port,
+        :user => Geoloader.config.postgis.username,
+        :dbname => @base_name
+      )
     end
 
   end
