@@ -7,6 +7,8 @@ require 'builder'
 module Geoloader
   class Geoserver
 
+    attr_reader :resource
+
     # Create the Geoserver resource.
     def initialize
       @config = Geoloader.config.geoserver
@@ -16,22 +18,38 @@ module Geoloader
       })
     end
 
+    # Create a new workspace.
+    #
+    # @param  [String] name
+    # @return [RestClient::Response]
+    def create_workspace(name)
+      payload = Builder::XmlMarkup.new.workspace { |w| w.name name }
+      @resource["workspaces"].post(payload, :content_type => :xml)
+    end
+
+    # Delete a workspace.
+    #
+    # @param  [String] name
+    # @return [RestClient::Response]
+    def delete_workspace(name)
+      @resource["workspaces/#{name}"].delete
+    end
+
     # Create a new coveragestore and layer for a GeoTIFF.
     #
-    # @param [Geoloader::Geotiff] geotiff
+    # @param  [Geoloader::Geotiff] geotiff
     # @return [RestClient::Response]
-    def upload_geotiff(geotiff)
+    def create_coveragestore(geotiff)
       url = "workspaces/#{@config.workspace}/coveragestores/#{geotiff.base_name}/file.geotiff"
       @resource[url].put(File.read(geotiff.processed_path))
     end
 
     # Publish the PostGIS database corresponding to a shapefile.
     #
-    # @param [Geoloader::Shapefile] shapefile
+    # @param  [Geoloader::Shapefile] shapefile
     # @return [RestClient::Response]
-    def publish_database(shapefile)
+    def create_datastore(shapefile)
 
-      # Construct the API request.
       payload = Builder::XmlMarkup.new.dataStore { |d|
         d.name shapefile.base_name
         d.connectionParameters { |c|
@@ -44,7 +62,7 @@ module Geoloader
         }
       }
 
-      # Create the new data store.
+      # Create the new datastore.
       url = "workspaces/#{@config.workspace}/datastores"
       @resource[url].post(payload, :content_type => :xml)
 
@@ -52,18 +70,17 @@ module Geoloader
 
     # Publish layers from the PostGIS tables corresponding to a shapefile.
     #
-    # @param [Geoloader::Shapefile] shapefile
+    # @param  [Geoloader::Shapefile] shapefile
     # @return [RestClient::Response]
-    def publish_tables(shapefile)
+    def create_featuretypes(shapefile)
       shapefile.get_layers.each { |layer|
 
-        # Construct the API request.
         payload = Builder::XmlMarkup.new.featureType { |f|
           f.name layer
           f.srs @config.srs
         }
 
-        # Create the new feature type.
+        # Create the new featuretype.
         url = "workspaces/#{@config.workspace}/datastores/#{shapefile.base_name}/featuretypes"
         @resource[url].post(payload, :content_type => :xml)
 

@@ -19,8 +19,8 @@ module Geoloader
         @shapefile.source_sql
 
         # Add datastore/layers to Geoserver.
-        @geoserver.publish_database(@shapefile)
-        @geoserver.publish_tables(@shapefile)
+        @geoserver.create_datastore(@shapefile)
+        @geoserver.create_featuretypes(@shapefile)
 
       rescue
         # TODO: Failure.

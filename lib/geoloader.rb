@@ -13,7 +13,7 @@ module Geoloader
   # @param [Hash] config
   def self.configure(config)
     if config.is_a? String
-      @config.configure(YAML::load(File.read(File.expand_path(path))))
+      @config.configure(YAML::load(File.read(File.expand_path(config))))
     else
       @config.configure(config)
     end

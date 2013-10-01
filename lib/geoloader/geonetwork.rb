@@ -7,6 +7,8 @@ require 'builder'
 module Geoloader
   class Geonetwork
 
+    attr_reader :resource
+
     # Create the Geonetwork resource.
     def initialize
       @config = Geoloader.config.geonetwork
@@ -19,8 +21,8 @@ module Geoloader
 
     # POST to an XML service.
     #
-    # @param [String] service
-    # @param [String] payload
+    # @param  [String] service
+    # @param  [String] payload
     # @return [RestClient::Response]
     def post(service, payload)
       @resource[service].post(payload) { |response, request, result, &block|
@@ -34,9 +36,9 @@ module Geoloader
 
     # Insert a new record.
     #
-    # @param [Geoloader::Asset] asset
-    # @param [String] style_sheet
-    # @param [String] category
+    # @param  [Geoloader::Asset] asset
+    # @param  [String] style_sheet
+    # @param  [String] category
     # @return [RestClient::Response]
     def add_record(asset, style_sheet = "_none_", category = "_none_")
       post("metadata.insert", self.class.xml.request { |r|

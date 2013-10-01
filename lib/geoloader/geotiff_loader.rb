@@ -18,7 +18,7 @@ module Geoloader
         @geotiff.build_header
 
         # Push to Geoserver.
-        @geoserver.upload_geotiff(@geotiff)
+        @geoserver.create_coveragestore(@geotiff)
 
       rescue
         # TODO: Failure.
