@@ -1,22 +1,13 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require 'spec_helper'
+require 'minitest_helper'
 
-describe Geoloader::GeotiffLoader do
+class GeotiffLoaderTest < GeoloaderTest
 
-  before do
+  def setup
 
-    # Configure Geoloader.
-    yaml_path = File.expand_path("../config.yaml", File.dirname(__FILE__))
-    Geoloader.configure(yaml_path)
-
-    # Alias the testing workspace.
-    @workspace = Geoloader.config.geoserver.workspace
-
-    # Create the testing workspace.
-    @geoserver = Geoloader::Geoserver.new
-    @geoserver.create_workspace(@workspace)
+    super
 
     # Load the GeoTIFF.
     file_path = File.expand_path("../fixtures/nyc.tif", File.dirname(__FILE__))
@@ -25,17 +16,12 @@ describe Geoloader::GeotiffLoader do
 
   end
 
-  after do
-    @geoserver.delete_workspace(@workspace)
+  def test_create_coveragestore
+    assert_equal 200, @geoserver.resource["workspaces/#{@workspace}/coveragestores/nyc"].get.code
   end
 
-  it "should create a new coveragestore on Geoserver" do
-    @geoserver.resource["workspaces/#{@workspace}/coveragestores/nyc"].get.code.must_equal 200
-  end
-
-  it "should publish a new layer on Geoserver" do
-    @geoserver.resource["layers/nyc"].get.code.must_equal 200
+  def test_publish_new_layer
+    assert_equal 200, @geoserver.resource["layers/nyc"].get.code
   end
 
 end
-

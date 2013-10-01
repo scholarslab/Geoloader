@@ -15,10 +15,15 @@ module Geoloader
       system "shp2pgsql #{@file_path} > #{@sql_path}"
     end
 
-    # Create a PostGIS database for the shapefile.
+    # Create a PostGIS database.
     def create_database
       system "createdb #{self.class.psql_options} #{@base_name}"
       system "psql #{self.class.psql_options} -d #{@base_name} -c 'CREATE EXTENSION postgis;'"
+    end
+
+    # Drop the PostGIS database.
+    def drop_database
+      system "dropdb #{self.class.psql_options} #{@base_name}"
     end
 
     # Source shapefile SQL to the new database.
