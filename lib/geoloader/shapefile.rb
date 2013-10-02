@@ -14,7 +14,7 @@ module Geoloader
     # @param [String] file_path
     def initialize(file_path)
       super(file_path)
-      @db_name = Geoloader.config.postgis.prefix + @base_name
+      @db_name = "#{Geoloader.config.postgis.prefix}_#{@base_name}"
     end
 
     # Convert the file to SQL for PostGIS.
