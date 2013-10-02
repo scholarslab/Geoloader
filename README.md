@@ -4,8 +4,6 @@ Geoloader is a simple little gem that automates the process of loading geospatia
 
 ## Usage
 
-### Configuration
-
 First, provide connection settings in a YAML file (see `test/config.yaml.changeme`):
 
 ```yaml
