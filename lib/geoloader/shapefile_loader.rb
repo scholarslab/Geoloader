@@ -15,16 +15,16 @@ module Geoloader
     def load
       begin
 
-        # Create SQL from shapefile.
+        # Create database.
         @shapefile.generate_sql
         @shapefile.create_database
         @shapefile.source_sql
 
-        # Add datastore/layers to Geoserver.
+        # Push to Geoserver.
         @geoserver.create_datastore(@shapefile)
         @geoserver.create_featuretypes(@shapefile)
 
-        # Disconnect from PostGIS.
+        # Close connection.
         @shapefile.disconnect
 
       rescue
