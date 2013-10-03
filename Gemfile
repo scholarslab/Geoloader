@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "jeweler"
 gem "rest-client"
+gem "aspector"
 gem "resque"
 gem "confstruct"
 gem "commander"

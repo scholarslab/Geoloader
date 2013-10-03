@@ -19,6 +19,7 @@ module Geoloader
         @shapefile.generate_sql
         @shapefile.create_database
         @shapefile.source_sql
+        @shapefile.connect
 
         # Push to Geoserver.
         @geoserver.create_datastore(@shapefile)

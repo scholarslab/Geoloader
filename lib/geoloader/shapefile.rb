@@ -15,7 +15,6 @@ module Geoloader
     def initialize(file_path)
       super(file_path)
       @db_name = "#{Geoloader.config.postgis.prefix}_#{@base_name}"
-      @connected = false
     end
 
     # Convert the file to SQL for PostGIS.
@@ -44,7 +43,6 @@ module Geoloader
     #
     # @return [Array]
     def get_layers
-      connect unless @connected
       @pg.exec("SELECT * FROM geometry_columns").field_values("f_table_name")
     end
 
@@ -69,7 +67,6 @@ module Geoloader
         :user => Geoloader.config.postgis.username,
         :dbname => @db_name
       )
-      @connected = true
     end
 
     # Close the PostgreSQL connection.
@@ -77,7 +74,6 @@ module Geoloader
     # @return [PG::Connection]
     def disconnect
       @pg.close
-      @connected = false
     end
 
   end
