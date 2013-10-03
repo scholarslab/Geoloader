@@ -19,7 +19,7 @@ module Geoloader
         @geotiff.remove_border
         @geotiff.build_header
 
-        # Push to Geoserver.
+        # Push to geoserver.
         @geoserver.create_coveragestore(@geotiff)
 
       rescue
