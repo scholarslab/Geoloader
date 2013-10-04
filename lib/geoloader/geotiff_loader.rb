@@ -10,6 +10,7 @@ module Geoloader
     def initialize(file_path)
       @geotiff    = Geoloader::Geotiff.new(file_path)
       @geoserver  = Geoloader::Geoserver.new
+      @geonetwork = Geoloader::Geonetwork.new
     end
 
     def load
@@ -19,8 +20,9 @@ module Geoloader
         @geotiff.remove_border
         @geotiff.build_header
 
-        # Push to geoserver.
+        # Push to Geoserver/Geonetwork.
         @geoserver.create_coveragestore(@geotiff)
+        @geonetwork.create_record(@geotiff)
 
       rescue
         # TODO: Failure.

@@ -40,10 +40,10 @@ module Geoloader
     # @param  [String] style_sheet
     # @param  [String] category
     # @return [RestClient::Response]
-    def add_record(asset, style_sheet = "_none_", category = "_none_")
+    def create_record(asset, style_sheet = "_none_", category = "_none_")
       post("metadata.insert", self.class.xml.request { |r|
         r.group @config.group
-        r.data { |d| d.cdata! asset.metadata }
+        r.data { |d| d.cdata! asset.get_xml }
         r.category category
         r.styleSheet style_sheet
       })

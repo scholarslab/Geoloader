@@ -8,8 +8,9 @@ module Geoloader
 
     # @param [String] file_name
     def initialize(file_name)
-      @shapefile = Geoloader::Shapefile.new(file_name)
-      @geoserver = Geoloader::Geoserver.new
+      @shapefile  = Geoloader::Shapefile.new(file_name)
+      @geoserver  = Geoloader::Geoserver.new
+      @geonetwork = Geoloader::Geonetwork.new
     end
 
     def load
@@ -21,9 +22,10 @@ module Geoloader
         @shapefile.connect
         @shapefile.source_sql
 
-        # Push to Geoserver.
+        # Push to Geoserver/Geonetwork.
         @geoserver.create_datastore(@shapefile)
         @geoserver.create_featuretypes(@shapefile)
+        @geonetwork.create_record(@shapefile)
 
         # Close connection.
         @shapefile.disconnect
