@@ -6,6 +6,7 @@ gem "aspector"
 gem "resque"
 gem "confstruct"
 gem "commander"
+gem "nokogiri"
 gem "pg"
 
 group :test do

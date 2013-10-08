@@ -81,6 +81,7 @@ DEPENDENCIES
   confstruct
   jeweler
   minitest
+  nokogiri
   pg
   resque
   rest-client
