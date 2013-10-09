@@ -22,7 +22,7 @@ module Geoloader
 
         # Push to Geoserver/Geonetwork.
         @geoserver.create_coveragestore(@geotiff)
-        @geonetwork.create_record(@geotiff)
+        #@geonetwork.create_record(@geotiff)
 
       rescue
         # TODO: Failure.
