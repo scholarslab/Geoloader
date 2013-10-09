@@ -16,6 +16,11 @@ class GeotiffLoaderTest < GeoloaderTest
 
   end
 
+  def teardown
+    super
+    @loader.shapefile.drop_database
+  end
+
   def test_create_coveragestore
     assert_equal 200, @geoserver.resource["workspaces/#{@workspace}/coveragestores/tif"].get.code
   end

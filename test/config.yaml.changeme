@@ -3,7 +3,7 @@ postgis:
   port:       "5432"
   username:   "admin"
   password:   "admin"
-  prefix:     "gl_test_"
+  prefix:     "gl_test"
 
 geoserver:
   url:        "http://localhost:8080/geoserver/rest"
