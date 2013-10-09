@@ -27,7 +27,7 @@ module Geoloader
     #
     # @return [Nokogiri::XSLT]
     def self.get_xslt
-      path = File.expand_path("xslt/iso19139.xsl", File.dirname(__FILE__))
+      path = File.expand_path(Geoloader.config.geonetwork.xslt, File.dirname(__FILE__))
       Nokogiri::XSLT(File.read(path))
     end
 
