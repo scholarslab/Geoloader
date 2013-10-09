@@ -15,11 +15,13 @@ module Geoloader
       @base_name = File.basename(@file_path, ".*")
     end
 
-    # Read the corresponding metadata file.
+    # Read the asset's XML file and transform it to ISO 19139.
     #
     # @return [String]
     def get_xml
-      File.read("#{@file_path}.xml")
+      xml = Nokogiri::XML(File.read("#{@file_path}.xml"))
+      xslt = Nokogiri::XSLT(File.read("xslt/iso19139.xsl"))
+      xslt.transform(xml)
     end
 
   end
