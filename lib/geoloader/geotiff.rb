@@ -23,7 +23,7 @@ module Geoloader
     end
 
     # (Re)build a EPSG:4326 header.
-    def build_header
+    def convert_to_4326
       system "gdal_translate -of GTiff -a_srs EPSG:4326 #{@processed_path} #{@processed_path}_"
       FileUtils.rm(@processed_path)
       FileUtils.mv("#{@processed_path}_", @processed_path)

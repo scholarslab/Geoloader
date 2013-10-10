@@ -7,24 +7,11 @@ require 'pg'
 module Geoloader
   class Shapefile < Asset
 
-    attr_reader :db_name, :sql_path
-
-    # Set the database name.
-    #
-    # @param [String] file_path
-    def initialize(file_path)
-      super(file_path)
-      @db_name = "#{Geoloader.config.postgis.prefix}#{@base_name}"
-    end
-
-    # Convert the file to SQL for PostGIS.
-    def generate_sql
-      @sql_path = "#{File.dirname(@file_path)}/#{@base_name}.geoloader.sql"
-      system "shp2pgsql #{@file_path} > #{@sql_path}"
-    end
+    attr_reader :sql_path, :db_name
 
     # Create a PostGIS-enabled database and connect to it.
     def create_database
+      @db_name = "#{Geoloader.config.postgis.prefix}#{@base_name}"
       system "createdb #{self.class.psql_options} #{@db_name}"
       system "psql #{self.class.psql_options} -d #{@db_name} -c 'CREATE EXTENSION postgis;'"
     end
@@ -32,6 +19,18 @@ module Geoloader
     # Drop the PostGIS database.
     def drop_database
       system "dropdb #{self.class.psql_options} #{@db_name}"
+    end
+
+    # Convert the file to EPSG:4326.
+    def convert_to_4326
+      @processed_path = ext_path(".geoloader.shp")
+      system "ogr2ogr -t_srs EPSG:4326 #{@processed_path} #{@file_path}"
+    end
+
+    # Convert the file to SQL for PostGIS.
+    def generate_sql
+      @sql_path = ext_path(".geoloader.sql")
+      system "shp2pgsql #{@processed_path} > #{@sql_path}"
     end
 
     # Source shapefile SQL to the new database.

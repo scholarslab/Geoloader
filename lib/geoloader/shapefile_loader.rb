@@ -16,15 +16,15 @@ module Geoloader
     def load
 
       # Create database.
-      @shapefile.generate_sql
       @shapefile.create_database
       @shapefile.connect
+      @shapefile.convert_to_4326
+      @shapefile.generate_sql
       @shapefile.source_sql
 
-      # Push to Geoserver/Geonetwork.
+      # Push to Geoserver.
       @geoserver.create_datastore(@shapefile)
       @geoserver.create_featuretypes(@shapefile)
-      #@geonetwork.create_record(@shapefile)
 
       # Close connection.
       @shapefile.disconnect

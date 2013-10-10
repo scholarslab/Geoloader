@@ -10,7 +10,7 @@ geoserver:
   username:   "admin"
   password:   "geoserver"
   workspace:  "gl_test"
-  srs:        "EPSG:900913"
+  srs:        "EPSG:4326"
 
 geonetwork:
   url:        "http://localhost:8080/geonetwork/srv/en"

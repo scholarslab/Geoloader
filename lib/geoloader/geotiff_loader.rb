@@ -17,11 +17,10 @@ module Geoloader
 
       # Prepare the file.
       @geotiff.remove_border
-      @geotiff.build_header
+      @geotiff.convert_to_4326
 
-      # Push to Geoserver/Geonetwork.
+      # Push to Geoserver.
       @geoserver.create_coveragestore(@geotiff)
-      #@geonetwork.create_record(@geotiff)
 
     end
 
