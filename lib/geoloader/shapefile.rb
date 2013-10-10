@@ -7,18 +7,12 @@ require 'pg'
 module Geoloader
   class Shapefile < Asset
 
-    attr_reader :sql_path, :db_name
+    attr_reader :sql_path
 
     # Create a PostGIS-enabled database and connect to it.
     def create_database
-      @db_name = "#{Geoloader.config.postgis.prefix}#{@base_name}"
-      system "createdb #{self.class.psql_options} #{@db_name}"
-      system "psql #{self.class.psql_options} -d #{@db_name} -c 'CREATE EXTENSION postgis;'"
-    end
-
-    # Drop the PostGIS database.
-    def drop_database
-      system "dropdb #{self.class.psql_options} #{@db_name}"
+      system "createdb #{self.class.psql_options} #{@base_name}"
+      system "psql #{self.class.psql_options} -d #{@base_name} -c 'CREATE EXTENSION postgis;'"
     end
 
     # Convert the file to EPSG:4326.
@@ -35,7 +29,7 @@ module Geoloader
 
     # Source shapefile SQL to the new database.
     def source_sql
-      system "psql #{self.class.psql_options} -d #{@db_name} -f #{@sql_path}"
+      system "psql #{self.class.psql_options} -d #{@base_name} -f #{@sql_path}"
     end
 
     # Fetch a list of layers in the database.
@@ -43,6 +37,11 @@ module Geoloader
     # @return [Array]
     def get_layers
       @pg.exec("SELECT * FROM geometry_columns").field_values("f_table_name")
+    end
+
+    # Drop the PostGIS database.
+    def drop_database
+      system "dropdb #{self.class.psql_options} #{@base_name}"
     end
 
     # Form generic PostgreSQL connection parameters.
@@ -64,7 +63,7 @@ module Geoloader
         :host => Geoloader.config.postgis.host,
         :port => Geoloader.config.postgis.port,
         :user => Geoloader.config.postgis.username,
-        :dbname => @db_name
+        :dbname => @base_name
       )
     end
 
