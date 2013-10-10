@@ -17,4 +17,3 @@ geonetwork:
   username:   "admin"
   password:   "admin"
   group:      "2"
-  xslt:       "/path/to/xslt"
