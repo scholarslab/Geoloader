@@ -25,3 +25,22 @@ command :load do |c|
 
   end
 end
+
+command :unload do |c|
+  c.syntax = 'geoloader unload [filename]'
+  c.summary = 'Unload a Geotiff (.tif) or Shapefile (.shp).'
+  c.action do |args, options|
+
+    Geoloader.configure("~/.geoloader")
+
+    case File.extname(args[0])
+    when ".tif"
+      loader = Geoloader::GeotiffLoader.new(args[0])
+      loader.unload
+    when ".shp"
+      loader = Geoloader::ShapefileLoader.new(args[0])
+      loader.unload
+    end
+
+  end
+end

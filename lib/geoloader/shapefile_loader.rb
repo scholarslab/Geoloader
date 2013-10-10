@@ -14,27 +14,26 @@ module Geoloader
     end
 
     def load
-      begin
 
-        # Create database.
-        @shapefile.generate_sql
-        @shapefile.create_database
-        @shapefile.connect
-        @shapefile.source_sql
+      # Create database.
+      @shapefile.generate_sql
+      @shapefile.create_database
+      @shapefile.connect
+      @shapefile.source_sql
 
-        # Push to Geoserver/Geonetwork.
-        @geoserver.create_datastore(@shapefile)
-        @geoserver.create_featuretypes(@shapefile)
-        #@geonetwork.create_record(@shapefile)
+      # Push to Geoserver/Geonetwork.
+      @geoserver.create_datastore(@shapefile)
+      @geoserver.create_featuretypes(@shapefile)
+      #@geonetwork.create_record(@shapefile)
 
-        # Close connection.
-        @shapefile.disconnect
+      # Close connection.
+      @shapefile.disconnect
 
-      rescue
-        # TODO: Failure.
-      else
-        # TODO: Success.
-      end
+    end
+
+    def unload
+      @geoserver.delete_datastore(@shapefile)
+      @shapefile.drop_database
     end
 
   end

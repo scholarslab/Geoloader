@@ -14,21 +14,19 @@ module Geoloader
     end
 
     def load
-      begin
 
-        # Prepare the file.
-        @geotiff.remove_border
-        @geotiff.build_header
+      # Prepare the file.
+      @geotiff.remove_border
+      @geotiff.build_header
 
-        # Push to Geoserver/Geonetwork.
-        @geoserver.create_coveragestore(@geotiff)
-        #@geonetwork.create_record(@geotiff)
+      # Push to Geoserver/Geonetwork.
+      @geoserver.create_coveragestore(@geotiff)
+      #@geonetwork.create_record(@geotiff)
 
-      rescue
-        # TODO: Failure.
-      else
-        # TODO: Success.
-      end
+    end
+
+    def unload
+      @geoserver.delete_coveragestore(@geotiff)
     end
 
   end

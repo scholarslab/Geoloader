@@ -44,6 +44,15 @@ module Geoloader
       @resource[url].put(File.read(geotiff.processed_path))
     end
 
+    # Delete the coveragestore that corresponds to a GeoTIFF.
+    #
+    # @param  [Geoloader::Geotiff] geotiff
+    # @return [RestClient::Response]
+    def delete_coveragestore(geotiff)
+      url = "workspaces/#{@config.workspace}/coveragestores/#{geotiff.base_name}"
+      @resource[url].delete({:params => {:recurse => true}})
+    end
+
     # Publish the PostGIS database corresponding to a shapefile.
     #
     # @param  [Geoloader::Shapefile] shapefile
@@ -66,6 +75,15 @@ module Geoloader
       url = "workspaces/#{@config.workspace}/datastores"
       @resource[url].post(payload, :content_type => :xml)
 
+    end
+
+    # Delete the datastore that corresponds to a shapefile.
+    #
+    # @param  [Geoloader::Shapefile] shapefile
+    # @return [RestClient::Response]
+    def delete_datastore(shapefile)
+      url = "workspaces/#{@config.workspace}/datastores/#{shapefile.base_name}"
+      @resource[url].delete({:params => {:recurse => true}})
     end
 
     # Publish layers from the PostGIS tables corresponding to a shapefile.
