@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet
     xmlns="http://www.isotc211.org/2005/gmd"
-    xmlns:gmd="http://www.isotc211.org/2005/gmd"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:gts="http://www.isotc211.org/2005/gts"
@@ -216,8 +215,6 @@
                                 <gco:Boolean>false</gco:Boolean>
                             </checkPointAvailability>
                             
-                            
-                                
                                 <xsl:for-each select="/metadata/spatRepInfo/Georect/cornerPts">
                                 <cornerPoints>
                                     <gml:Point gml:id="{generate-id()}">
@@ -296,6 +293,31 @@
                     
                 </MD_DataIdentification>
             </identificationInfo>
+
+            <distributionInfo>
+                <MD_Distribution>
+                    <transferOptions>
+                        <MD_DigitalTransferOptions>
+                            <onLine>
+                                <CI_OnlineResource>
+                                    <linkage>
+                                        <URL>http://localhost:8080/geoserver/wms?SERVICE=WMS</URL>
+                                    </linkage>
+                                    <protocol>
+                                        <CharacterString>OGC:WMS-1.1.1-http-get-map</CharacterString>
+                                    </protocol>
+                                    <name>
+                                        <CharacterString>geoloader:shp</CharacterString>
+                                    </name>
+                                    <description>
+                                        <CharacterString>Test Shapefile</CharacterString>
+                                    </description>
+                                </CI_OnlineResource>
+                            </onLine>
+                        </MD_DigitalTransferOptions>
+                    </transferOptions>
+                </MD_Distribution>
+            </distributionInfo>
             
         </MD_Metadata>
     </xsl:template>
