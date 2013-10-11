@@ -12,6 +12,9 @@
     version="2.0">
     
     <xsl:output method="xml" indent="yes" />
+    <xsl:param name="geoserver_url" as="xs:string" required="yes" />
+    <xsl:param name="resource" as="xs:string" required="yes" />
+    <xsl:param name="description" as="xs:string" required="yes" />
     
     <xsl:template match="/">
         <MD_Metadata>
@@ -301,16 +304,16 @@
                             <onLine>
                                 <CI_OnlineResource>
                                     <linkage>
-                                        <URL>http://localhost:8080/geoserver/wms?SERVICE=WMS</URL>
+                                        <URL><xsl:value-of select="$geoserver_url" />/wms?SERVICE=WMS</URL>
                                     </linkage>
                                     <protocol>
                                         <CharacterString>OGC:WMS-1.1.1-http-get-map</CharacterString>
                                     </protocol>
                                     <name>
-                                        <CharacterString>geoloader:shp</CharacterString>
+                                        <CharacterString><xsl:value-of select="$resource" /></CharacterString>
                                     </name>
                                     <description>
-                                        <CharacterString>Test Shapefile</CharacterString>
+                                        <CharacterString><xsl:value-of select="$description" /></CharacterString>
                                     </description>
                                 </CI_OnlineResource>
                             </onLine>
