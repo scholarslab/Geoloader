@@ -30,7 +30,8 @@ module Geoloader
     # @return [String]
     def get_xml
       xslt_path = File.expand_path("iso19139.xsl", File.dirname(__FILE__))
-      system "saxon #{@file_path}.xml #{xslt_path}"
+      system "saxon #{@file_path}.xml #{xslt_path} > #{ext_path('.geoloader.xml')}"
+      File.read(ext_path(".geoloader.xml"))
     end
 
   end

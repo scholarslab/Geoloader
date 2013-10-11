@@ -3,6 +3,7 @@
 
 require 'jeweler'
 require 'rake/testtask'
+require 'rake/clean'
 
 task :default => :test
 task :test => :install
@@ -17,3 +18,5 @@ Rake::TestTask.new do |t|
   t.libs << "test"
   t.pattern = "test/integration/*.rb"
 end
+
+CLEAN.include("test/fixtures/*.geoloader.*")
