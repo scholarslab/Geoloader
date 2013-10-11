@@ -12,7 +12,7 @@ module Geoloader
     # Create the Geoserver resource.
     def initialize
       @config = Geoloader.config.geoserver
-      @resource = RestClient::Resource.new(@config.url, {
+      @resource = RestClient::Resource.new("#{@config.url}/rest", {
         :user     => @config.username,
         :password => @config.password
       })

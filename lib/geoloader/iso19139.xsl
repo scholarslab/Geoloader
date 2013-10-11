@@ -14,7 +14,6 @@
     <xsl:output method="xml" indent="yes" />
     <xsl:param name="geoserver_url" as="xs:string" required="yes" />
     <xsl:param name="resource" as="xs:string" required="yes" />
-    <xsl:param name="description" as="xs:string" required="yes" />
     
     <xsl:template match="/">
         <MD_Metadata>
@@ -312,9 +311,6 @@
                                     <name>
                                         <CharacterString><xsl:value-of select="$resource" /></CharacterString>
                                     </name>
-                                    <description>
-                                        <CharacterString><xsl:value-of select="$description" /></CharacterString>
-                                    </description>
                                 </CI_OnlineResource>
                             </onLine>
                         </MD_DigitalTransferOptions>
