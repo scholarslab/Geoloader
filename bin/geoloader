@@ -12,7 +12,7 @@ command :load do |c|
   c.summary = 'Load a Geotiff (.tif) or Shapefile (.shp).'
   c.action do |args, options|
 
-    Geoloader.configure("~/.geoloader")
+    Geoloader.configure("~/.geoloader/config.yaml")
 
     case File.extname(args[0])
     when ".tif"
@@ -31,7 +31,7 @@ command :unload do |c|
   c.summary = 'Unload a Geotiff (.tif) or Shapefile (.shp).'
   c.action do |args, options|
 
-    Geoloader.configure("~/.geoloader")
+    Geoloader.configure("~/.geoloader/config.yaml")
 
     case File.extname(args[0])
     when ".tif"
@@ -50,7 +50,7 @@ command :reload do |c|
   c.summary = 'Reload a Geotiff (.tif) or Shapefile (.shp).'
   c.action do |args, options|
 
-    Geoloader.configure("~/.geoloader")
+    Geoloader.configure("~/.geoloader/config.yaml")
 
     case File.extname(args[0])
     when ".tif"
