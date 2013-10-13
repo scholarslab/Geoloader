@@ -93,6 +93,26 @@ module Geoloader
       })
     end
 
+    # Get all records in a given group.
+    #
+    # @param  [String] name
+    # @return [RestClient::Response]
+    def get_records_in_group(name)
+      post("xml.search", self.class.xml_doc.request { |r|
+        r.group get_group_id(name)
+      })
+    end
+
+    # Delete a record by id.
+    #
+    # @param  [Integer] id
+    # @return [RestClient::Response]
+    def delete_record(id)
+      post("metadata.delete", self.class.xml_doc.request { |r|
+        r.id id
+      })
+    end
+
     # Get an XML builder instance.
     #
     # @return [Builder::XmlMarkup]
