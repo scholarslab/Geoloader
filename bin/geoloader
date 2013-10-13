@@ -69,7 +69,7 @@ end
 command :test do |c|
   c.action do |args, options|
     Geoloader.configure("~/.geoloader/config.yaml")
-    geonetwork = Geoloader::Geonetwork.new
-    puts geonetwork.delete_group("geoloader_test")
+    geoserver = Geoloader::Geoserver.new
+    puts geoserver.workspace_exists?("test")
   end
 end

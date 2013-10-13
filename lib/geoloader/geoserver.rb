@@ -11,11 +11,27 @@ module Geoloader
 
     # Create the Geoserver resource.
     def initialize
+
+      # Alias config, create resource.
       @config = Geoloader.config.geoserver
       @resource = RestClient::Resource.new("#{@config.url}/rest", {
         :user     => @config.username,
         :password => @config.password
       })
+
+      # If necessary, create the workspace.
+      if not workspace_exists?(@config.workspace)
+        create_workspace(@config.workspace)
+      end
+
+    end
+
+    # Does a workspace with a given name exist?
+    #
+    # @param  [String] name
+    # @return [Boolean]
+    def workspace_exists?(name)
+      !!Nokogiri::XML(@resource["workspaces"].get).at_xpath("//workspace[name[text()='#{name}']]")
     end
 
     # Create a new workspace.
