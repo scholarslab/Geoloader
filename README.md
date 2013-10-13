@@ -4,7 +4,7 @@ Geoloader is a simple little gem that automates the process of loading geospatia
 
 ## Usage
 
-First, provide connection settings in a YAML file (see `test/config.yaml.changeme`):
+First, provide connection settings in a YAML file:
 
 ```yaml
 postgis:
@@ -38,22 +38,30 @@ require 'geoloader'
 Geoloader.config_from_yaml("/path/to/config.yaml")
 
 # Load a GeoTIFF.
-load_tiff = Geoloader::GeotiffLoader.new("/path/to/file.tif")
-loader.load
+tiff_loader = Geoloader::GeotiffLoader.new("/path/to/file.tif")
+tiff_loader.load
+
+# Unload a GeoTIFF.
+tiff_loader.unload
 
 # Load a Shapefile.
-load_shp = Geoloader::ShapefileLoader.new("/path/to/file.shp")
-loader.load
+shp_loader = Geoloader::ShapefileLoader.new("/path/to/file.shp")
+shp_loader.load
+
+# Unload a Shapefile.
+shp_loader.unload
 ```
 
-Or as a command-line utility, with global YAML settings in `~/.geoloader`:
+Or as a command-line utility, with global YAML settings in `~/.geoloader/config.yaml`:
 
 ```bash
 geoloader load /var/spatial/nyc.tif
+geoloader unload /var/spatial/nyc.tif
 ```
 
 ```bash
 geoloader load /var/spatial/nyc.shp
+geoloader unload /var/spatial/nyc.shp
 ```
 
 [geotiff]: http://en.wikipedia.org/wiki/Geotiff
