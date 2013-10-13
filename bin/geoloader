@@ -65,3 +65,11 @@ command :reload do |c|
 
   end
 end
+
+command :test do |c|
+  c.action do |args, options|
+    Geoloader.configure("~/.geoloader/config.yaml")
+    geonetwork = Geoloader::Geonetwork.new
+    puts geonetwork.group_exists?("sample2")
+  end
+end

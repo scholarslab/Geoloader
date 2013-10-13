@@ -26,6 +26,7 @@ geonetwork:
   username:   "admin"
   password:   "admin"
   group:      "2"
+  xslt:       "path/to/iso19139/xslt"
 ```
 
 Then, use Geoloader programmatically in code:

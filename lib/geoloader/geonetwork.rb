@@ -3,6 +3,7 @@
 
 require 'rest_client'
 require 'builder'
+require 'nokogiri'
 
 module Geoloader
   class Geonetwork
@@ -34,6 +35,19 @@ module Geoloader
       }
     end
 
+    # Does a group with a given name exist?
+    #
+    # @param  [String] name
+    # @return [Boolean]
+    def group_exists?(name)
+      Nokogiri::XML(@resource["xml.group.list"].get).xpath("//record").each do |record|
+        if record.at_xpath("name").content == name
+          return true
+        end
+      end
+      false
+    end
+
     # Insert a new record.
     #
     # @param  [Geoloader::Asset] asset
@@ -41,7 +55,7 @@ module Geoloader
     # @param  [String] category
     # @return [RestClient::Response]
     def create_record(asset, style_sheet = "_none_", category = "_none_")
-      post("metadata.insert", self.class.xml.request { |r|
+      post("metadata.insert", self.class.xml_doc.request { |r|
         r.group @config.group
         r.data { |d| d.cdata! asset.get_xml }
         r.category category
@@ -50,8 +64,9 @@ module Geoloader
     end
 
     # Get an XML builder instance.
+    #
     # @return [Builder::XmlMarkup]
-    def self.xml
+    def self.xml_doc
       xml = Builder::XmlMarkup.new
       xml.instruct! :xml, :version => "1.0", :encoding => "UTF-8"
       xml
