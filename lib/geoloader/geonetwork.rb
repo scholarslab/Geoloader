@@ -73,6 +73,7 @@ module Geoloader
     # @param  [String] name
     # @return [RestClient::Response]
     def delete_group(name)
+      delete_records_in_group(name)
       post("group.remove", self.class.xml_doc.request { |r|
         r.id get_group_id(name)
       })
@@ -111,6 +112,16 @@ module Geoloader
       post("metadata.delete", self.class.xml_doc.request { |r|
         r.id id
       })
+    end
+
+    # Delete all records in a group with a given name.
+    #
+    # @param  [Integer] name
+    # @return [RestClient::Response]
+    def delete_records_in_group(name)
+      Nokogiri::XML(get_records_in_group(name)).xpath("//metadata//id").each do |m|
+        delete_record(m.content.to_i)
+      end
     end
 
     # Get an XML builder instance.
