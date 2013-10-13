@@ -35,17 +35,19 @@ module Geoloader
       }
     end
 
-    # Does a group with a given name exist?
+    # List all groups on the node.
+    #
+    # @return [RestClient::Response]
+    def list_groups
+      @resource["xml.group.list"].get
+    end
+
+    # Get a group by name.
     #
     # @param  [String] name
-    # @return [Boolean]
-    def group_exists?(name)
-      Nokogiri::XML(@resource["xml.group.list"].get).xpath("//record").each do |record|
-        if record.at_xpath("name").content == name
-          return true
-        end
-      end
-      false
+    # @return [RestClient::Response]
+    def get_group(name)
+      Nokogiri::XML(list_groups).at_xpath("//record[name[text()='#{name}']]")
     end
 
     # Insert a new record.
