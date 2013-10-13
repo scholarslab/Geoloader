@@ -25,8 +25,8 @@ geonetwork:
   url:        "http://localhost:8080/geonetwork/srv/en"
   username:   "admin"
   password:   "admin"
-  group:      "2"
   xslt:       "path/to/iso19139/xslt"
+  group:      "geoloader"
 ```
 
 Then, use Geoloader programmatically in code:
