@@ -42,12 +42,40 @@ module Geoloader
       @resource["xml.group.list"].get
     end
 
-    # Get a group by name.
+    # Get a group with a given name.
+    #
+    # @param  [String] name
+    # @return [Nokogiri::XML]
+    def get_group(name)
+      Nokogiri::XML(list_groups).at_xpath("//record[name[text()='#{name}']]")
+    end
+
+    # Get the id of a group with a given name.
+    #
+    # @param  [String] name
+    # @return [Integer]
+    def get_group_id(name)
+      get_group(name).at_xpath("id").content.to_i
+    end
+
+    # Create a new group with a given name.
     #
     # @param  [String] name
     # @return [RestClient::Response]
-    def get_group(name)
-      Nokogiri::XML(list_groups).at_xpath("//record[name[text()='#{name}']]")
+    def create_group(name)
+      post("group.update", self.class.xml_doc.request { |r|
+        r.name name
+      })
+    end
+
+    # Delete group with a given name.
+    #
+    # @param  [String] name
+    # @return [RestClient::Response]
+    def delete_group(name)
+      post("group.remove", self.class.xml_doc.request { |r|
+        r.id get_group_id(name)
+      })
     end
 
     # Insert a new record.
