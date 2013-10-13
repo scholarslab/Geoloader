@@ -35,7 +35,7 @@ Then, use Geoloader programmatically in code:
 require 'geoloader'
 
 # Point Geoloader at a configuration file.
-Geoloader.config_from_yaml("/path/to/config.yaml")
+Geoloader.configure("/path/to/config.yaml")
 
 # Load a GeoTIFF.
 tiff_loader = Geoloader::GeotiffLoader.new("/path/to/file.tif")
