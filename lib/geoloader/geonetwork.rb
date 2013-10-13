@@ -12,12 +12,23 @@ module Geoloader
 
     # Create the Geonetwork resource.
     def initialize
+
+      # Alias config, create resource.
       @config = Geoloader.config.geonetwork
       @resource = RestClient::Resource.new(@config.url, {
         :user     => @config.username,
         :password => @config.password,
         :headers  => { :content_type => :xml }
       })
+
+      # If necessary, create the group.
+      if not group_exists?(@config.group)
+        create_group(@config.group)
+      end
+
+      # Cache the group id.
+      @group_id = get_group_id(@config.group)
+
     end
 
     # POST to an XML service.
@@ -48,6 +59,14 @@ module Geoloader
     # @return [Nokogiri::XML]
     def get_group(name)
       Nokogiri::XML(list_groups).at_xpath("//record[name[text()='#{name}']]")
+    end
+
+    # Does a group with a given name exist?
+    #
+    # @param  [String] name
+    # @return [Boolean]
+    def group_exists?(name)
+      !!get_group(name)
     end
 
     # Get the id of a group with a given name.
@@ -87,7 +106,7 @@ module Geoloader
     # @return [RestClient::Response]
     def create_record(asset, style_sheet = "_none_", category = "_none_")
       post("metadata.insert", self.class.xml_doc.request { |r|
-        r.group @config.group
+        r.group @group_id
         r.data { |d| d.cdata! asset.get_xml }
         r.category category
         r.styleSheet style_sheet
