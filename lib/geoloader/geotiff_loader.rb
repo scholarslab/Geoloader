@@ -20,7 +20,7 @@ module Geoloader
 
       # Push to Geoserver.
       @geoserver.create_coveragestore(@geotiff)
-      #@geonetwork.create_record(@geotiff)
+      # @geonetwork.create_record(@geotiff)
 
     end
 
