@@ -50,7 +50,7 @@ module Geoloader
     #
     # @return [RestClient::Response]
     def list_groups
-      @resource["xml.group.list"].get
+     @resource["xml.group.list"].get
     end
 
     # Get a group with a given name.
@@ -92,7 +92,7 @@ module Geoloader
     # @param  [String] name
     # @return [RestClient::Response]
     def delete_group(name)
-      delete_records_in_group(name)
+      delete_records_by_group(name)
       post("group.remove", self.class.xml_doc.request { |r|
         r.id get_group_id(name)
       })
@@ -123,11 +123,19 @@ module Geoloader
       })
     end
 
+    # Count the number of records in a given group.
+    #
+    # @param  [String] name
+    # @return [Integer]
+    def count_records_in_group(name = @config.group)
+      Nokogiri::XML(get_records_in_group(name)).at_xpath("//summary/@count").content.to_i
+    end
+
     # Delete a record by id.
     #
     # @param  [Integer] id
     # @return [RestClient::Response]
-    def delete_record(id)
+    def delete_record_by_id(id)
       post("metadata.delete", self.class.xml_doc.request { |r|
         r.id id
       })
@@ -137,9 +145,9 @@ module Geoloader
     #
     # @param  [Integer] name
     # @return [RestClient::Response]
-    def delete_records_in_group(name)
+    def delete_records_by_group(name)
       Nokogiri::XML(get_records_in_group(name)).xpath("//metadata//id").each do |m|
-        delete_record(m.content.to_i)
+        delete_record_by_id(m.content.to_i)
       end
     end
 

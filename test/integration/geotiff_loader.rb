@@ -17,11 +17,13 @@ class GeotiffLoaderTest < GeoloaderTest
   end
 
   def test_create_geoserver_coveragestore
-    assert_equal 200, @geoserver.resource["workspaces/#{@workspace}/coveragestores/tif"].get.code
+    response = @loader.geoserver.resource["workspaces/#{@workspace}/coveragestores/tif"].get
+    assert_equal 200, response.code
   end
 
   def test_publish_geoserver_layer
-    assert_equal 200, @geoserver.resource["layers/tif"].get.code
+    response = @loader.geoserver.resource["layers/tif"].get
+    assert_equal 200, response.code
   end
 
   def test_create_geonetwork_record

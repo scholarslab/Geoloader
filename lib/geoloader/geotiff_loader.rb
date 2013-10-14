@@ -4,7 +4,7 @@
 module Geoloader
   class GeotiffLoader
 
-    attr_reader :geotiff, :geoserver
+    attr_reader :geotiff, :geoserver, :geonetwork
 
     # @param [String] file_path
     def initialize(file_path)

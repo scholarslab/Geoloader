@@ -66,10 +66,18 @@ command :reload do |c|
   end
 end
 
-command :test do |c|
+command :geonetwork do |c|
   c.action do |args, options|
+
     Geoloader.configure("~/.geoloader/config.yaml")
-    geoserver = Geoloader::Geoserver.new
-    puts geoserver.workspace_exists?("test")
+    geonetwork = Geoloader::Geonetwork.new
+
+    case args[0]
+    when "delete-group"
+      puts geonetwork.delete_group(args[1]).code
+    when "count-records"
+      puts geonetwork.count_records_in_group(args[1])
+    end
+
   end
 end

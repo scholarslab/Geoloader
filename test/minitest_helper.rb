@@ -13,22 +13,15 @@ class GeoloaderTest < MiniTest::Test
     yaml_path = File.expand_path("config.yaml", File.dirname(__FILE__))
     Geoloader.configure(yaml_path)
 
-    # Alias the testing workspace/group.
-    @workspace = Geoloader.config.geoserver.workspace
-    @group = Geoloader.config.geonetwork.group
-
-    # Create the testing Geoserver workspace.
-    @geoserver = Geoloader::Geoserver.new
-    @geoserver.create_workspace(@workspace)
-
-    # Create the testing Geonetwork group.
-    @geonetwork = Geoloader::Geonetwork.new
-
   end
 
   def teardown
-    @geoserver.delete_workspace(@workspace)
-    #@geonetwork.delete_group(@group)
+    puts @loader.geonetwork.count_records_in_group(Geoloader.config.geonetwork.group)
+    begin
+      @loader.geoserver.delete_workspace(Geoloader.config.geoserver.workspace)
+      @loader.geonetwork.delete_group(Geoloader.config.geonetwork.group)
+    rescue
+    end
   end
 
 end

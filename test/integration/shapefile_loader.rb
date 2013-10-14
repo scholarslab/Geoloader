@@ -22,11 +22,13 @@ class ShapefileLoaderTest < GeoloaderTest
   end
 
   def test_create_geoserver_datastore
-    assert_equal 200, @geoserver.resource["workspaces/#{@workspace}/datastores/shp"].get.code
+    response = @loader.geoserver.resource["workspaces/#{@workspace}/datastores/shp"].get
+    assert_equal 200, response.code
   end
 
   def test_publish_geoserver_layer
-    assert_equal 200, @geoserver.resource["layers/shp"].get.code
+    response = @loader.geoserver.resource["layers/shp"].get
+    assert_equal 200, response.code
   end
 
   def test_create_geonetwork_record

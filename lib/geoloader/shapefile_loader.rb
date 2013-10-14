@@ -4,7 +4,7 @@
 module Geoloader
   class ShapefileLoader
 
-    attr_reader :shapefile, :geoserver
+    attr_reader :shapefile, :geoserver, :geonetwork
 
     # @param [String] file_name
     def initialize(file_name)
