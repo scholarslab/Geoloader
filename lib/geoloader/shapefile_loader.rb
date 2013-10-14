@@ -8,8 +8,8 @@ module Geoloader
 
     # @param [String] file_name
     def initialize(file_name)
-      super
       @shapefile = Geoloader::Shapefile.new(file_name)
+      super()
     end
 
     def load

@@ -8,8 +8,8 @@ module Geoloader
 
     # @param [String] file_path
     def initialize(file_path)
-      super
       @geotiff = Geoloader::Geotiff.new(file_path)
+      super()
     end
 
     def load

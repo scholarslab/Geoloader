@@ -4,6 +4,12 @@
 require 'confstruct'
 require 'yaml'
 
+def require_dir(path)
+  Dir["#{File.dirname(__FILE__)}/#{path}/*.rb"].each { |file|
+    require file
+  }
+end
+
 module Geoloader
 
   @config = Confstruct::Configuration.new
@@ -26,7 +32,5 @@ module Geoloader
 
 end
 
-# Require assets.
-Dir["#{File.dirname(__FILE__)}/geoloader/*.rb"].each { |file|
-  require file
-}
+require_dir("geoloader/abstract")
+require_dir("geoloader")
