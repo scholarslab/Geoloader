@@ -50,7 +50,7 @@ module Geoloader
     #
     # @return [RestClient::Response]
     def list_groups
-     @resource["xml.group.list"].get
+      @resource["xml.group.list"].get
     end
 
     # Get a group with a given name.

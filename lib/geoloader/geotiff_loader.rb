@@ -2,15 +2,14 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 module Geoloader
-  class GeotiffLoader
+  class GeotiffLoader < Loader
 
-    attr_reader :geotiff, :geoserver, :geonetwork
+    attr_reader :geotiff
 
     # @param [String] file_path
     def initialize(file_path)
-      @geotiff    = Geoloader::Geotiff.new(file_path)
-      @geoserver  = Geoloader::Geoserver.new
-      @geonetwork = Geoloader::Geonetwork.new
+      super
+      @geotiff = Geoloader::Geotiff.new(file_path)
     end
 
     def load
