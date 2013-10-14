@@ -32,8 +32,7 @@ class ShapefileLoaderTest < GeoloaderTest
   end
 
   def test_create_geonetwork_record
-    #count = @loader.geonetwork.count_records_in_group
-    #assert_equal 1, count
+    # TODO
   end
 
 end

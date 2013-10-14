@@ -89,7 +89,7 @@ module Geoloader
     def create_record(asset, style_sheet = "_none_", category = "_none_")
       post("metadata.insert", self.class.xml_doc.request { |r|
         r.group get_group_id
-        r.data { |d| d.cdata! asset.get_xml }
+        r.data { |d| d.cdata! asset.get_iso19139_xml }
         r.category category
         r.styleSheet style_sheet
       })

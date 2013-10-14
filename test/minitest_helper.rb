@@ -17,7 +17,7 @@ class GeoloaderTest < MiniTest::Test
 
   def teardown
     @loader.geoserver.delete_workspace
-    #@loader.geonetwork.delete_group
+    # @loader.geonetwork.delete_group
   end
 
 end
