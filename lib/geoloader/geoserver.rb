@@ -12,17 +12,17 @@ module Geoloader
     # Create the Geoserver resource.
     def initialize
 
-      # Alias config, create resource.
+      # Alias the Geoserver config.
       @config = Geoloader.config.geoserver
+
+      # Create the REST resource.
       @resource = RestClient::Resource.new("#{@config.url}/rest", {
         :user     => @config.username,
         :password => @config.password
       })
 
       # Create the workspace.
-      if not workspace_exists?
-        create_workspace
-      end
+      create_workspace unless workspace_exists?
 
     end
 
