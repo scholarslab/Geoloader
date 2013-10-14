@@ -21,13 +21,13 @@ module Geoloader
         :headers  => { :content_type => :xml }
       })
 
-      # If necessary, create the group.
-      if not group_exists?(@config.group)
-        create_group(@config.group)
+      # Create the group.
+      if not group_exists?
+        create_group
       end
 
-      # Cache the group id.
-      @group_id = get_group_id(@config.group)
+      # Store the group id.
+      @group_id = get_group_id
 
     end
 
@@ -57,7 +57,7 @@ module Geoloader
     #
     # @param  [String] name
     # @return [Nokogiri::XML]
-    def get_group(name)
+    def get_group(name = @config.group)
       Nokogiri::XML(list_groups).at_xpath("//record[name[text()='#{name}']]")
     end
 
@@ -65,7 +65,7 @@ module Geoloader
     #
     # @param  [String] name
     # @return [Boolean]
-    def group_exists?(name)
+    def group_exists?(name = @config.group)
       !!get_group(name)
     end
 
@@ -73,7 +73,7 @@ module Geoloader
     #
     # @param  [String] name
     # @return [Integer]
-    def get_group_id(name)
+    def get_group_id(name = @config.group)
       get_group(name).at_xpath("id").content.to_i
     end
 
@@ -81,7 +81,7 @@ module Geoloader
     #
     # @param  [String] name
     # @return [RestClient::Response]
-    def create_group(name)
+    def create_group(name = @config.group)
       post("group.update", self.class.xml_doc.request { |r|
         r.name name
       })
@@ -91,7 +91,7 @@ module Geoloader
     #
     # @param  [String] name
     # @return [RestClient::Response]
-    def delete_group(name)
+    def delete_group(name = @config.group)
       delete_records_by_group(name)
       post("group.remove", self.class.xml_doc.request { |r|
         r.id get_group_id(name)
@@ -117,7 +117,7 @@ module Geoloader
     #
     # @param  [String] name
     # @return [RestClient::Response]
-    def get_records_in_group(name)
+    def get_records_in_group(name = @config.group)
       post("xml.search", self.class.xml_doc.request { |r|
         r.group get_group_id(name)
       })
@@ -145,7 +145,7 @@ module Geoloader
     #
     # @param  [Integer] name
     # @return [RestClient::Response]
-    def delete_records_by_group(name)
+    def delete_records_by_group(name = @config.group)
       Nokogiri::XML(get_records_in_group(name)).xpath("//metadata//id").each do |m|
         delete_record_by_id(m.content.to_i)
       end

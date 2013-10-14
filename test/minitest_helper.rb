@@ -16,12 +16,8 @@ class GeoloaderTest < MiniTest::Test
   end
 
   def teardown
-    puts @loader.geonetwork.count_records_in_group(Geoloader.config.geonetwork.group)
-    begin
-      @loader.geoserver.delete_workspace(Geoloader.config.geoserver.workspace)
-      @loader.geonetwork.delete_group(Geoloader.config.geonetwork.group)
-    rescue
-    end
+    @loader.geoserver.delete_workspace
+    @loader.geonetwork.delete_group
   end
 
 end

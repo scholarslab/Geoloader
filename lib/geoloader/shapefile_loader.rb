@@ -18,7 +18,6 @@ module Geoloader
       # Create database.
       @shapefile.create_database
       @shapefile.connect
-      @shapefile.convert_to_4326
       @shapefile.generate_sql
       @shapefile.source_sql
 

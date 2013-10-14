@@ -19,9 +19,9 @@ module Geoloader
         :password => @config.password
       })
 
-      # If necessary, create the workspace.
-      if not workspace_exists?(@config.workspace)
-        create_workspace(@config.workspace)
+      # Create the workspace.
+      if not workspace_exists?
+        create_workspace
       end
 
     end
@@ -30,7 +30,7 @@ module Geoloader
     #
     # @param  [String] name
     # @return [Boolean]
-    def workspace_exists?(name)
+    def workspace_exists?(name = @config.workspace)
       !!Nokogiri::XML(@resource["workspaces"].get).at_xpath("//workspace[name[text()='#{name}']]")
     end
 
@@ -38,7 +38,7 @@ module Geoloader
     #
     # @param  [String] name
     # @return [RestClient::Response]
-    def create_workspace(name)
+    def create_workspace(name = @config.workspace)
       payload = Builder::XmlMarkup.new.workspace { |w| w.name name }
       @resource["workspaces"].post(payload, :content_type => :xml)
     end
@@ -47,7 +47,7 @@ module Geoloader
     #
     # @param  [String] name
     # @return [RestClient::Response]
-    def delete_workspace(name)
+    def delete_workspace(name = @config.workspace)
       @resource["workspaces/#{name}"].delete({:params => {:recurse => true}})
     end
 

@@ -15,16 +15,10 @@ module Geoloader
       system "psql #{self.class.psql_options} -d #{@base_name} -c 'CREATE EXTENSION postgis;'"
     end
 
-    # Convert the file to EPSG:4326.
-    def convert_to_4326
-      @processed_path = ext_path(".geoloader.shp")
-      system "ogr2ogr -t_srs EPSG:4326 #{@processed_path} #{@file_path}"
-    end
-
     # Convert the file to SQL for PostGIS.
     def generate_sql
       @sql_path = ext_path(".geoloader.sql")
-      system "shp2pgsql #{@processed_path} > #{@sql_path}"
+      system "shp2pgsql #{@file_path} > #{@sql_path}"
     end
 
     # Source shapefile SQL to the new database.
