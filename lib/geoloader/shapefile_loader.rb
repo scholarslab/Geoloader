@@ -23,7 +23,6 @@ module Geoloader
       # Push to Geoserver.
       @geoserver.create_datastore(@shapefile)
       @geoserver.create_featuretypes(@shapefile)
-      @geonetwork.create_record(@shapefile)
 
       # Close connection.
       @shapefile.disconnect

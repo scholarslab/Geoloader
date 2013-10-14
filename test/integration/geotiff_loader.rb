@@ -26,8 +26,4 @@ class GeotiffLoaderTest < GeoloaderTest
     assert_equal 200, response.code
   end
 
-  def test_create_geonetwork_record
-    # TODO
-  end
-
 end
