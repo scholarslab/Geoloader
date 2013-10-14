@@ -5,8 +5,7 @@ require 'jeweler'
 require 'rake/testtask'
 require 'rake/clean'
 
-task :default => :test
-task :test => :install
+task :default => [:install, :test]
 
 Jeweler::Tasks.new do |gem|
   gem.name    = "geoloader"

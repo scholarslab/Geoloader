@@ -17,7 +17,7 @@ module Geoloader
 
     # Convert the file to SQL for PostGIS.
     def generate_sql
-      @sql_path = ext_path(".geoloader.sql")
+      @sql_path = "#{File.dirname(@file_path)}/#{@base_name}.geoloader.sql"
       system "shp2pgsql #{@file_path} > #{@sql_path}"
     end
 

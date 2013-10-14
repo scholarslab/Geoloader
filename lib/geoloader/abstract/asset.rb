@@ -17,13 +17,5 @@ module Geoloader
       @base_name = File.basename(@file_path, ".*")
     end
 
-    # Construct a file path with a given extension.
-    #
-    # @param  [String] ext
-    # @return [String]
-    def ext_path(ext)
-      "#{File.dirname(@file_path)}/#{@base_name}#{ext}"
-    end
-
   end
 end

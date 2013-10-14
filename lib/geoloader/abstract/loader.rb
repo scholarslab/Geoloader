@@ -4,11 +4,10 @@
 module Geoloader
   class Loader
 
-    attr_reader :geoserver, :geonetwork
+    attr_reader :geoserver
 
     def initialize
-      @geoserver  = Geoloader::Geoserver.new
-      @geonetwork = Geoloader::Geonetwork.new
+      @geoserver = Geoloader::Geoserver.new
     end
 
   end
