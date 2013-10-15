@@ -12,7 +12,7 @@ module Geoloader
     #
     # @param [String] file_path
     def initialize(file_path)
-      super(file_path)
+      super
       @processed_path = "#{File.dirname(@file_path)}/#{@base_name}.geoloader.tif"
       FileUtils.cp(@file_path, @processed_path)
     end

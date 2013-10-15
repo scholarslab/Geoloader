@@ -6,7 +6,7 @@ module Geoloader
 
     attr_reader :geotiff
 
-    # @param [String] file_path
+    # @param [String] file_name
     def initialize(file_path)
       @geotiff = Geoloader::Geotiff.new(file_path)
       super()

@@ -9,7 +9,6 @@ module Geoloader
 
     attr_reader :resource
 
-    # Create the Geoserver resource.
     def initialize
 
       # Alias the Geoserver config.

@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "jeweler"
 gem "rest-client"
-gem "solr"
+gem "rsolr"
 gem "confstruct"
 gem "commander"
 gem "nokogiri"

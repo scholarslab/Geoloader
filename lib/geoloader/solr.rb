@@ -1,13 +1,21 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require 'solr'
+require 'rsolr'
 
 module Geoloader
   class Solr
 
+    attr_reader :resource
+
     def initialize
-      # TODO
+
+      # Alias the Solr config.
+      @config = Geoloader.config.solr
+
+      # Create the REST resource.
+      @resource = RSolr.connect(:url => @config.url)
+
     end
 
   end

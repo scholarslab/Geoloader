@@ -66,18 +66,13 @@ command :reload do |c|
   end
 end
 
-command :geonetwork do |c|
+command :test do |c|
   c.action do |args, options|
 
     Geoloader.configure("~/.geoloader/config.yaml")
-    geonetwork = Geoloader::Geonetwork.new
+    solr = Geoloader::Solr.new
 
-    case args[0]
-    when "delete-group"
-      puts geonetwork.delete_group(args[1]).code
-    when "count-records"
-      puts geonetwork.count_records_in_group(args[1])
-    end
+    puts solr.resource.get("select", :params => {:q => "*:*"})
 
   end
 end
