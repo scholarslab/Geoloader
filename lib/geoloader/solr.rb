@@ -18,5 +18,12 @@ module Geoloader
 
     end
 
+    # Add a new document to the index.
+    #
+    # @param [Geoloader::Asset] geotiff
+    def create_document(asset)
+      # TODO
+    end
+
   end
 end

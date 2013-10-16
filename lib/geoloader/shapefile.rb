@@ -27,8 +27,6 @@ module Geoloader
     end
 
     # Fetch a list of layers in the database.
-    #
-    # @return [Array]
     def get_layers
       @pg.exec("SELECT * FROM geometry_columns").field_values("f_table_name")
     end
@@ -39,8 +37,6 @@ module Geoloader
     end
 
     # Form generic PostgreSQL connection parameters.
-    #
-    # @return [String]
     def self.psql_options
       [
         "-h #{Geoloader.config.postgis.host}",
@@ -50,8 +46,6 @@ module Geoloader
     end
 
     # Get a generic PostgreSQL connection instance.
-    #
-    # @return [PG::Connection]
     def connect
       @pg = PG.connect(
         :host => Geoloader.config.postgis.host,
@@ -62,8 +56,6 @@ module Geoloader
     end
 
     # Close the PostgreSQL connection.
-    #
-    # @return [PG::Connection]
     def disconnect
       @pg.close
     end
