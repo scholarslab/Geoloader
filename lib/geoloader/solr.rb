@@ -2,6 +2,7 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 require 'rsolr'
+require 'securerandom'
 
 module Geoloader
   class Solr
@@ -9,20 +10,26 @@ module Geoloader
     attr_reader :resource
 
     def initialize
-
-      # Alias the Solr config.
       @config = Geoloader.config.solr
-
-      # Create the REST resource.
       @resource = RSolr.connect(:url => @config.url)
-
     end
 
     # Add a new document to the index.
     #
-    # @param [Geoloader::Asset] geotiff
+    # @param [Geoloader::Asset] asset
     def create_document(asset)
-      # TODO
+      # TODO|dev
+      @resource.add({
+        :id     => SecureRandom.hex,
+        :title  => asset.base_name
+      })
+      @resource.commit
+    end
+
+    # Delete all documents.
+    def clear_index
+      @resource.delete_by_query("*:*")
+      @resource.commit
     end
 
   end

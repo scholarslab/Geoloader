@@ -66,13 +66,24 @@ command :reload do |c|
   end
 end
 
-command :test do |c|
+command :solr do |c|
   c.action do |args, options|
 
     Geoloader.configure("~/.geoloader/config.yaml")
     solr = Geoloader::Solr.new
 
-    puts solr.resource.get("select", :params => {:q => "*:*"})
+    case args[0]
+    when "clear"
+      solr.clear_index
+    end
 
+  end
+end
+
+command :test do |c|
+  c.action do |args, options|
+    Geoloader.configure("~/.geoloader/config.yaml")
+    solr = Geoloader::Solr.new
+    solr.create_document
   end
 end

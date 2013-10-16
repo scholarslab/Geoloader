@@ -20,7 +20,7 @@ module Geoloader
       @geotiff.remove_border
       @geotiff.convert_to_4326
 
-      # Push to Geoserver/Solr.
+      # Push to Geoserver / Solr.
       @geoserver.create_coveragestore(@geotiff)
       @solr.create_document(@geotiff)
 

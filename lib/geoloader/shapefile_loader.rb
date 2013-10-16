@@ -22,7 +22,7 @@ module Geoloader
       @shapefile.generate_sql
       @shapefile.source_sql
 
-      # Push to Geoserver/Solr.
+      # Push to Geoserver / Solr.
       @geoserver.create_datastore(@shapefile)
       @geoserver.create_featuretypes(@shapefile)
       @solr.create_document(@shapefile)
