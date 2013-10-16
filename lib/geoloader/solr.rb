@@ -20,8 +20,8 @@ module Geoloader
     def create_document(asset)
       # TODO|dev
       @resource.add({
-        :id     => SecureRandom.hex,
-        :title  => asset.base_name
+        :id     => asset.uuid,
+        :layer  => asset.slug
       })
       @resource.commit
     end
