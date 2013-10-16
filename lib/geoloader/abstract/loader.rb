@@ -4,7 +4,7 @@
 module Geoloader
   class Loader
 
-    attr_reader :geoserver
+    attr_reader :geoserver, :solr
 
     # Connect to Geoserver and Solr.
     def initialize
