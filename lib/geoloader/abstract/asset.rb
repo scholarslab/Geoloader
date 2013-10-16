@@ -9,7 +9,7 @@ module Geoloader
 
     attr_reader :file_path, :base_name, :uuid, :slug
 
-    # Store the original file path and base name.
+    # Store the file path and query for the ESRI uuid and slug.
     #
     # @param [String] file_path
     def initialize(file_path)

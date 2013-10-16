@@ -14,11 +14,11 @@ module Geoloader
       @resource = RSolr.connect(:url => @config.url)
     end
 
+    # TODO|dev
     # Add a new document to the index.
     #
     # @param [Geoloader::Asset] asset
     def create_document(asset)
-      # TODO|dev
       @resource.add({
         :id     => asset.uuid,
         :layer  => asset.slug
