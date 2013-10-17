@@ -6,27 +6,20 @@ require 'fileutils'
 module Geoloader
   class Geotiff < Asset
 
-    attr_reader :processed_path
-
-    # Copy the file for post-processing.
     #
-    # @param [String] file_path
-    def initialize(file_path)
-      super
-      @processed_path = "#{File.dirname(@file_path)}/#{@base_name}.geoloader.tif"
-      FileUtils.cp(@file_path, @processed_path)
-    end
-
     # Remove the black borders added by ArcMap.
+    #
     def remove_border
-      system "gdalwarp -srcnodata 0 -dstalpha #{@processed_path} #{@processed_path}"
+      system "gdalwarp -srcnodata 0 -dstalpha #{@file_path} #{@file_path}"
     end
 
+    #
     # (Re)build a EPSG:4326 header.
+    #
     def convert_to_4326
-      system "gdal_translate -of GTiff -a_srs EPSG:4326 #{@processed_path} #{@processed_path}_"
-      FileUtils.rm(@processed_path)
-      FileUtils.mv("#{@processed_path}_", @processed_path)
+      system "gdal_translate -of GTiff -a_srs EPSG:4326 #{@file_path} #{@file_path}_"
+      FileUtils.rm(@file_path)
+      FileUtils.mv("#{@file_path}_", @file_path)
     end
 
   end

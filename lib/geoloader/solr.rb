@@ -14,9 +14,11 @@ module Geoloader
       @resource = RSolr.connect(:url => @config.url)
     end
 
+    #
     # Add a new document to the index.
     #
     # @param [Geoloader::Asset] asset
+    #
     def create_document(asset)
       # TODO|dev
       @resource.add({
@@ -26,15 +28,19 @@ module Geoloader
       @resource.commit
     end
 
+    #
     # Delete the document for a given asset.
     #
     # @param [Geoloader::Asset] asset
+    #
     def delete_document(asset)
       @resource.delete_by_query("id:#{asset.uuid}")
       @resource.commit
     end
 
+    #
     # Delete all documents.
+    #
     def clear_index
       @resource.delete_by_query("*:*")
       @resource.commit

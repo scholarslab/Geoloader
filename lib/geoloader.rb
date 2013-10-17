@@ -14,9 +14,11 @@ module Geoloader
 
   @config = Confstruct::Configuration.new
 
+  #
   # Set configuration options.
   #
   # @param [Hash] config
+  #
   def self.configure(config)
     if config.is_a? String
       @config.configure(YAML::load(File.read(File.expand_path(config))))
@@ -25,7 +27,9 @@ module Geoloader
     end
   end
 
+  #
   # Get the configuration object.
+  #
   def self.config
     @config
   end
