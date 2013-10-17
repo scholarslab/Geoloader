@@ -9,6 +9,9 @@ module Geoloader
 
     attr_reader :resource
 
+    #
+    # Initialize the API wrapper.
+    #
     def initialize
       @resource = RSolr.connect(:url => Geoloader.config.solr.url)
     end

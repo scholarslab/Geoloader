@@ -5,13 +5,6 @@ module Geoloader
   class ShapefileLoader < AssetLoader
 
     attr_reader :shapefile
-    @queue = :geoloader
-
-    # TODO|dev
-    def self.perform(file_path, metadata)
-      loader = self.class.new(file_path, metadata)
-      loader.load
-    end
 
     #
     # Construct the asset instance.
@@ -30,10 +23,10 @@ module Geoloader
     def load
 
       # (1) Create database.
-      @shapefile.create_copies
-      @shapefile.create_database
-      @shapefile.connect
-      @shapefile.insert_tables
+      @asset.create_copies
+      @asset.create_database
+      @asset.connect
+      @asset.insert_tables
 
       # (2) Push to Geoserver.
       @geoserver.create_datastore(@asset, @workspace)
@@ -43,8 +36,8 @@ module Geoloader
       @solr.create_document(@asset, @metadata)
 
       # (4) Cleanup.
-      @shapefile.disconnect
-      @shapefile.delete_copies
+      @asset.disconnect
+      @asset.delete_copies
 
     end
 

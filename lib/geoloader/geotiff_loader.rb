@@ -5,13 +5,6 @@ module Geoloader
   class GeotiffLoader < AssetLoader
 
     attr_reader :geotiff
-    @queue = :geoloader
-
-    # TODO|dev
-    def self.perform(file_path, metadata)
-      loader = self.class.new(file_path, metadata)
-      loader.load
-    end
 
     #
     # Consruct the asset instance.
