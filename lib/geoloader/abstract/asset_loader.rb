@@ -13,9 +13,9 @@ module Geoloader
     # @param [Hash] metadata
     #
     def initialize(file_path, metadata)
-      @solr       = Geoloader::Solr.new
-      @geoserver  = Geoloader::Geoserver.new
-      @metadata   = metadata
+      @metadata = metadata
+      @geoserver = Geoloader::Geoserver.new(@metadata["workspace"])
+      @solr = Geoloader::Solr.new
     end
 
   end

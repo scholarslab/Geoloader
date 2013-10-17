@@ -21,7 +21,7 @@ module Geoloader
 
       # Cache the ESRI uuid.
       @esri_xml = Nokogiri::XML(File.read("#{@file_path}.xml"))
-      @uuid = "#{@esri_xml.at_xpath("//thesaName/@uuidref").content}:#{@base_name}"
+      @uuid = "#{@esri_xml.at_xpath("//thesaName/@uuidref").content}-#{@base_name}"
 
     end
 

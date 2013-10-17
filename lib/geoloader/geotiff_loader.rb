@@ -11,35 +11,38 @@ module Geoloader
     # @param [Hash] metadata
     #
     def initialize(file_path, metadata)
-      @geotiff = Geoloader::Geotiff.new(file_path)
+      @asset = Geoloader::Geotiff.new(file_path)
       super
     end
 
+    #
+    # Load the asset to Geoserver and Solr.
+    #
     def load
 
       # (1) Process the file.
-      @geotiff.create_copies
-      @geotiff.remove_border
-      @geotiff.convert_to_4326
+      @asset.create_copies
+      @asset.remove_border
+      @asset.convert_to_4326
 
       # (2) Push to Geoserver.
-      @geoserver.create_coveragestore(@geotiff)
+      @geoserver.create_coveragestore(@asset)
 
       # (3) Push to Solr.
-      @solr.create_document(@geotiff, @metadata)
+      @solr.create_document(@asset, @metadata)
 
       # (4) Cleanup.
-      @geotiff.delete_copies
+      @asset.delete_copies
 
     end
 
     def unload
 
       # (1) Delete from Goeserver.
-      @geoserver.delete_coveragestore(@geotiff)
+      @geoserver.delete_coveragestore(@asset)
 
       # (2) Delete from Solr.
-      @solr.delete_document(@geotiff)
+      @solr.delete_document(@asset)
 
     end
 

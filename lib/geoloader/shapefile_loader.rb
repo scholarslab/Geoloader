@@ -11,10 +11,20 @@ module Geoloader
     # @param [Hash] metadata
     #
     def initialize(file_path, metadata)
-      @shapefile = Geoloader::Shapefile.new(file_path)
+      @asset = Geoloader::Shapefile.new(file_path)
       super
     end
 
+    #
+    # Has the asset already been loaded?
+    #
+    def already_loaded?
+      # TODO
+    end
+
+    #
+    # Load the asset to Geoserver and Solr.
+    #
     def load
 
       # (1) Create database.
@@ -24,11 +34,11 @@ module Geoloader
       @shapefile.insert_tables
 
       # (2) Push to Geoserver.
-      @geoserver.create_datastore(@shapefile)
-      @geoserver.create_featuretypes(@shapefile)
+      @geoserver.create_datastore(@asset)
+      @geoserver.create_featuretypes(@asset)
 
       # (3) Push to Solr.
-      @solr.create_document(@shapefile, @metadata)
+      @solr.create_document(@asset, @metadata)
 
       # (4) Cleanup.
       @shapefile.disconnect
@@ -39,10 +49,10 @@ module Geoloader
     def unload
 
       # (1) Delete from Solr.
-      @solr.delete_document(@shapefile)
+      @solr.delete_document(@asset)
 
       # (2) Delete from Geoserver.
-      @geoserver.delete_datastore(@shapefile)
+      @geoserver.delete_datastore(@asset)
 
       # (3) Drop database.
       @shapefile.drop_database

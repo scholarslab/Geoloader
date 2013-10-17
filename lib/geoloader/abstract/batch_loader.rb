@@ -11,7 +11,7 @@ module Geoloader
     #
     def initialize(file_path)
       @file_path = File.expand_path(file_path)
-      @yaml = Yaml::load(File.read(file_path))
+      @yaml = YAML::load(File.read(@file_path))
     end
 
     #

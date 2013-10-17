@@ -10,8 +10,7 @@ module Geoloader
     attr_reader :resource
 
     def initialize
-      @config = Geoloader.config.solr
-      @resource = RSolr.connect(:url => @config.url)
+      @resource = RSolr.connect(:url => Geoloader.config.solr..url)
     end
 
     #
@@ -29,6 +28,15 @@ module Geoloader
         :layer        => asset.base_name
       })
       @resource.commit
+    end
+
+    #
+    # Query for an individual asset document.
+    #
+    # @param [Geoloader::Asset] asset
+    #
+    def get_document(asset)
+      @resource.get("select", :params => {:q => "id:#{asset.uuid}"})
     end
 
     #
