@@ -1,6 +1,8 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
+require 'resque'
+
 module Geoloader
   class BatchLoader
 
@@ -22,11 +24,9 @@ module Geoloader
       Dir.glob("#{File.dirname(@yaml_path)}/#{@metadata["files"]}") do |file|
         case File.extname(file)
         when ".tif"
-          loader = Geoloader::GeotiffLoader.new(file, @metadata)
-          loader.load
+          Resque.enqueue( Geoloader::GeotiffLoader, file, @metadata)
         when ".shp"
-          loader = Geoloader::ShapefileLoader.new(file, @metadata)
-          loader.load
+          Resque.enqueue( Geoloader::ShapefileLoader, file, @metadata)
         end
       end
 

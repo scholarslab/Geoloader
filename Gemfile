@@ -5,6 +5,7 @@ gem "rest-client"
 gem "confstruct"
 gem "rsolr"
 gem "commander"
+gem "resque"
 gem "nokogiri"
 gem "pg"
 

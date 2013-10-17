@@ -5,7 +5,16 @@ module Geoloader
   class ShapefileLoader < AssetLoader
 
     attr_reader :shapefile
+    @queue = :geoloader
 
+    # TODO|dev
+    def self.perform(file_path, metadata)
+      loader = self.class.new(file_path, metadata)
+      loader.load
+    end
+
+    #
+    # Construct the asset instance.
     #
     # @param [String] file_name
     # @param [Hash] metadata
