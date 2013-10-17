@@ -10,7 +10,7 @@ module Geoloader
     attr_reader :resource
 
     def initialize
-      @resource = RSolr.connect(:url => Geoloader.config.solr..url)
+      @resource = RSolr.connect(:url => Geoloader.config.solr.url)
     end
 
     #
@@ -37,6 +37,15 @@ module Geoloader
     #
     def get_document(asset)
       @resource.get("select", :params => {:q => "id:#{asset.uuid}"})
+    end
+
+    #
+    # Does a document exist for a given asset?.
+    #
+    # @param [Geoloader::Asset] asset
+    #
+    def document_exists?(asset)
+      get_document(asset)["response"]["numFound"].to_i == 1
     end
 
     #

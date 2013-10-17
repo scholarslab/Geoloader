@@ -30,3 +30,12 @@ command :reset do |c|
     solr.clear_index
   end
 end
+
+# TODO|dev
+command :test do |c|
+  c.action do |args, options|
+    tiff = Geoloader::Geotiff.new(args[0])
+    solr = Geoloader::Solr.new
+    puts solr.document_exists?(tiff)
+  end
+end

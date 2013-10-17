@@ -34,11 +34,11 @@ module Geoloader
     #
     # Does a workspace with a given name exist?
     #
-    # @param [String] name
+    # @param [String] workspace
     #
-    def workspace_exists?(name = @workspace)
+    def workspace_exists?(workspace = @workspace)
       workspaces = @resource["workspaces"].get
-      !!Nokogiri::XML(workspaces).at_xpath("//workspace[name[text()='#{name}']]")
+      !!Nokogiri::XML(workspaces).at_xpath("//workspace[name[text()='#{workspace}']]")
     end
 
     #
@@ -46,8 +46,8 @@ module Geoloader
     #
     # @param [String] name
     #
-    def create_workspace(name = @workspace)
-      payload = Builder::XmlMarkup.new.workspace { |w| w.name name }
+    def create_workspace(workspace = @workspace)
+      payload = Builder::XmlMarkup.new.workspace { |w| w.name workspace }
       @resource["workspaces"].post(payload, :content_type => :xml)
     end
 
@@ -56,17 +56,18 @@ module Geoloader
     #
     # @param [String] name
     #
-    def delete_workspace(name = @workspace)
-      @resource["workspaces/#{name}"].delete({:params => {:recurse => true}})
+    def delete_workspace(workspace = @workspace)
+      @resource["workspaces/#{workspace}"].delete({:params => {:recurse => true}})
     end
 
     #
     # Create a new coveragestore and layer for a GeoTIFF.
     #
     # @param [Geoloader::Geotiff] geotiff
+    # @param [String] workspace
     #
-    def create_coveragestore(geotiff)
-      url = "workspaces/#{@workspace}/coveragestores/#{geotiff.base_name}/file.geotiff"
+    def create_coveragestore(geotiff, workspace = @workspace)
+      url = "workspaces/#{workspace}/coveragestores/#{geotiff.base_name}/file.geotiff"
       @resource[url].put(File.read(geotiff.file_path))
     end
 
@@ -74,9 +75,10 @@ module Geoloader
     # Delete the coveragestore that corresponds to a GeoTIFF.
     #
     # @param [Geoloader::Geotiff] geotiff
+    # @param [String] workspace
     #
-    def delete_coveragestore(geotiff)
-      url = "workspaces/#{@workspace}/coveragestores/#{geotiff.base_name}"
+    def delete_coveragestore(geotiff, workspace = @workspace)
+      url = "workspaces/#{workspace}/coveragestores/#{geotiff.base_name}"
       @resource[url].delete({:params => {:recurse => true}})
     end
 
@@ -84,9 +86,11 @@ module Geoloader
     # Publish the PostGIS database corresponding to a shapefile.
     #
     # @param [Geoloader::Shapefile] shapefile
+    # @param [String] workspace
     #
-    def create_datastore(shapefile)
+    def create_datastore(shapefile, workspace = @workspace)
 
+      # Construct the request.
       payload = Builder::XmlMarkup.new.dataStore { |d|
         d.name shapefile.base_name
         d.connectionParameters { |c|
@@ -100,7 +104,7 @@ module Geoloader
       }
 
       # Create the new datastore.
-      url = "workspaces/#{@workspace}/datastores"
+      url = "workspaces/#{workspace}/datastores"
       @resource[url].post(payload, :content_type => :xml)
 
     end
@@ -109,9 +113,10 @@ module Geoloader
     # Delete the datastore that corresponds to a shapefile.
     #
     # @param [Geoloader::Shapefile] shapefile
+    # @param [String] workspace
     #
-    def delete_datastore(shapefile)
-      url = "workspaces/#{@workspace}/datastores/#{shapefile.base_name}"
+    def delete_datastore(shapefile, workspace = @workspace)
+      url = "workspaces/#{workspace}/datastores/#{shapefile.base_name}"
       @resource[url].delete({:params => {:recurse => true}})
     end
 
@@ -119,20 +124,24 @@ module Geoloader
     # Publish layers from the PostGIS tables corresponding to a shapefile.
     #
     # @param [Geoloader::Shapefile] shapefile
+    # @param [String] workspace
     #
-    def create_featuretypes(shapefile)
+    def create_featuretypes(shapefile, workspace = @workspace)
+
       shapefile.get_layers.each { |layer|
 
+        # Construct the request.
         payload = Builder::XmlMarkup.new.featureType { |f|
           f.name layer
           f.srs @config.srs
         }
 
         # Create the new featuretype.
-        url = "workspaces/#{@workspace}/datastores/#{shapefile.base_name}/featuretypes"
+        url = "workspaces/#{workspace}/datastores/#{shapefile.base_name}/featuretypes"
         @resource[url].post(payload, :content_type => :xml)
 
       }
+
     end
 
   end
