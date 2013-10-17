@@ -21,10 +21,10 @@ command :load do |c|
     Dir.glob("#{File.dirname(path)}/#{yaml["files"]}") do |f|
       case File.extname(f)
       when ".tif"
-        loader = Geoloader::GeotiffLoader.new(f)
+        loader = Geoloader::GeotiffLoader.new(f, yaml)
         loader.load
       when ".shp"
-        loader = Geoloader::ShapefileLoader.new(f)
+        loader = Geoloader::ShapefileLoader.new(f, yaml)
         loader.load
       end
     end

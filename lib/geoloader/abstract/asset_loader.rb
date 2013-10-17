@@ -7,11 +7,15 @@ module Geoloader
     attr_reader :geoserver, :solr
 
     #
-    # Create Geoserver / Solr wrappers.
+    # Store metadata, create service wrappers.
     #
-    def initialize
-      @geoserver = Geoloader::Geoserver.new
-      @solr = Geoloader::Solr.new
+    # @param [String] file_name
+    # @param [Hash] metadata
+    #
+    def initialize(file_path, metadata)
+      @solr       = Geoloader::Solr.new
+      @geoserver  = Geoloader::Geoserver.new
+      @metadata   = metadata
     end
 
   end

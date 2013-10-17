@@ -8,10 +8,11 @@ module Geoloader
 
     #
     # @param [String] file_name
+    # @param [Hash] metadata
     #
-    def initialize(file_path)
+    def initialize(file_path, metadata)
       @geotiff = Geoloader::Geotiff.new(file_path)
-      super()
+      super
     end
 
     def load
@@ -25,7 +26,7 @@ module Geoloader
       @geoserver.create_coveragestore(@geotiff)
 
       # (3) Push to Solr.
-      @solr.create_document(@geotiff)
+      @solr.create_document(@geotiff, @metadata)
 
       # (4) Cleanup.
       @geotiff.delete_copies

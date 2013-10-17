@@ -8,10 +8,11 @@ module Geoloader
 
     #
     # @param [String] file_name
+    # @param [Hash] metadata
     #
-    def initialize(file_path)
+    def initialize(file_path, metadata)
       @shapefile = Geoloader::Shapefile.new(file_path)
-      super()
+      super
     end
 
     def load
@@ -27,7 +28,7 @@ module Geoloader
       @geoserver.create_featuretypes(@shapefile)
 
       # (3) Push to Solr.
-      @solr.create_document(@shapefile)
+      @solr.create_document(@shapefile, @metadata)
 
       # (4) Cleanup.
       @shapefile.disconnect

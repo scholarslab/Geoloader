@@ -18,12 +18,15 @@ module Geoloader
     # Add a new document to the index.
     #
     # @param [Geoloader::Asset] asset
+    # @param [Hash] metadata
     #
-    def create_document(asset)
-      # TODO|dev
+    def create_document(asset, metadata)
       @resource.add({
-        :id     => asset.uuid,
-        :layer  => asset.slug
+        :id           => asset.uuid,
+        :title        => metadata["title"],
+        :description  => metadata["description"],
+        :workspace    => metadata["workspace"],
+        :layer        => asset.base_name
       })
       @resource.commit
     end
