@@ -7,83 +7,42 @@ require 'geoloader'
 program :version, '0.0.1'
 program :description, 'Load GeoTIFFs and Shapefiles into Geonetwork, Geoserver, and PostgreSQL'
 
+Geoloader.configure("~/.geoloader/config.yaml")
+
+# TODO|dev
 command :load do |c|
   c.syntax = 'geoloader load [filename]'
-  c.summary = 'Load a Geotiff (.tif) or Shapefile (.shp).'
+  c.summary = 'Load a YAML batch manifest.'
   c.action do |args, options|
 
-    Geoloader.configure("~/.geoloader/config.yaml")
+    path = File.expand_path(args[0])
+    yaml = YAML::load(File.read(path))
 
-    case File.extname(args[0])
-    when ".tif"
-      loader = Geoloader::GeotiffLoader.new(args[0])
-      loader.load
-    when ".shp"
-      loader = Geoloader::ShapefileLoader.new(args[0])
-      loader.load
+    Dir.glob("#{File.dirname(path)}/#{yaml["files"]}") do |f|
+      case File.extname(f)
+      when ".tif"
+        loader = Geoloader::GeotiffLoader.new(f)
+        loader.load
+      when ".shp"
+        loader = Geoloader::ShapefileLoader.new(f)
+        loader.load
+      end
     end
 
   end
 end
 
-command :unload do |c|
-  c.syntax = 'geoloader unload [filename]'
-  c.summary = 'Unload a Geotiff (.tif) or Shapefile (.shp).'
+# TODO|dev
+command :reset do |c|
+  c.syntax = 'geoloader reset'
+  c.summary = 'Delete all assets (for development).'
   c.action do |args, options|
 
-    Geoloader.configure("~/.geoloader/config.yaml")
+    geoserver = Geoloader::Geoserver.new
+    geoserver.delete_workspace
 
-    case File.extname(args[0])
-    when ".tif"
-      loader = Geoloader::GeotiffLoader.new(args[0])
-      loader.unload
-    when ".shp"
-      loader = Geoloader::ShapefileLoader.new(args[0])
-      loader.unload
-    end
-
-  end
-end
-
-command :reload do |c|
-  c.syntax = 'geoloader reload [filename]'
-  c.summary = 'Reload a Geotiff (.tif) or Shapefile (.shp).'
-  c.action do |args, options|
-
-    Geoloader.configure("~/.geoloader/config.yaml")
-
-    case File.extname(args[0])
-    when ".tif"
-      loader = Geoloader::GeotiffLoader.new(args[0])
-      loader.unload
-      loader.load
-    when ".shp"
-      loader = Geoloader::ShapefileLoader.new(args[0])
-      loader.unload
-      loader.load
-    end
-
-  end
-end
-
-command :solr do |c|
-  c.action do |args, options|
-
-    Geoloader.configure("~/.geoloader/config.yaml")
     solr = Geoloader::Solr.new
+    solr.clear_index
 
-    case args[0]
-    when "clear"
-      solr.clear_index
-    end
-
-  end
-end
-
-command :test do |c|
-  c.action do |args, options|
-    Geoloader.configure("~/.geoloader/config.yaml")
-    solr = Geoloader::Solr.new
-    solr.create_document
   end
 end
