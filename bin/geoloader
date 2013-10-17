@@ -9,7 +9,6 @@ program :description, 'Load GeoTIFFs and Shapefiles into Geonetwork, Geoserver, 
 
 Geoloader.configure("~/.geoloader/config.yaml")
 
-# TODO|dev
 command :load do |c|
   c.syntax = 'geoloader load [filename]'
   c.summary = 'Load a YAML batch manifest.'
@@ -26,16 +25,7 @@ command :reset do |c|
   c.action do |args, options|
     geoserver = Geoloader::Geoserver.new
     solr = Geoloader::Solr.new
-    geoserver.delete_workspace
+    geoserver.delete_workspace(args[0])
     solr.clear_index
-  end
-end
-
-# TODO|dev
-command :test do |c|
-  c.action do |args, options|
-    tiff = Geoloader::Geotiff.new(args[0])
-    solr = Geoloader::Solr.new
-    puts solr.document_exists?(tiff)
   end
 end

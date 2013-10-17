@@ -27,8 +27,8 @@ module Geoloader
       @shapefile.insert_tables
 
       # (2) Push to Geoserver.
-      @geoserver.create_datastore(@asset)
-      @geoserver.create_featuretypes(@asset)
+      @geoserver.create_datastore(@asset, @workspace)
+      @geoserver.create_featuretypes(@asset, @workspace)
 
       # (3) Push to Solr.
       @solr.create_document(@asset, @metadata)
@@ -48,7 +48,7 @@ module Geoloader
       @solr.delete_document(@asset)
 
       # (2) Delete from Geoserver.
-      @geoserver.delete_datastore(@asset)
+      @geoserver.delete_datastore(@asset, @workspace)
 
       # (3) Drop database.
       @shapefile.drop_database

@@ -13,9 +13,17 @@ module Geoloader
     # @param [Hash] metadata
     #
     def initialize(file_path, metadata)
+
       @metadata = metadata
-      @geoserver = Geoloader::Geoserver.new(@metadata["workspace"])
-      @solr = Geoloader::Solr.new
+
+      # Initialize service wrappers.
+      @geoserver  = Geoloader::Geoserver.new
+      @solr       = Geoloader::Solr.new
+
+      # Create the Geoserver workspace.
+      @workspace = @metadata["workspace"]
+      @geoserver.create_workspace(@workspace) unless @geoserver.workspace_exists?(@workspace)
+
     end
 
   end

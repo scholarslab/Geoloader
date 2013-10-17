@@ -26,7 +26,7 @@ module Geoloader
       @asset.convert_to_4326
 
       # (2) Push to Geoserver.
-      @geoserver.create_coveragestore(@asset)
+      @geoserver.create_coveragestore(@asset, @workspace)
 
       # (3) Push to Solr.
       @solr.create_document(@asset, @metadata)
@@ -42,7 +42,7 @@ module Geoloader
     def unload
 
       # (1) Delete from Goeserver.
-      @geoserver.delete_coveragestore(@asset)
+      @geoserver.delete_coveragestore(@asset, @workspace)
 
       # (2) Delete from Solr.
       @solr.delete_document(@asset)
