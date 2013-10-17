@@ -14,21 +14,8 @@ command :load do |c|
   c.syntax = 'geoloader load [filename]'
   c.summary = 'Load a YAML batch manifest.'
   c.action do |args, options|
-
-    path = File.expand_path(args[0])
-    yaml = YAML::load(File.read(path))
-
-    Dir.glob("#{File.dirname(path)}/#{yaml["files"]}") do |f|
-      case File.extname(f)
-      when ".tif"
-        loader = Geoloader::GeotiffLoader.new(f, yaml)
-        loader.load
-      when ".shp"
-        loader = Geoloader::ShapefileLoader.new(f, yaml)
-        loader.load
-      end
-    end
-
+    loader = Geoloader::BatchLoader.new(args[0])
+    loader.load
   end
 end
 
@@ -37,12 +24,9 @@ command :reset do |c|
   c.syntax = 'geoloader reset'
   c.summary = 'Delete all assets (for development).'
   c.action do |args, options|
-
     geoserver = Geoloader::Geoserver.new
-    geoserver.delete_workspace
-
     solr = Geoloader::Solr.new
+    geoserver.delete_workspace
     solr.clear_index
-
   end
 end
