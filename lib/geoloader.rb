@@ -4,6 +4,11 @@
 require 'confstruct'
 require 'yaml'
 
+#
+# Require all files in a directory.
+#
+# @param [String] path
+#
 def require_dir(path)
   Dir["#{File.dirname(__FILE__)}/#{path}/*.rb"].each { |file|
     require file
@@ -19,7 +24,7 @@ module Geoloader
   #
   # @param [Hash] config
   #
-  def self.configure(config)
+  def self.configure(config = "~/.geoloader/config.yaml")
     if config.is_a? String
       @config.configure(YAML::load(File.read(File.expand_path(config))))
     else
@@ -36,5 +41,9 @@ module Geoloader
 
 end
 
+# Load assets.
 require_dir("geoloader/abstract")
 require_dir("geoloader")
+
+# Set defaults.
+Geoloader.configure

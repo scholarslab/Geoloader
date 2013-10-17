@@ -7,8 +7,6 @@ require 'geoloader'
 program :version, '0.0.1'
 program :description, 'Load GeoTIFFs and Shapefiles into Geonetwork, Geoserver, and PostgreSQL'
 
-Geoloader.configure("~/.geoloader/config.yaml")
-
 command :load do |c|
   c.syntax = 'geoloader load [filename]'
   c.summary = 'Load a YAML batch manifest.'
