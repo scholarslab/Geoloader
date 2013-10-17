@@ -16,13 +16,6 @@ module Geoloader
     end
 
     #
-    # Has the asset already been loaded?
-    #
-    def already_loaded?
-      # TODO
-    end
-
-    #
     # Load the asset to Geoserver and Solr.
     #
     def load
@@ -46,6 +39,9 @@ module Geoloader
 
     end
 
+    #
+    # Remove the asset from Geoserver and Solr.
+    #
     def unload
 
       # (1) Delete from Solr.

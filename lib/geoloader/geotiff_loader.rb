@@ -36,6 +36,9 @@ module Geoloader
 
     end
 
+    #
+    # Remove the asset from Geoserver and Solr.
+    #
     def unload
 
       # (1) Delete from Goeserver.
