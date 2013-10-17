@@ -6,8 +6,6 @@ module Geoloader
 
     attr_reader :shapefile
 
-    # Create the file asset.
-    #
     # @param [String] file_name
     def initialize(file_name)
       @shapefile = Geoloader::Shapefile.new(file_name)
@@ -16,25 +14,35 @@ module Geoloader
 
     def load
 
-      # Create database.
+      # (1) Create database.
       @shapefile.create_database
       @shapefile.connect
       @shapefile.generate_sql
       @shapefile.source_sql
 
-      # Push to Geoserver / Solr.
+      # (2) Push to Geoserver.
       @geoserver.create_datastore(@shapefile)
       @geoserver.create_featuretypes(@shapefile)
+
+      # (3) Push to Solr.
       @solr.create_document(@shapefile)
 
-      # Close connection.
+      # (4) Close connection.
       @shapefile.disconnect
 
     end
 
     def unload
+
+      # (1) Delete from Solr.
+      @solr.delete_document(@shapefile)
+
+      # (2) Delete from Geoserver.
       @geoserver.delete_datastore(@shapefile)
+
+      # (3) Drop database.
       @shapefile.drop_database
+
     end
 
   end

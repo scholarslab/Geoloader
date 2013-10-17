@@ -9,7 +9,7 @@ module Geoloader
 
     attr_reader :file_path, :base_name, :uuid, :slug
 
-    # Store the original file path and base name.
+    # Load the ESRI XML and cache the uuid.
     #
     # @param [String] file_path
     def initialize(file_path)
@@ -17,10 +17,9 @@ module Geoloader
       @file_path = file_path
       @base_name = File.basename(@file_path, ".*")
 
-      # Query ESRI XML for uuid and slug.
+      # Cache the ESRI uuid.
       @esri_xml = Nokogiri::XML(File.read("#{@file_path}.xml"))
       @uuid = @esri_xml.at_xpath("//thesaName/@uuidref").content
-      @slug = @esri_xml.at_xpath("//itemName").content
 
     end
 

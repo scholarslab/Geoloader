@@ -11,8 +11,8 @@ module Geoloader
 
     # Create a PostGIS-enabled database and connect to it.
     def create_database
-      system "createdb #{self.class.psql_options} #{@base_name}"
-      system "psql #{self.class.psql_options} -d #{@base_name} -c 'CREATE EXTENSION postgis;'"
+      system "createdb #{self.class.psql_options} #{@uuid}"
+      system "psql #{self.class.psql_options} -d #{@uuid} -c 'CREATE EXTENSION postgis;'"
     end
 
     # Convert the file to SQL for PostGIS.
@@ -23,7 +23,7 @@ module Geoloader
 
     # Source shapefile SQL to the new database.
     def source_sql
-      system "psql #{self.class.psql_options} -d #{@base_name} -f #{@sql_path}"
+      system "psql #{self.class.psql_options} -d #{@uuid} -f #{@sql_path}"
     end
 
     # Fetch a list of layers in the database.
@@ -33,7 +33,7 @@ module Geoloader
 
     # Drop the PostGIS database.
     def drop_database
-      system "dropdb #{self.class.psql_options} #{@base_name}"
+      system "dropdb #{self.class.psql_options} #{@uuid}"
     end
 
     # Form generic PostgreSQL connection parameters.
@@ -51,7 +51,7 @@ module Geoloader
         :host => Geoloader.config.postgis.host,
         :port => Geoloader.config.postgis.port,
         :user => Geoloader.config.postgis.username,
-        :dbname => @base_name
+        :dbname => @uuid
       )
     end
 

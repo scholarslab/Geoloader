@@ -6,7 +6,6 @@ module Geoloader
 
     attr_reader :geoserver, :solr
 
-    # Connect to Geoserver and Solr.
     def initialize
       @geoserver = Geoloader::Geoserver.new
       @solr = Geoloader::Solr.new

@@ -9,11 +9,10 @@ module Geoloader
 
     attr_reader :resource
 
-    def initialize(workspace)
+    def initialize
 
       # Alias the configuration.
       @config = Geoloader.config.geoserver
-      @workspace = workspace
 
       # Create the REST resource.
       @resource = RestClient::Resource.new("#{@config.url}/rest", {
@@ -29,7 +28,7 @@ module Geoloader
     # Does a workspace with a given name exist?
     #
     # @param [String] name
-    def workspace_exists?(name = @workspace)
+    def workspace_exists?(name = @config.workspace)
       workspaces = @resource["workspaces"].get
       !!Nokogiri::XML(workspaces).at_xpath("//workspace[name[text()='#{name}']]")
     end
@@ -37,7 +36,7 @@ module Geoloader
     # Create a new workspace.
     #
     # @param [String] name
-    def create_workspace(name = @workspace)
+    def create_workspace(name = @config.workspace)
       payload = Builder::XmlMarkup.new.workspace { |w| w.name name }
       @resource["workspaces"].post(payload, :content_type => :xml)
     end
@@ -45,7 +44,7 @@ module Geoloader
     # Delete a workspace.
     #
     # @param [String] name
-    def delete_workspace(name = @workspace)
+    def delete_workspace(name = @config.workspace)
       @resource["workspaces/#{name}"].delete({:params => {:recurse => true}})
     end
 
@@ -53,7 +52,7 @@ module Geoloader
     #
     # @param [Geoloader::Geotiff] geotiff
     def create_coveragestore(geotiff)
-      url = "workspaces/#{@workspace}/coveragestores/#{geotiff.base_name}/file.geotiff"
+      url = "workspaces/#{@config.workspace}/coveragestores/#{geotiff.uuid}/file.geotiff"
       @resource[url].put(File.read(geotiff.processed_path))
     end
 
@@ -61,7 +60,7 @@ module Geoloader
     #
     # @param [Geoloader::Geotiff] geotiff
     def delete_coveragestore(geotiff)
-      url = "workspaces/#{@workspace}/coveragestores/#{geotiff.base_name}"
+      url = "workspaces/#{@config.workspace}/coveragestores/#{geotiff.uuid}"
       @resource[url].delete({:params => {:recurse => true}})
     end
 
@@ -71,19 +70,19 @@ module Geoloader
     def create_datastore(shapefile)
 
       payload = Builder::XmlMarkup.new.dataStore { |d|
-        d.name shapefile.base_name
+        d.name shapefile.uuid
         d.connectionParameters { |c|
           c.host      Geoloader.config.postgis.host
           c.port      Geoloader.config.postgis.port
           c.user      Geoloader.config.postgis.username
           c.passwd    Geoloader.config.postgis.password
-          c.database  shapefile.base_name
+          c.database  shapefile.uuid
           c.dbtype    "postgis"
         }
       }
 
       # Create the new datastore.
-      url = "workspaces/#{@workspace}/datastores"
+      url = "workspaces/#{@config.workspace}/datastores"
       @resource[url].post(payload, :content_type => :xml)
 
     end
@@ -92,7 +91,7 @@ module Geoloader
     #
     # @param [Geoloader::Shapefile] shapefile
     def delete_datastore(shapefile)
-      url = "workspaces/#{@workspace}/datastores/#{shapefile.base_name}"
+      url = "workspaces/#{@config.workspace}/datastores/#{shapefile.uuid}"
       @resource[url].delete({:params => {:recurse => true}})
     end
 
@@ -108,7 +107,7 @@ module Geoloader
         }
 
         # Create the new featuretype.
-        url = "workspaces/#{@workspace}/datastores/#{shapefile.base_name}/featuretypes"
+        url = "workspaces/#{@config.workspace}/datastores/#{shapefile.uuid}/featuretypes"
         @resource[url].post(payload, :content_type => :xml)
 
       }

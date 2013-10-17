@@ -26,6 +26,14 @@ module Geoloader
       @resource.commit
     end
 
+    # Delete the document for a given asset.
+    #
+    # @param [Geoloader::Asset] asset
+    def delete_document(asset)
+      @resource.delete_by_query("id:#{asset.uuid}")
+      @resource.commit
+    end
+
     # Delete all documents.
     def clear_index
       @resource.delete_by_query("*:*")

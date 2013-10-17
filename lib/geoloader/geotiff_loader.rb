@@ -6,8 +6,6 @@ module Geoloader
 
     attr_reader :geotiff
 
-    # Create the file asset.
-    #
     # @param [String] file_name
     def initialize(file_path)
       @geotiff = Geoloader::Geotiff.new(file_path)
@@ -16,18 +14,26 @@ module Geoloader
 
     def load
 
-      # Prepare the file.
+      # (1) Process the file.
       @geotiff.remove_border
       @geotiff.convert_to_4326
 
-      # Push to Geoserver / Solr.
+      # (2) Push to Geoserver.
       @geoserver.create_coveragestore(@geotiff)
+
+      # (3) Push to Solr.
       @solr.create_document(@geotiff)
 
     end
 
     def unload
+
+      # (1) Delete from Goeserver.
       @geoserver.delete_coveragestore(@geotiff)
+
+      # (2) Delete from Solr.
+      @solr.delete_document(@geotiff)
+
     end
 
   end
