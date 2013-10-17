@@ -8,6 +8,8 @@ require 'rake/clean'
 
 task :default => [:install, :test]
 
+CLEAN.include("test/fixtures/*.geoloader.*")
+
 Jeweler::Tasks.new do |gem|
   gem.name    = "geoloader"
   gem.author  = "David McClure"
@@ -19,4 +21,6 @@ Rake::TestTask.new do |t|
   t.pattern = "test/integration/*.rb"
 end
 
-CLEAN.include("test/fixtures/*.geoloader.*")
+task "resque:setup" do
+  require './lib/geoloader.rb'
+end

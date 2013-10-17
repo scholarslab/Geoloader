@@ -24,9 +24,9 @@ module Geoloader
       Dir.glob("#{File.dirname(@yaml_path)}/#{@metadata["files"]}") do |file|
         case File.extname(file)
         when ".tif"
-          Resque.enqueue( Geoloader::GeotiffLoader, file, @metadata)
+          Resque.enqueue(Geoloader::GeotiffJob, file, @metadata)
         when ".shp"
-          Resque.enqueue( Geoloader::ShapefileLoader, file, @metadata)
+          Resque.enqueue(Geoloader::ShapefileJob, file, @metadata)
         end
       end
 
