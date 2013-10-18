@@ -47,7 +47,7 @@ end
 # Prompt for a title, description, and workspace.
 #
 def get_metadata
-  {"title" => ask("Title: "),"workspace" => ask("Workspace: ") }
+  { "title" => ask("Title: "),"workspace" => ask("Workspace: ") }
 end
 
 #

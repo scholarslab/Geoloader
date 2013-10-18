@@ -41,21 +41,5 @@ module Geoloader
 
     end
 
-    #
-    # Remove the asset from Geoserver and Solr.
-    #
-    def unload
-
-      # (1) Delete from Solr.
-      @solr.delete_document(@asset)
-
-      # (2) Delete from Geoserver.
-      @geoserver.delete_datastore(@asset, @workspace)
-
-      # (3) Drop database.
-      @shapefile.drop_database
-
-    end
-
   end
 end

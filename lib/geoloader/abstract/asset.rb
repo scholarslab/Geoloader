@@ -50,5 +50,14 @@ module Geoloader
       FileUtils.rm_rf(@archive)
     end
 
+    #
+    # Print an activity log.
+    #
+    # @param [String] message
+    #
+    def log(msg)
+      puts "#{@uuid} :: #{msg}"
+    end
+
   end
 end
