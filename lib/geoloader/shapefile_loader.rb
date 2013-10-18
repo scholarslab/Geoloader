@@ -6,6 +6,18 @@ module Geoloader
 
     attr_reader :shapefile
 
+    @queue = :geoloader
+
+    #
+    # Perform an upload (used by Resque).
+    #
+    # @param [String] file_name
+    # @param [Hash] metadata
+    #
+    def self.perform(file_path, metadata)
+      Geoloader::ShapefileLoader.new(file_path, metadata).load
+    end
+
     #
     # Construct the asset instance.
     #

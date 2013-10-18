@@ -70,7 +70,7 @@ end
 #
 def load_shapefile(file_path, metadata, resque)
   if resque
-    Resque.enqueue(Geoloader::ShapefileJob, file_path, metadata)
+    Resque.enqueue(Geoloader::ShapefileLoader, file_path, metadata)
   else
     Geoloader::ShapefileLoader.new(file_path, metadata).load
   end
@@ -85,7 +85,7 @@ end
 #
 def load_geotiff(file_path, metadata, resque)
   if resque
-    Resque.enqueue(Geoloader::GeotiffJob, file_path, metadata)
+    Resque.enqueue(Geoloader::GeotiffLoader, file_path, metadata)
   else
     Geoloader::GeotiffLoader.new(file_path, metadata).load
   end
