@@ -9,11 +9,11 @@ module Geoloader
     #
     # Read batch manifest and metadata.
     #
-    # @param [String] yaml_name
+    # @param [String] file_path
     #
-    def initialize(yaml_path)
-      @yaml_path = File.expand_path(yaml_path)
-      @metadata = YAML::load(File.read(@yaml_path))
+    def initialize(file_path)
+      @file_path = File.expand_path(file_path)
+      @metadata = YAML::load(File.read(@file_path))
     end
 
     #
@@ -21,7 +21,7 @@ module Geoloader
     #
     def load
 
-      Dir.glob("#{File.dirname(@yaml_path)}/#{@metadata["files"]}") do |file|
+      Dir.glob("#{File.dirname(@file_path)}/#{@metadata["files"]}") do |file|
         case File.extname(file)
         when ".tif"
           Resque.enqueue(Geoloader::GeotiffJob, file, @metadata)

@@ -7,7 +7,7 @@ require 'nokogiri'
 module Geoloader
   class Asset
 
-    attr_reader :file_path, :base_name, :uuid, :slug
+    attr_reader :file_path, :base_name, :uuid
 
     #
     # Load the ESRI XML and cache the uuid.
