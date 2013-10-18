@@ -62,10 +62,12 @@ module Geoloader
     end
 
     #
-    # Delete all documents.
+    # Delete all documents in a given workspace.
     #
-    def clear_index
-      @resource.delete_by_query("*:*")
+    # @param [String] workspace
+    #
+    def delete_by_workspace(workspace)
+      @resource.delete_by_query("workspace:#{workspace}")
       @resource.commit
     end
 

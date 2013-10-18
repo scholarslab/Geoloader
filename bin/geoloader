@@ -8,22 +8,9 @@ program :version, '0.0.1'
 program :description, 'Load GeoTIFFs and Shapefiles into Geonetwork, Geoserver, and PostgreSQL'
 
 command :load do |c|
-  c.syntax = 'geoloader load [filename]'
+  c.syntax  = 'geoloader load [filename]'
   c.summary = 'Load a YAML batch manifest.'
   c.action do |args, options|
-    loader = Geoloader::BatchLoader.new(args[0])
-    loader.load
-  end
-end
-
-# TODO|dev
-command :reset do |c|
-  c.syntax = 'geoloader reset'
-  c.summary = 'Delete all assets (for development).'
-  c.action do |args, options|
-    geoserver = Geoloader::Geoserver.new
-    solr = Geoloader::Solr.new
-    geoserver.delete_workspace(args[0])
-    solr.clear_index
+    Geoloader::BatchLoader.new(args[0]).load
   end
 end

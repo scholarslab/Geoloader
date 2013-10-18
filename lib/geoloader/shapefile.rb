@@ -7,8 +7,6 @@ require 'pg'
 module Geoloader
   class Shapefile < Asset
 
-    attr_reader :sql_path
-
     #
     # Create a PostGIS-enabled database and connect to it.
     #
@@ -22,7 +20,7 @@ module Geoloader
     #
     def insert_tables
       sql_path = "#{File.dirname(@file_path)}/#{@base_name}.sql"
-      system "shp2pgsql #{@file_path} > #{@sql_path}"
+      system "shp2pgsql #{@file_path} > #{sql_path}"
       system "psql #{self.class.psql_options} -d #{@base_name} -f #{sql_path}"
     end
 
