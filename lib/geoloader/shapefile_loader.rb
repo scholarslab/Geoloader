@@ -12,21 +12,21 @@ module Geoloader
     # Perform an upload (used by Resque).
     #
     # @param [String] file_name
-    # @param [Hash] metadata
+    # @param [Hash] manifest
     #
-    def self.perform(file_path, metadata)
-      Geoloader::ShapefileLoader.new(file_path, metadata).load
+    def self.perform(file_path, manifest)
+      Geoloader::ShapefileLoader.new(file_path, manifest).load
     end
 
     #
     # Construct the asset instance.
     #
     # @param [String] file_name
-    # @param [Hash] metadata
+    # @param [Hash] manifest
     #
-    def initialize(file_path, metadata)
+    def initialize(file_path, manifest)
       super
-      @asset = Geoloader::Shapefile.new(file_path, @workspace)
+      @asset = Geoloader::Shapefile.new(file_path, @manifest.workspace)
     end
 
     #
@@ -41,11 +41,11 @@ module Geoloader
       @asset.insert_tables
 
       # (2) Push to Geoserver.
-      @geoserver.create_datastore(@asset, @workspace)
-      @geoserver.create_featuretypes(@asset, @workspace)
+      @geoserver.create_datastore(@asset, @manifest.workspace)
+      @geoserver.create_featuretypes(@asset, @manifest.workspace)
 
       # (3) Push to Solr.
-      @solr.create_document(@asset, @metadata)
+      @solr.create_document(@asset, @manifest)
 
       # (4) Cleanup.
       @asset.disconnect

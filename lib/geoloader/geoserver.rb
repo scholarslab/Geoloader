@@ -40,6 +40,15 @@ module Geoloader
     end
 
     #
+    # Check to see if a workspace exists, and if not, create it.
+    #
+    # @param [String] name
+    #
+    def ensure_workspace(workspace)
+      create_workspace(workspace) unless workspace_exists?(workspace)
+    end
+
+    #
     # Delete a workspace.
     #
     # @param [String] name

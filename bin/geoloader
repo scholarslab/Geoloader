@@ -21,17 +21,17 @@ command :load do |c|
 
     options.default :resque => false
 
-    # Read the YAML manifest.
-    file_path = File.expand_path(args[0])
-    yaml = YAML::load(File.read(file_path))
+    # Load the manifest.
+    manifest_path = File.expand_path(args[0])
+    manifest = YAML::load(File.read(manifest_path))
 
     # Process each of the matched files.
-    Dir.glob("#{File.dirname(file_path)}/#{yaml["files"]}") do |f|
+    Dir.glob("#{File.dirname(manifest_path)}/#{manifest["files"]}") do |f|
       case File.extname(f)
       when ".shp"
-        load_shapefile(f, yaml, options.resque)
+        load_shapefile(f, manifest, options.resque)
       when ".tif"
-        load_geotiff(f, yaml, options.resque)
+        load_geotiff(f, manifest, options.resque)
       end
     end
 
@@ -65,14 +65,14 @@ end
 # Load a Shapefile.
 #
 # @param [String] file_path
-# @param [Hash] metadata
+# @param [Hash] manifest
 # @param [Boolean] resque
 #
-def load_shapefile(file_path, metadata, resque)
+def load_shapefile(file_path, manifest, resque)
   if resque
-    Resque.enqueue(Geoloader::ShapefileLoader, file_path, metadata)
+    Resque.enqueue(Geoloader::ShapefileLoader, file_path, manifest)
   else
-    Geoloader::ShapefileLoader.new(file_path, metadata).load
+    Geoloader::ShapefileLoader.new(file_path, manifest).load
   end
 end
 
@@ -80,13 +80,13 @@ end
 # Load a GeoTIFF.
 #
 # @param [String] file_path
-# @param [Hash] metadata
+# @param [Hash] manifest
 # @param [Boolean] resque
 #
-def load_geotiff(file_path, metadata, resque)
+def load_geotiff(file_path, manifest, resque)
   if resque
-    Resque.enqueue(Geoloader::GeotiffLoader, file_path, metadata)
+    Resque.enqueue(Geoloader::GeotiffLoader, file_path, manifest)
   else
-    Geoloader::GeotiffLoader.new(file_path, metadata).load
+    Geoloader::GeotiffLoader.new(file_path, manifest).load
   end
 end

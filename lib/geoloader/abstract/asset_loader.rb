@@ -10,19 +10,16 @@ module Geoloader
     # Store metadata, create service wrappers.
     #
     # @param [String] file_name
-    # @param [Hash] metadata
+    # @param [Hash] manifest
     #
-    def initialize(file_path, metadata)
+    def initialize(file_path, manifest)
 
-      @metadata = metadata
-
-      # Initialize service wrappers.
+      @manifest   = Confstruct::Configuration.new(manifest)
       @geoserver  = Geoloader::Geoserver.new
       @solr       = Geoloader::Solr.new
 
       # Create the Geoserver workspace.
-      @workspace = @metadata["workspace"]
-      @geoserver.create_workspace(@workspace) unless @geoserver.workspace_exists?(@workspace)
+      @geoserver.ensure_workspace(@manifest.workspace)
 
     end
 

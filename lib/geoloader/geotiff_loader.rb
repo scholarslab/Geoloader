@@ -12,21 +12,21 @@ module Geoloader
     # Perform an upload (used by Resque).
     #
     # @param [String] file_name
-    # @param [Hash] metadata
+    # @param [Hash] manifest
     #
-    def self.perform(file_path, metadata)
-      Geoloader::GeotiffLoader.new(file_path, metadata).load
+    def self.perform(file_path, manifest)
+      Geoloader::GeotiffLoader.new(file_path, manifest).load
     end
 
     #
     # Consruct the asset instance.
     #
     # @param [String] file_name
-    # @param [Hash] metadata
+    # @param [Hash] manifest
     #
-    def initialize(file_path, metadata)
+    def initialize(file_path, manifest)
       super
-      @asset = Geoloader::Geotiff.new(file_path, @workspace)
+      @asset = Geoloader::Geotiff.new(file_path, @manifest.workspace)
     end
 
     #
@@ -40,10 +40,10 @@ module Geoloader
       @asset.convert_to_4326
 
       # (2) Push to Geoserver.
-      @geoserver.create_coveragestore(@asset, @workspace)
+      @geoserver.create_coveragestore(@asset, @manifest.workspace)
 
       # (3) Push to Solr.
-      @solr.create_document(@asset, @metadata)
+      @solr.create_document(@asset, @manifest)
 
       # (4) Cleanup.
       @asset.delete_copies
