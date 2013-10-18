@@ -32,6 +32,17 @@ command :load do |c|
 end
 
 #
+# Spin up a Resque worker.
+#
+command :work do |c|
+  c.syntax  = 'geoloader work'
+  c.summary = 'Start a Resque worker.'
+  c.action do |args, options|
+    Resque::Worker.new("geoloader").work
+  end
+end
+
+#
 # Delete all databases, stores, and documents in a workspace.
 #
 command :clear do |c|
@@ -47,7 +58,7 @@ end
 # Prompt for a title, description, and workspace.
 #
 def get_metadata
-  { "title" => ask("Title: "),"workspace" => ask("Workspace: ") }
+  { "title" => ask("Title: "), "workspace" => ask("Workspace: ") }
 end
 
 #

@@ -12,7 +12,10 @@ module Geoloader
     #
     # Form the database name.
     #
-    def initialize
+    # @param [String] file_path
+    # @param [String] workspace
+    #
+    def initialize(file_path, workspace)
       super
       @database = "#{@workspace}_#{@base_name}"
     end
