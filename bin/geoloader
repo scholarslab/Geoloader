@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+# vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
+
 require 'rubygems'
 require 'commander/import'
 require 'resque'
@@ -19,13 +21,18 @@ command :load do |c|
 
     options.default :resque => false
 
-    case File.extname(args[0])
-    when ".yaml", ".yml"
-      load_batch(args[0], options.resque)
-    when ".shp"
-      load_shapefile(args[0], get_metadata, options.resque)
-    when ".tif"
-      load_geotiff(args[0], get_metadata, options.resque)
+    # Read the YAML manifest.
+    file_path = File.expand_path(file_path)
+    yaml = YAML::load(File.read(file_path))
+
+    # Process each of the matched files.
+    Dir.glob("#{File.dirname(file_path)}/#{yaml["files"]}") do |f|
+      case File.extname(f)
+      when ".shp"
+        load_shapefile(f, yaml, options.resque)
+      when ".tif"
+        load_geotiff(f, yaml, options.resque)
+      end
     end
 
   end
@@ -52,37 +59,6 @@ command :clear do |c|
     Geoloader::Geoserver.new.delete_workspace(args[0])
     Geoloader::Solr.new.delete_by_workspace(args[0])
   end
-end
-
-#
-# Prompt for a title, description, and workspace.
-#
-def get_metadata
-  { "title" => ask("Title: "), "workspace" => ask("Workspace: ") }
-end
-
-#
-# Load a batch manifest.
-#
-# @param [String] file_path
-# @param [Boolean] resque
-#
-def load_batch(file_path, resque)
-
-  # Read the YAML manifest.
-  file_path = File.expand_path(file_path)
-  yaml = YAML::load(File.read(file_path))
-
-  # Process each of the matched files.
-  Dir.glob("#{File.dirname(file_path)}/#{yaml["files"]}") do |f|
-    case File.extname(f)
-    when ".shp"
-      load_shapefile(f, yaml, resque)
-    when ".tif"
-      load_geotiff(f, yaml, resque)
-    end
-  end
-
 end
 
 #

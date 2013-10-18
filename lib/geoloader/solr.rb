@@ -23,7 +23,13 @@ module Geoloader
     # @param [Hash] metadata
     #
     def create_document(asset, metadata)
-      @resource.add({ :id => asset.uuid, :layer => asset.base_name }.merge(metadata))
+      @resource.add({
+        :id           => asset.uuid,
+        :title        => metadata["title"],
+        :description  => metadata["description"],
+        :workspace    => metadata["workspace"],
+        :layer        => asset.base_name
+      })
       @resource.commit
     end
 
