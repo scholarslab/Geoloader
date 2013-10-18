@@ -22,7 +22,7 @@ command :load do |c|
     options.default :resque => false
 
     # Read the YAML manifest.
-    file_path = File.expand_path(file_path)
+    file_path = File.expand_path(args[0])
     yaml = YAML::load(File.read(file_path))
 
     # Process each of the matched files.
