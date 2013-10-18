@@ -13,15 +13,10 @@ module Geoloader
     # Initialize the API wrapper.
     #
     def initialize
-
-      @config = Geoloader.config.geoserver
-
-      # Create the REST resource.
-      @resource = RestClient::Resource.new("#{@config.url}/rest", {
-        :user     => @config.username,
-        :password => @config.password
+      @resource = RestClient::Resource.new("#{Geoloader.config.geoserver.url}/rest", {
+        :user     => Geoloader.config.geoserver.username,
+        :password => Geoloader.config.geoserver.password
       })
-
     end
 
     #
@@ -126,7 +121,7 @@ module Geoloader
         # Construct the request.
         payload = Builder::XmlMarkup.new.featureType { |f|
           f.name layer
-          f.srs @config.srs
+          f.srs Geoloader.config.geoserver.srs
         }
 
         # Create the new featuretype.

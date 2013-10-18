@@ -7,8 +7,7 @@ module Geoloader
     @queue = :geoloader
 
     def self.perform(file_path, metadata)
-      loader = Geoloader::ShapefileLoader.new(file_path, metadata)
-      loader.load
+      Geoloader::ShapefileLoader.new(file_path, metadata).load
     end
 
   end

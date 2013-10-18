@@ -10,8 +10,9 @@ module Geoloader
     # Read batch manifest and metadata.
     #
     # @param [String] file_path
+    # @param [Boolean] enqueue
     #
-    def initialize(file_path)
+    def initialize(file_path, enqueue = false)
       @file_path = File.expand_path(file_path)
       @metadata = YAML::load(File.read(@file_path))
     end

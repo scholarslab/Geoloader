@@ -2,15 +2,104 @@
 
 require 'rubygems'
 require 'commander/import'
+require 'resque'
 require 'geoloader'
 
 program :version, '0.0.1'
-program :description, 'Load GeoTIFFs and Shapefiles into Geonetwork, Geoserver, and PostgreSQL'
+program :description, 'Load GeoTIFFs and Shapefiles into PostGIS, Geoserver, and Solr.'
 
+#
+# Load a batch manifest or an individual GeoTIFF / Shapefile.
+#
 command :load do |c|
   c.syntax  = 'geoloader load [filename]'
   c.summary = 'Load a YAML batch manifest.'
+  c.option  "-q", "--resque", "Push jobs onto Resque."
   c.action do |args, options|
-    Geoloader::BatchLoader.new(args[0]).load
+
+    options.default :resque => false
+
+    case File.extname(args[0])
+    when ".yaml", ".yml"
+      load_batch(args[0], options.resque)
+    when ".shp"
+      load_shapefile(args[0], get_metadata, options.resque)
+    when ".tif"
+      load_geotiff(args[0], get_metadata, options.resque)
+    end
+
+  end
+end
+
+#
+# Delete all databases, stores, and documents in a workspace.
+#
+command :clear do |c|
+  c.syntax  = 'geoloader clear [workspace]'
+  c.summary = 'Clear a workspace.'
+  c.action do |args, options|
+    Geoloader::Geoserver.new.delete_workspace(args[0])
+    Geoloader::Solr.new.delete_by_workspace(args[0])
+  end
+end
+
+#
+# Prompt for a title, description, and workspace.
+#
+def get_metadata
+  {"title" => ask("Title: "),"workspace" => ask("Workspace: ") }
+end
+
+#
+# Load a batch manifest.
+#
+# @param [String] file_path
+# @param [Boolean] resque
+#
+def load_batch(file_path, resque)
+
+  # Read the YAML manifest.
+  file_path = File.expand_path(file_path)
+  yaml = YAML::load(File.read(file_path))
+
+  # Process each of the matched files.
+  Dir.glob("#{File.dirname(file_path)}/#{yaml["files"]}") do |f|
+    case File.extname(f)
+    when ".shp"
+      load_shapefile(f, yaml, resque)
+    when ".tif"
+      load_geotiff(f, yaml, resque)
+    end
+  end
+
+end
+
+#
+# Load a Shapefile.
+#
+# @param [String] file_path
+# @param [Hash] metadata
+# @param [Boolean] resque
+#
+def load_shapefile(file_path, metadata, resque)
+  if resque
+    Resque.enqueue(Geoloader::ShapefileJob, file_path, metadata)
+  else
+    Geoloader::ShapefileLoader.new(file_path, metadata).load
+  end
+end
+
+#
+# Load a GeoTIFF.
+#
+# @param [String] file_path
+# @param [Hash] metadata
+# @param [Boolean] resque
+#
+def load_geotiff(file_path, metadata, resque)
+  if resque
+    Resque.enqueue(Geoloader::GeotiffJob, file_path, metadata)
+  else
+    Geoloader::GeotiffLoader.new(file_path, metadata).load
   end
 end
