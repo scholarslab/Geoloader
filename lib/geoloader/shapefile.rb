@@ -7,12 +7,22 @@ require 'pg'
 module Geoloader
   class Shapefile < Asset
 
+    attr_reader :database
+
+    #
+    # Form the database name.
+    #
+    def initialize
+      super
+      @database = "#{@workspace}_#{@base_name}"
+    end
+
     #
     # Create a PostGIS-enabled database and connect to it.
     #
     def create_database
-      system "createdb #{self.class.psql_options} #{@base_name}"
-      system "psql #{self.class.psql_options} -d #{@base_name} -c 'CREATE EXTENSION postgis;'"
+      system "createdb #{self.class.psql_options} #{@database}"
+      system "psql #{self.class.psql_options} -d #{@database} -c 'CREATE EXTENSION postgis;'"
     end
 
     #
@@ -21,7 +31,7 @@ module Geoloader
     def insert_tables
       sql_path = "#{File.dirname(@file_path)}/#{@base_name}.sql"
       system "shp2pgsql #{@file_path} > #{sql_path}"
-      system "psql #{self.class.psql_options} -d #{@base_name} -f #{sql_path}"
+      system "psql #{self.class.psql_options} -d #{@database} -f #{sql_path}"
     end
 
     #
@@ -35,7 +45,7 @@ module Geoloader
     # Drop the PostGIS database.
     #
     def drop_database
-      system "dropdb #{self.class.psql_options} #{@base_name}"
+      system "dropdb #{self.class.psql_options} #{@database}"
     end
 
     #
@@ -57,7 +67,7 @@ module Geoloader
         :host => Geoloader.config.postgis.host,
         :port => Geoloader.config.postgis.port,
         :user => Geoloader.config.postgis.username,
-        :dbname => @base_name
+        :dbname => @database
       )
     end
 

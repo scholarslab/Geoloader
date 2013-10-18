@@ -13,8 +13,8 @@ module Geoloader
     # @param [Hash] metadata
     #
     def initialize(file_path, metadata)
-      @asset = Geoloader::Shapefile.new(file_path)
       super
+      @asset = Geoloader::Shapefile.new(file_path, @workspace)
     end
 
     #

@@ -13,11 +13,13 @@ module Geoloader
     # Load the ESRI XML and cache the uuid.
     #
     # @param [String] file_path
+    # @param [String] workspace
     #
-    def initialize(file_path)
+    def initialize(file_path, workspace)
 
       @file_path = file_path
       @base_name = File.basename(@file_path, ".*")
+      @workspace = workspace
 
       # Cache the ESRI uuid.
       @esri_xml = Nokogiri::XML(File.read("#{@file_path}.xml"))
@@ -48,15 +50,6 @@ module Geoloader
     #
     def delete_copies
       FileUtils.rm_rf(@archive)
-    end
-
-    #
-    # Print an activity log.
-    #
-    # @param [String] message
-    #
-    def log(msg)
-      puts "#{@uuid} :: #{msg}"
     end
 
   end
