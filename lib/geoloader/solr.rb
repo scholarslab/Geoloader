@@ -33,12 +33,30 @@ module Geoloader
     end
 
     #
-    # Select all documents in a given workspace.
+    # Count the number of documents in each workspace.
     #
     # @param [String] workspace
     #
-    def select_by_workspace(workspace)
-      @resource.get("select", :params => {:q => "workspace:#{workspace}"})
+    def get_workspace_counts
+
+      workspaces = []
+
+      # Query for all documents.
+      response = @resource.find({
+        :queries => "*:*",
+        :facets => { :fields => "workspace" },
+        :rows => 0
+      })
+
+      # Assemble counts.
+      response.facets.each do |facet|
+        facet.items.each do |item|
+          workspaces << [item.value, item.hits]
+        end
+      end
+
+      workspaces
+
     end
 
     #
