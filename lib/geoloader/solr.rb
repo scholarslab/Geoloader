@@ -41,14 +41,14 @@ module Geoloader
 
       workspaces = []
 
-      # Query for all documents.
+      # Query for workspace facets.
       response = @resource.find({
         :queries => "*:*",
         :facets => { :fields => "workspace" },
         :rows => 0
       })
 
-      # Assemble counts.
+      # Flatten out the counts.
       response.facets.each do |facet|
         facet.items.each do |item|
           workspaces << [item.value, item.hits]

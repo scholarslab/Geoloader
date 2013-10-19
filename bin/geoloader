@@ -57,7 +57,11 @@ command :list do |c|
   c.syntax  = 'geoloader list'
   c.summary = 'List workspaces.'
   c.action do |args, options|
-    puts Terminal::Table.new(:rows => Geoloader::Solr.new.get_workspace_counts)
+    puts Terminal::Table.new({
+      :title => "GEOLOADER",
+      :rows => Geoloader::Solr.new.get_workspace_counts,
+      :headings => ["Workspace", "# Assets"]
+    })
   end
 end
 
