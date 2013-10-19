@@ -1,8 +1,7 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require 'rsolr'
-require 'securerandom'
+require 'rsolr-ext'
 
 module Geoloader
   class Solr
@@ -13,7 +12,7 @@ module Geoloader
     # Initialize the API wrapper.
     #
     def initialize
-      @resource = RSolr.connect(:url => Geoloader.config.solr.url)
+      @resource = RSolr::Ext.connect(:url => Geoloader.config.solr.url)
     end
 
     #
@@ -34,31 +33,12 @@ module Geoloader
     end
 
     #
-    # Query for an individual asset document.
+    # Select all documents in a given workspace.
     #
-    # @param [Geoloader::Asset] asset
+    # @param [String] workspace
     #
-    def get_document(asset)
-      @resource.get("select", :params => {:q => "id:#{asset.uuid}"})
-    end
-
-    #
-    # Does a document exist for a given asset?
-    #
-    # @param [Geoloader::Asset] asset
-    #
-    def document_exists?(asset)
-      get_document(asset)["response"]["numFound"].to_i == 1
-    end
-
-    #
-    # Delete the document for a given asset.
-    #
-    # @param [Geoloader::Asset] asset
-    #
-    def delete_document(asset)
-      @resource.delete_by_query("id:#{asset.uuid}")
-      @resource.commit
+    def select_by_workspace(workspace)
+      @resource.get("select", :params => {:q => "workspace:#{workspace}"})
     end
 
     #

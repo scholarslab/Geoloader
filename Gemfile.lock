@@ -65,6 +65,8 @@ GEM
       mime-types (>= 1.16)
     rsolr (1.0.9)
       builder (>= 2.1.2)
+    rsolr-ext (1.0.3)
+      rsolr (>= 1.0.2)
     sinatra (1.4.3)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -85,4 +87,4 @@ DEPENDENCIES
   pg
   resque
   rest-client
-  rsolr
+  rsolr-ext
