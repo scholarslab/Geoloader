@@ -26,7 +26,7 @@ module Geoloader
     #
     def initialize(file_path, manifest)
       super
-      @asset = Geoloader::Shapefile.new(file_path, @manifest.workspace)
+      @asset = Geoloader::Shapefile.new(file_path)
     end
 
     #

@@ -13,14 +13,10 @@ module Geoloader
     # Load the ESRI XML and cache the uuid.
     #
     # @param [String] file_path
-    # @param [String] workspace
     #
-    def initialize(file_path, workspace)
+    def initialize(file_path)
 
       @file_path = file_path
-      @workspace = workspace
-
-      # Store a semantic identifier.
       @base_name = File.basename(@file_path, ".*")
 
       # Store the ESRI uuid.
