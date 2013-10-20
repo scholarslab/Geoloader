@@ -3,12 +3,8 @@
 
 require 'jeweler'
 require 'resque/tasks'
-require 'rake/testtask'
-require 'rake/clean'
 
 task :default => [:install, :test]
-
-CLEAN.include("test/fixtures/*.geoloader.*")
 
 Jeweler::Tasks.new do |gem|
   gem.name    = "geoloader"
