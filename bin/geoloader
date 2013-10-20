@@ -2,10 +2,9 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require 'rubygems'
 require 'commander/import'
-require 'terminal-table'
 require 'resque'
+require 'terminal-table'
 require 'geoloader'
 
 program :version, '0.0.1'
@@ -51,21 +50,6 @@ command :work do |c|
 end
 
 #
-# Show a list of all workspaces with document counts.
-#
-command :list do |c|
-  c.syntax  = 'geoloader list'
-  c.summary = 'List workspaces.'
-  c.action do |args, options|
-    puts Terminal::Table.new({
-      :title => "GEOLOADER",
-      :rows => Geoloader::Solr.new.get_workspace_counts,
-      :headings => ["Workspace", "# Assets"]
-    })
-  end
-end
-
-#
 # Delete all databases, stores, and documents in a workspace.
 #
 command :clear do |c|
@@ -74,6 +58,21 @@ command :clear do |c|
   c.action do |args, options|
     Geoloader::Geoserver.new.delete_workspace(args[0])
     Geoloader::Solr.new.delete_by_workspace(args[0])
+  end
+end
+
+#
+# Show a list of all workspaces with document counts.
+#
+command :list do |c|
+  c.syntax  = 'geoloader list'
+  c.summary = 'List workspaces.'
+  c.action do |args, options|
+    puts Terminal::Table.new({
+      :title => "GEOLOADER",
+      :headings => ["Workspace", "# Assets"],
+      :rows => Geoloader::Solr.new.get_workspace_counts
+    })
   end
 end
 
