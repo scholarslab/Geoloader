@@ -2,10 +2,9 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
+require 'geoloader'
 require 'commander/import'
 require 'resque'
-require 'terminal-table'
-require 'geoloader'
 
 program :version, '0.0.1'
 program :description, 'Load GeoTIFFs and Shapefiles into PostGIS, Geoserver, and Solr.'
@@ -21,31 +20,32 @@ command :load do |c|
 
     options.default :resque => false
 
-    # Load the manifest.
+    # Read the manifest.
     manifest_path = File.expand_path(args[0])
     manifest = YAML::load(File.read(manifest_path))
 
-    # Process each of the matched files.
+    # For each matched file in the manifest:
     Dir.glob("#{File.dirname(manifest_path)}/#{manifest["files"]}") do |f|
-      case File.extname(f)
-      when ".shp"
-        load_shapefile(f, manifest, options.resque)
+
+      # Get a loader class.
+      loader = case File.extname(f)
+      when ".shp" then
+        Geoloader::ShapefileLoader
       when ".tif"
-        load_geotiff(f, manifest, options.resque)
+        Geoloader::GeotiffLoader
+      else
+        next
       end
+
+      # Execute / enqueue.
+      if options.resque
+        Resque.enqueue(loader, f, manifest)
+      else
+        loader.new(f, manifest).load
+      end
+
     end
 
-  end
-end
-
-#
-# Spin up a Resque worker.
-#
-command :work do |c|
-  c.syntax  = 'geoloader work'
-  c.summary = 'Start a Resque worker.'
-  c.action do |args, options|
-    Resque::Worker.new("geoloader").work
   end
 end
 
@@ -62,46 +62,12 @@ command :clear do |c|
 end
 
 #
-# Show a list of all workspaces with document counts.
+# Spin up a Resque worker.
 #
-command :list do |c|
-  c.syntax  = 'geoloader list'
-  c.summary = 'List workspaces.'
+command :work do |c|
+  c.syntax  = 'geoloader work'
+  c.summary = 'Start a Resque worker.'
   c.action do |args, options|
-    puts Terminal::Table.new({
-      :title => "GEOLOADER",
-      :headings => ["Workspace", "# Assets"],
-      :rows => Geoloader::Solr.new.get_workspace_counts
-    })
-  end
-end
-
-#
-# Load a Shapefile.
-#
-# @param [String] file_path
-# @param [Hash] manifest
-# @param [Boolean] resque
-#
-def load_shapefile(file_path, manifest, resque)
-  if resque
-    Resque.enqueue(Geoloader::ShapefileLoader, file_path, manifest)
-  else
-    Geoloader::ShapefileLoader.new(file_path, manifest).load
-  end
-end
-
-#
-# Load a GeoTIFF.
-#
-# @param [String] file_path
-# @param [Hash] manifest
-# @param [Boolean] resque
-#
-def load_geotiff(file_path, manifest, resque)
-  if resque
-    Resque.enqueue(Geoloader::GeotiffLoader, file_path, manifest)
-  else
-    Geoloader::GeotiffLoader.new(file_path, manifest).load
+    Resque::Worker.new("geoloader").work
   end
 end
