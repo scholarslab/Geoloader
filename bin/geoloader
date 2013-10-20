@@ -71,3 +71,12 @@ command :work do |c|
     Resque::Worker.new("geoloader").work
   end
 end
+
+#
+# TODO|dev.
+#
+command :test do |c|
+  c.action do |args, options|
+    puts Geoloader::Solr.new.select_by_workspace(args[0])
+  end
+end

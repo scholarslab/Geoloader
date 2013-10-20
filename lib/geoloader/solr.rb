@@ -33,7 +33,17 @@ module Geoloader
     end
 
     #
-    # Delete all documents in a given workspace.
+    # Select all documents in a workspace.
+    #
+    # @param [String] workspace
+    #
+    def select_by_workspace(workspace)
+      # TODO|dev
+      @resource.find({ :queries => "workspace:#{workspace}" })
+    end
+
+    #
+    # Delete all documents in a workspace.
     #
     # @param [String] workspace
     #

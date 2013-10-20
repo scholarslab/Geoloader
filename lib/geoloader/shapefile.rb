@@ -7,8 +7,6 @@ require 'pg'
 module Geoloader
   class Shapefile < Asset
 
-    attr_reader :database
-
     #
     # Create a PostGIS-enabled database and connect to it.
     #
