@@ -12,9 +12,12 @@ module Geoloader
     #
     # Initialize the database name.
     #
+    # @param [String] file_path
+    # @param [String] workspace
+    #
     def initialize(file_path, workspace)
       super
-      @db_name = "#{@workspace}_#{@uuid}"
+      @db_name = "#{workspace}_#{@uuid}"
     end
 
     #
