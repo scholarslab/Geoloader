@@ -19,9 +19,7 @@ module Geoloader
     # Convert the file to SQL for PostGIS.
     #
     def insert_tables
-      sql_path = "#{File.dirname(@file_path)}/#{@base_name}.sql"
-      system "shp2pgsql #{@file_path} > #{sql_path}"
-      system "psql #{self.class.psql_options} -d #{@slug} -f #{sql_path}"
+      @pg.exec(`shp2pgsql #{@file_path}`)
     end
 
     #

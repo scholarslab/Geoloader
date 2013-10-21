@@ -7,6 +7,13 @@ module Geoloader
   module Database
 
     #
+    # Connect to the default database.
+    #
+    def initialize
+      connect
+    end
+
+    #
     # Connect to Postgres.
     #
     # @param [String] name
@@ -21,20 +28,19 @@ module Geoloader
     end
 
     #
-    # Close the PostgreSQL connection.
+    # Drop a database.
     #
-    def disconnect
-      @pg.close
+    # @param [String] database
+    #
+    def create_database(database)
+      @pg.exec("CREATE DATABASE #{PG::Connection.quote_ident(database)}")
     end
 
     #
-    # Get an array of all column values in a table.
+    # Enable the PostGIS extension.
     #
-    # @param [String] table
-    # @param [String] column
-    #
-    def get_column(table, column)
-      @pg.exec("SELECT * FROM #{table}").field_values(column)
+    def enable_postgis(database)
+      @pg.exec("CREATE EXTENSION postgis")
     end
 
     #
@@ -51,6 +57,23 @@ module Geoloader
     #
     def list_databases
       get_column("pg_database", "datname")
+    end
+
+    #
+    # Get an array of all column values in a table.
+    #
+    # @param [String] table
+    # @param [String] column
+    #
+    def get_column(table, column)
+      @pg.exec("SELECT * FROM #{table}").field_values(column)
+    end
+
+    #
+    # Close the PostgreSQL connection.
+    #
+    def disconnect
+      @pg.close
     end
 
   end
