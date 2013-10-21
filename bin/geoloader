@@ -4,6 +4,7 @@
 
 require 'geoloader'
 require 'commander/import'
+require 'yaml'
 require 'resque'
 
 program :version, '0.0.1'

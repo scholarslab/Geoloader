@@ -32,7 +32,6 @@ GEM
     jwt (0.1.8)
       multi_json (>= 1.5)
     mime-types (1.23)
-    minitest (5.0.6)
     mono_logger (1.1.0)
     multi_json (1.7.9)
     multi_xml (0.5.5)
@@ -82,7 +81,6 @@ DEPENDENCIES
   commander
   confstruct
   jeweler
-  minitest
   nokogiri
   pg
   resque

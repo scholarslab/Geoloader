@@ -19,15 +19,15 @@ module Geoloader
     # Add a new document to the index.
     #
     # @param [Geoloader::Asset] asset
-    # @param [Hash] manifest
+    # @param [Confstruct::Configuration] data
     #
-    def create_document(asset, manifest)
+    def create_document(asset, data)
       @resource.add({
-        :id           => asset.uuid,
-        :title        => manifest.title,
-        :description  => manifest.description,
-        :workspace    => manifest.workspace,
-        :layer        => asset.base_name
+        :LayerId          => asset.uuid,
+        :Name             => asset.base_name,
+        :LayerDisplayName => data.title,
+        :Abstract         => data.description,
+        :workspaceName    => data.workspace
       })
       @resource.commit
     end

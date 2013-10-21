@@ -30,7 +30,7 @@ module Geoloader
     #
     def create_copies
 
-      # Create the upload archive directory.
+      # Create the working directory.
       @archive = "#{File.expand_path(Geoloader.config.archive)}/#{Time.now.to_i}"
       FileUtils.mkdir(@archive)
 
@@ -38,7 +38,7 @@ module Geoloader
       files = Dir.glob("#{File.dirname(file_path)}/#{@base_name}.*")
       FileUtils.cp(files, @archive)
 
-      # Set the working file path.
+      # Update the working file path.
       @file_path = "#{@archive}/#{File.basename(file_path)}"
 
     end
