@@ -8,22 +8,11 @@ module Geoloader
   class Postgres
 
     #
-    # List all databases.
-    #
-    def list_databases
-      connect
-      @pg.exec("SELECT datname FROM pg_database") do |table|
-        puts table
-      end
-      disconnect
-    end
-
-    #
-    # Get a generic PostgreSQL connection instance.
+    # Connect to Postgres.
     #
     # @param [String] name
     #
-    def connect(database = "postgres")
+    def initialize(database = "postgres")
       @pg = PG.connect(
         :host => Geoloader.config.postgis.host,
         :port => Geoloader.config.postgis.port,
@@ -33,21 +22,49 @@ module Geoloader
     end
 
     #
+    # Get an array of all column values in a table.
+    #
+    # @param [String] table
+    # @param [String] column
+    #
+    def get_column(table, column)
+      @pg.exec("SELECT * FROM #{table}").field_values(column)
+    end
+
+    #
+    # List all databases.
+    #
+    def list_databases
+      get_column("pg_database", "datname")
+    end
+
+    #
+    # Drop a database.
+    #
+    # @param [String] database
+    #
+    def drop_database(database)
+      @pg.exec("DROP DATABASE IF EXISTS #{database}")
+    end
+
+    #
+    # Drop all databases with a given workspace prefix.
+    #
+    # @param [String] workspace
+    #
+    def drop_databases_by_workspace(workspace)
+      list_databases.each do |database|
+        if database.starts_with?(workspace)
+          drop_database(database)
+        end
+      end
+    end
+
+    #
     # Close the PostgreSQL connection.
     #
     def disconnect
       @pg.close
-    end
-
-    #
-    # Form generic PostgreSQL connection parameters.
-    #
-    def self.psql_options
-      [
-        "-h #{Geoloader.config.postgis.host}",
-        "-p #{Geoloader.config.postgis.port}",
-        "-U #{Geoloader.config.postgis.username}"
-      ].join(" ")
     end
 
   end
