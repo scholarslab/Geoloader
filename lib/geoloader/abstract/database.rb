@@ -7,13 +7,6 @@ module Geoloader
   module Database
 
     #
-    # Connect to the default database.
-    #
-    def initialize
-      connect
-    end
-
-    #
     # Connect to Postgres.
     #
     # @param [String] name
@@ -25,38 +18,6 @@ module Geoloader
         :user => Geoloader.config.postgis.username,
         :dbname => database
       )
-    end
-
-    #
-    # Drop a database.
-    #
-    # @param [String] database
-    #
-    def create_database(database)
-      @pg.exec("CREATE DATABASE #{PG::Connection.quote_ident(database)}")
-    end
-
-    #
-    # Enable the PostGIS extension.
-    #
-    def enable_postgis(database)
-      @pg.exec("CREATE EXTENSION postgis")
-    end
-
-    #
-    # Drop a database.
-    #
-    # @param [String] database
-    #
-    def drop_database(database)
-      @pg.exec("DROP DATABASE #{PG::Connection.quote_ident(database)}")
-    end
-
-    #
-    # List all databases.
-    #
-    def list_databases
-      get_column("pg_database", "datname")
     end
 
     #

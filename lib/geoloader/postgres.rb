@@ -10,6 +10,29 @@ module Geoloader
     include Database
 
     #
+    # Connect to the default database.
+    #
+    def initialize
+      connect
+    end
+
+    #
+    # Drop a database.
+    #
+    # @param [String] database
+    #
+    def drop_database(database)
+      @pg.exec("DROP DATABASE #{PG::Connection.quote_ident(database)}")
+    end
+
+    #
+    # List all databases.
+    #
+    def list_databases
+      get_column("pg_database", "datname")
+    end
+
+    #
     # Drop all databases with a given workspace prefix.
     #
     # @param [String] workspace

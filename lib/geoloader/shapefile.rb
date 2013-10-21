@@ -7,12 +7,29 @@ require 'pg'
 module Geoloader
   class Shapefile < Asset
 
+    include Database
+
     #
-    # Create a PostGIS-enabled database and connect to it.
+    # Connect to Postgres.
+    #
+    def iniailize(*args)
+      super
+      connect
+    end
+
+    #
+    # Create a new database.
     #
     def create_database
-      system "createdb #{self.class.psql_options} #{@slug}"
-      system "psql #{self.class.psql_options} -d #{@slug} -c 'CREATE EXTENSION postgis;'"
+      @pg.exec("CREATE DATABASE #{PG::Connection.quote_ident(@slug)}")
+      connect(@slug)
+    end
+
+    #
+    # Enable the PostGIS extension.
+    #
+    def enable_postgis
+      @pg.exec("CREATE EXTENSION postgis")
     end
 
     #
@@ -26,44 +43,7 @@ module Geoloader
     # Fetch a list of layers in the database.
     #
     def get_layers
-      @pg.exec("SELECT * FROM geometry_columns").field_values("f_table_name")
-    end
-
-    #
-    # Drop the PostGIS database.
-    #
-    def drop_database
-      system "dropdb #{self.class.psql_options} #{@slug}"
-    end
-
-    #
-    # Get a generic PostgreSQL connection instance.
-    #
-    def connect
-      @pg = PG.connect(
-        :host => Geoloader.config.postgis.host,
-        :port => Geoloader.config.postgis.port,
-        :user => Geoloader.config.postgis.username,
-        :dbname => @slug
-      )
-    end
-
-    #
-    # Form generic PostgreSQL connection parameters.
-    #
-    def self.psql_options
-      [
-        "-h #{Geoloader.config.postgis.host}",
-        "-p #{Geoloader.config.postgis.port}",
-        "-U #{Geoloader.config.postgis.username}"
-      ].join(" ")
-    end
-
-    #
-    # Close the PostgreSQL connection.
-    #
-    def disconnect
-      @pg.close
+      get_column("geometry_columns", "f_table_name")
     end
 
   end
