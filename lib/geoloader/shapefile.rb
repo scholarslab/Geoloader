@@ -7,7 +7,7 @@ require 'pg'
 module Geoloader
   class Shapefile < Asset
 
-    attr_reader :db_name
+    attr_reader :database
 
     #
     # Initialize the database name.
