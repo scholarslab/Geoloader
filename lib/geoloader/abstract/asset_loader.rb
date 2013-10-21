@@ -19,7 +19,7 @@ module Geoloader
       @geoserver  = Geoloader::Geoserver.new
 
       # Ensure that the Geoserver workspace exists.
-      @geoserver.ensure_workspace(@manifest.workspace)
+      @geoserver.ensure_workspace(@manifest.WorkspaceName)
 
     end
 

@@ -40,7 +40,7 @@ module Geoloader
       @asset.convert_to_4326
 
       # (2) Push to Geoserver.
-      @geoserver.create_coveragestore(@asset, @manifest.workspace)
+      @geoserver.create_coveragestore(@asset, @manifest.WorkspaceName)
 
       # (3) Push to Solr.
       @solr.create_document(@asset, @manifest)

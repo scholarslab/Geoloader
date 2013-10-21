@@ -22,13 +22,7 @@ module Geoloader
     # @param [Confstruct::Configuration] data
     #
     def create_document(asset, data)
-      @resource.add({
-        :LayerId          => asset.uuid,
-        :Name             => asset.base_name,
-        :LayerDisplayName => data.title,
-        :Abstract         => data.description,
-        :workspaceName    => data.workspace
-      })
+      @resource.add(data.merge({ :LayerId => asset.uuid, :Name => asset.base_name }))
       @resource.commit
     end
 
@@ -38,7 +32,7 @@ module Geoloader
     # @param [String] workspace
     #
     def delete_by_workspace(workspace)
-      @resource.delete_by_query("workspace:#{workspace}")
+      @resource.delete_by_query("WorkspaceName:#{workspace}")
       @resource.commit
     end
 

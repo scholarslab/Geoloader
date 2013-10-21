@@ -41,8 +41,8 @@ module Geoloader
       @asset.insert_tables
 
       # (2) Push to Geoserver.
-      @geoserver.create_datastore(@asset, @manifest.workspace)
-      @geoserver.create_featuretypes(@asset, @manifest.workspace)
+      @geoserver.create_datastore(@asset, @manifest.WorkspaceName)
+      @geoserver.create_featuretypes(@asset, @manifest.WorkspaceName)
 
       # (3) Push to Solr.
       @solr.create_document(@asset, @manifest)
