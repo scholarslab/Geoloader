@@ -93,7 +93,7 @@ module Geoloader
           c.port      Geoloader.config.postgis.port
           c.user      Geoloader.config.postgis.username
           c.passwd    Geoloader.config.postgis.password
-          c.database  shapefile.database
+          c.database  shapefile.slug
           c.dbtype    "postgis"
         }
       }

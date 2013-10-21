@@ -22,7 +22,7 @@ module Geoloader
     # @param [Confstruct::Configuration] data
     #
     def create_document(asset, data)
-      @resource.add(data.merge({ :LayerId => asset.id, :Name => asset.base_name }))
+      @resource.add(data.merge({ :LayerId => asset.slug, :Name => asset.base_name }))
       @resource.commit
     end
 
