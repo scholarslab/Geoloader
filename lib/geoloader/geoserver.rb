@@ -61,10 +61,9 @@ module Geoloader
     # Create a new coveragestore and layer for a GeoTIFF.
     #
     # @param [Geoloader::Geotiff] geotiff
-    # @param [String] workspace
     #
-    def create_coveragestore(geotiff, workspace)
-      url = "workspaces/#{workspace}/coveragestores/#{geotiff.base_name}/file.geotiff"
+    def create_coveragestore(geotiff)
+      url = "workspaces/#{geotiff.workspace}/coveragestores/#{geotiff.base_name}/file.geotiff"
       @resource[url].put(File.read(geotiff.file_path))
     end
 
@@ -72,10 +71,9 @@ module Geoloader
     # Delete the coveragestore that corresponds to a GeoTIFF.
     #
     # @param [Geoloader::Geotiff] geotiff
-    # @param [String] workspace
     #
-    def delete_coveragestore(geotiff, workspace)
-      url = "workspaces/#{workspace}/coveragestores/#{geotiff.base_name}"
+    def delete_coveragestore(geotiff)
+      url = "workspaces/#{geotiff.workspace}/coveragestores/#{geotiff.base_name}"
       @resource[url].delete({:params => {:recurse => true}})
     end
 
@@ -83,9 +81,8 @@ module Geoloader
     # Publish the PostGIS database corresponding to a shapefile.
     #
     # @param [Geoloader::Shapefile] shapefile
-    # @param [String] workspace
     #
-    def create_datastore(shapefile, workspace)
+    def create_datastore(shapefile)
 
       # Construct the request.
       payload = Builder::XmlMarkup.new.dataStore { |d|
@@ -95,13 +92,13 @@ module Geoloader
           c.port      Geoloader.config.postgis.port
           c.user      Geoloader.config.postgis.username
           c.passwd    Geoloader.config.postgis.password
-          c.database  shapefile.db_name
+          c.database  shapefile.database
           c.dbtype    "postgis"
         }
       }
 
       # Create the new datastore.
-      url = "workspaces/#{workspace}/datastores"
+      url = "workspaces/#{shapefile.workspace}/datastores"
       @resource[url].post(payload, :content_type => :xml)
 
     end
@@ -110,10 +107,9 @@ module Geoloader
     # Delete the datastore that corresponds to a shapefile.
     #
     # @param [Geoloader::Shapefile] shapefile
-    # @param [String] workspace
     #
-    def delete_datastore(shapefile, workspace)
-      url = "workspaces/#{workspace}/datastores/#{shapefile.base_name}"
+    def delete_datastore(shapefile)
+      url = "workspaces/#{shapefile.workspace}/datastores/#{shapefile.base_name}"
       @resource[url].delete({:params => {:recurse => true}})
     end
 
@@ -121,9 +117,8 @@ module Geoloader
     # Publish layers from the PostGIS tables corresponding to a shapefile.
     #
     # @param [Geoloader::Shapefile] shapefile
-    # @param [String] workspace
     #
-    def create_featuretypes(shapefile, workspace)
+    def create_featuretypes(shapefile)
 
       shapefile.get_layers.each { |layer|
 
@@ -134,7 +129,7 @@ module Geoloader
         }
 
         # Create the new featuretype.
-        url = "workspaces/#{workspace}/datastores/#{shapefile.base_name}/featuretypes"
+        url = "workspaces/#{shapefile.workspace}/datastores/#{shapefile.base_name}/featuretypes"
         @resource[url].post(payload, :content_type => :xml)
 
       }

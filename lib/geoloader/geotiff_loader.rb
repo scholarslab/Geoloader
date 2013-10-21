@@ -26,7 +26,7 @@ module Geoloader
     #
     def initialize(file_path, manifest)
       super
-      @asset = Geoloader::Geotiff.new(file_path, @manifest.WorkspaceName)
+      @geotiff = Geoloader::Geotiff.new(file_path, @manifest.WorkspaceName)
     end
 
     #
@@ -35,18 +35,18 @@ module Geoloader
     def load
 
       # (1) Process the file.
-      @asset.create_copies
-      @asset.remove_border
-      @asset.convert_to_4326
+      @geotiff.create_copies
+      @geotiff.remove_border
+      @geotiff.convert_to_4326
 
       # (2) Push to Geoserver.
-      @geoserver.create_coveragestore(@asset, @manifest.WorkspaceName)
+      @geoserver.create_coveragestore(@geotiff)
 
       # (3) Push to Solr.
-      @solr.create_document(@asset, @manifest)
+      @solr.create_document(@geotiff, @manifest)
 
       # (4) Cleanup.
-      @asset.delete_copies
+      @geotiff.delete_copies
 
     end
 

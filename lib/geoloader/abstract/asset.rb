@@ -2,26 +2,27 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 require 'fileutils'
-require 'nokogiri'
+require 'digest/sha1'
 
 module Geoloader
   class Asset
 
-    attr_reader :file_path, :base_name, :uuid
+    attr_reader :file_path, :base_name, :id
 
     #
-    # Load the ESRI XML and cache the uuid.
+    # Construct an id from the workspace adn base name.
     #
     # @param [String] file_path
+    # @param [String] workspace
     #
-    def initialize(file_path)
+    def initialize(file_path, workspace)
 
       @file_path = file_path
       @base_name = File.basename(@file_path, ".*")
+      @workspace = workspace
 
-      # Store the ESRI uuid.
-      @esri_xml = Nokogiri::XML(File.read("#{@file_path}.xml"))
-      @uuid = "#{@esri_xml.at_xpath("//thesaName/@uuidref").content}-#{@base_name}"
+      # Generate a Solr id.
+      @id = Digest::SHA1.hexdigest("#{@workspace}_#{@base_name}")
 
     end
 
@@ -35,7 +36,7 @@ module Geoloader
       FileUtils.mkdir(@archive)
 
       # Copy the assets into the archive.
-      files = Dir.glob("#{File.dirname(file_path)}/#{@base_name}.*")
+      files = Dir.glob("#{File.dirname(file_path)}/#{@slug}.*")
       FileUtils.cp(files, @archive)
 
       # Update the working file path.

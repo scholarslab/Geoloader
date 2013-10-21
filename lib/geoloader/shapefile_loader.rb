@@ -26,7 +26,7 @@ module Geoloader
     #
     def initialize(file_path, manifest)
       super
-      @asset = Geoloader::Shapefile.new(file_path, @manifest.WorkspaceName)
+      @shapefile = Geoloader::Shapefile.new(file_path, @manifest.WorkspaceName)
     end
 
     #
@@ -35,21 +35,21 @@ module Geoloader
     def load
 
       # (1) Create database.
-      @asset.create_copies
-      @asset.create_database
-      @asset.connect
-      @asset.insert_tables
+      @shapefile.create_copies
+      @shapefile.create_database
+      @shapefile.connect
+      @shapefile.insert_tables
 
       # (2) Push to Geoserver.
-      @geoserver.create_datastore(@asset, @manifest.WorkspaceName)
-      @geoserver.create_featuretypes(@asset, @manifest.WorkspaceName)
+      @geoserver.create_datastore(@shapefile)
+      @geoserver.create_featuretypes(@shapefile)
 
       # (3) Push to Solr.
-      @solr.create_document(@asset, @manifest)
+      @solr.create_document(@shapefile, @manifest)
 
       # (4) Cleanup.
-      @asset.disconnect
-      @asset.delete_copies
+      @shapefile.disconnect
+      @shapefile.delete_copies
 
     end
 
