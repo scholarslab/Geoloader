@@ -3,6 +3,7 @@
 
 require 'rest_client'
 require 'builder'
+require 'nokogiri'
 
 module Geoloader
   class Geoserver

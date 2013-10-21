@@ -7,7 +7,7 @@ require 'digest/sha1'
 module Geoloader
   class Asset
 
-    attr_reader :file_path, :base_name, :id
+    attr_reader :file_path, :base_name, :workspace, :id
 
     #
     # Construct an id from the workspace adn base name.
@@ -36,11 +36,11 @@ module Geoloader
       FileUtils.mkdir(@archive)
 
       # Copy the assets into the archive.
-      files = Dir.glob("#{File.dirname(file_path)}/#{@slug}.*")
+      files = Dir.glob("#{File.dirname(@file_path)}/#{@base_name}.*")
       FileUtils.cp(files, @archive)
 
       # Update the working file path.
-      @file_path = "#{@archive}/#{File.basename(file_path)}"
+      @file_path = "#{@archive}/#{File.basename(@file_path)}"
 
     end
 
