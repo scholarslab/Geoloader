@@ -59,6 +59,7 @@ command :clear do |c|
   c.action do |args, options|
     Geoloader::Geoserver.new.delete_workspace(args[0])
     Geoloader::Solr.new.delete_by_workspace(args[0])
+    Geoloader::Postgis.new.list_databases
   end
 end
 
@@ -70,5 +71,14 @@ command :work do |c|
   c.summary = 'Start a Resque worker.'
   c.action do |args, options|
     Resque::Worker.new("geoloader").work
+  end
+end
+
+#
+# TODO|dev
+#
+command :test do |c|
+  c.action do |args, options|
+    Geoloader::Postgis.new.list_databases
   end
 end
