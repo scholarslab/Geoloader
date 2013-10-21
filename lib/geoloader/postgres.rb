@@ -7,45 +7,7 @@ require 'pg'
 module Geoloader
   class Postgres
 
-    #
-    # Connect to Postgres.
-    #
-    # @param [String] name
-    #
-    def initialize(database = "postgres")
-      @pg = PG.connect(
-        :host => Geoloader.config.postgis.host,
-        :port => Geoloader.config.postgis.port,
-        :user => Geoloader.config.postgis.username,
-        :dbname => database
-      )
-    end
-
-    #
-    # Get an array of all column values in a table.
-    #
-    # @param [String] table
-    # @param [String] column
-    #
-    def get_column(table, column)
-      @pg.exec("SELECT * FROM #{table}").field_values(column)
-    end
-
-    #
-    # List all databases.
-    #
-    def list_databases
-      get_column("pg_database", "datname")
-    end
-
-    #
-    # Drop a database.
-    #
-    # @param [String] database
-    #
-    def drop_database(database)
-      @pg.exec("DROP DATABASE #{PG::Connection.quote_ident(database)}")
-    end
+    include Database
 
     #
     # Drop all databases with a given workspace prefix.
@@ -58,13 +20,6 @@ module Geoloader
           drop_database(database)
         end
       end
-    end
-
-    #
-    # Close the PostgreSQL connection.
-    #
-    def disconnect
-      @pg.close
     end
 
   end
