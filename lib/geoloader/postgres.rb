@@ -44,7 +44,7 @@ module Geoloader
     # @param [String] database
     #
     def drop_database(database)
-      @pg.exec("DROP DATABASE IF EXISTS #{database}")
+      @pg.exec("DROP DATABASE #{PG::Connection.quote_ident(database)}")
     end
 
     #
@@ -54,7 +54,7 @@ module Geoloader
     #
     def drop_databases_by_workspace(workspace)
       list_databases.each do |database|
-        if database.starts_with?(workspace)
+        if database.start_with?(workspace)
           drop_database(database)
         end
       end
