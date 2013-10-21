@@ -7,10 +7,10 @@ require 'digest/sha1'
 module Geoloader
   class Asset
 
-    attr_reader :file_path, :base_name, :workspace, :id
+    attr_reader :file_path, :base_name, :workspace, :slug
 
     #
-    # Construct an id from the workspace adn base name.
+    # Set the basename and workspace-prefixed slug.
     #
     # @param [String] file_path
     # @param [String] workspace
@@ -21,8 +21,8 @@ module Geoloader
       @base_name = File.basename(@file_path, ".*")
       @workspace = workspace
 
-      # Generate a Solr id.
-      @id = Digest::SHA1.hexdigest("#{@workspace}_#{@base_name}")
+      # Set a workspace-prefixed slug.
+      @slug = "#{@workspace}_#{@base_name}"
 
     end
 
