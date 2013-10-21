@@ -26,7 +26,7 @@ module Geoloader
     #
     def initialize(file_path, manifest)
       super
-      @asset = Geoloader::Geotiff.new(file_path)
+      @asset = Geoloader::Geotiff.new(file_path, @manifest.WorkspaceName)
     end
 
     #

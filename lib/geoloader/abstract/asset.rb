@@ -13,11 +13,13 @@ module Geoloader
     # Load the ESRI XML and cache the uuid.
     #
     # @param [String] file_path
+    # @param [String] workspace
     #
-    def initialize(file_path)
+    def initialize(file_path, workspace)
 
       @file_path = file_path
       @base_name = File.basename(@file_path, ".*")
+      @workspace = workspace
 
       # Store the ESRI uuid.
       @esri_xml = Nokogiri::XML(File.read("#{@file_path}.xml"))
