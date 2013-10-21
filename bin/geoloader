@@ -79,6 +79,6 @@ end
 #
 command :test do |c|
   c.action do |args, options|
-    Geoloader::Postgis.new.list_databases
+    Geoloader::Postgres.new.list_databases
   end
 end
