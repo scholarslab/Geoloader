@@ -6,6 +6,8 @@ require 'pg'
 module Geoloader
   module Database
 
+    attr_accessor :pg
+
     #
     # Connect to Postgres.
     #

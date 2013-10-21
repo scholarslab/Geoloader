@@ -12,7 +12,7 @@ module Geoloader
     #
     # Connect to Postgres.
     #
-    def iniailize(*args)
+    def initialize(*args)
       super
       connect
     end
