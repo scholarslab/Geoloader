@@ -12,7 +12,7 @@ program :version, "0.0.1"
 program :description, "Load GeoTIFFs and Shapefiles into PostGIS, Geoserver, and Solr."
 
 #
-# Load a batch manifest or an individual GeoTIFF / Shapefile.
+# Load a batch manifest.
 #
 command :load do |c|
   c.syntax  = "geoloader load [filename]"

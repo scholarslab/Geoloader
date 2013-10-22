@@ -8,37 +8,25 @@ require "thor"
 
 class GeoloaderCLI < Thor
 
-  desc "geoloader load MANIFEST", "Load a YAML batch manifest"
-  def load
-    # TODO
-    puts "load"
+  desc "load MANIFEST", "Load a YAML batch manifest"
+  option "resque", :aliases => "q", :type => :boolean, :default => false
+  def load(manifest)
+    Geoloader::Routines.load(manifest, options[:resque])
   end
 
-  desc "geoloader clear WORKSPACE", "Clear a workspace"
+  desc "clear WORKSPACE", "Clear a workspace"
   def clear(workspace)
-
-    # Query for workspace counts.
-    counts = Geoloader::Solr.new.get_workspace_counts
-
-    # Pretty-print the table.
-    puts Terminal::Table.new(
-      :title    => "GEOLOADER",
-      :headings => ["Workspace", "# Assets"],
-      :rows     => counts
-    )
-
+    Geoloader::Routines.clear(workspace)
   end
 
-  desc "geoloader list", "List workspaces and asset counts"
+  desc "list", "List workspaces and asset counts"
   def list
-    # TODO
-    puts "list"
+    Geoloader::Routines.list
   end
 
-  desc "geoloader work", "Start a Resque worker"
+  desc "work", "Start a Resque worker"
   def work
-    # TODO
-    puts "work"
+    Geoloader::Routines.work
   end
 
 end
