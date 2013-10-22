@@ -8,3 +8,7 @@ gem "commander"
 gem "resque"
 gem "nokogiri"
 gem "pg"
+
+group :test do
+  gem "minitest"
+end
