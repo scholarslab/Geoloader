@@ -1,7 +1,7 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Geoloader::GeotiffLoader do
   it "should create a coveragestore on Geoserver"

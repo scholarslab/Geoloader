@@ -1,8 +1,8 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require 'fileutils'
-require 'digest/sha1'
+require "fileutils"
+require "digest/sha1"
 
 module Geoloader
   class Asset

@@ -1,8 +1,8 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require 'fileutils'
-require 'pg'
+require "fileutils"
+require "pg"
 
 module Geoloader
   class Postgres

@@ -2,21 +2,21 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require 'geoloader'
-require 'commander/import'
-require 'yaml'
-require 'terminal-table'
-require 'resque'
+require "geoloader"
+require "commander/import"
+require "yaml"
+require "terminal-table"
+require "resque"
 
-program :version, '0.0.1'
-program :description, 'Load GeoTIFFs and Shapefiles into PostGIS, Geoserver, and Solr.'
+program :version, "0.0.1"
+program :description, "Load GeoTIFFs and Shapefiles into PostGIS, Geoserver, and Solr."
 
 #
 # Load a batch manifest or an individual GeoTIFF / Shapefile.
 #
 command :load do |c|
-  c.syntax  = 'geoloader load [filename]'
-  c.summary = 'Load a YAML batch manifest.'
+  c.syntax  = "geoloader load [filename]"
+  c.summary = "Load a YAML batch manifest."
   c.option  "-q", "--resque", "Push jobs onto Resque."
   c.action do |args, options|
 
@@ -55,8 +55,8 @@ end
 # Delete all databases, stores, and documents in a workspace.
 #
 command :clear do |c|
-  c.syntax  = 'geoloader clear [workspace]'
-  c.summary = 'Clear a workspace.'
+  c.syntax  = "geoloader clear [workspace]"
+  c.summary = "Clear a workspace."
   c.action do |args, options|
 
     # Delete Geoserver stores.
@@ -75,8 +75,8 @@ end
 # Show a list of all workspaces with document counts.
 #
 command :list do |c|
-  c.syntax  = 'geoloader list'
-  c.summary = 'List workspaces.'
+  c.syntax  = "geoloader list"
+  c.summary = "List workspaces."
   c.action do |args, options|
 
     # Query for workspace counts. 
@@ -96,8 +96,8 @@ end
 # Spin up a Resque worker.
 #
 command :work do |c|
-  c.syntax  = 'geoloader work'
-  c.summary = 'Start a Resque worker.'
+  c.syntax  = "geoloader work"
+  c.summary = "Start a Resque worker."
   c.action do |args, options|
     Resque::Worker.new("geoloader").work
   end
