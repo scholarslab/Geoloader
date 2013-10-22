@@ -5,6 +5,7 @@
 require 'geoloader'
 require 'commander/import'
 require 'yaml'
+require 'terminal-table'
 require 'resque'
 
 program :version, '0.0.1'
@@ -57,9 +58,37 @@ command :clear do |c|
   c.syntax  = 'geoloader clear [workspace]'
   c.summary = 'Clear a workspace.'
   c.action do |args, options|
+
+    # Delete Geoserver stores.
     Geoloader::Geoserver.new.delete_workspace(args[0])
+
+    # Drop PostGIS tables.
     Geoloader::Postgres.new.drop_databases_by_workspace(args[0])
+
+    # Delete Solr documents.
     Geoloader::Solr.new.delete_by_workspace(args[0])
+
+  end
+end
+
+#
+# Show a list of all workspaces with document counts.
+#
+command :list do |c|
+  c.syntax  = 'geoloader list'
+  c.summary = 'List workspaces.'
+  c.action do |args, options|
+
+    # Query for workspace counts. 
+    counts = Geoloader::Solr.new.get_workspace_counts
+
+    # Pretty-print the table.
+    puts Terminal::Table.new(
+      :title    => "GEOLOADER",
+      :headings => ["Workspace", "# Assets"],
+      :rows     => counts
+    )
+
   end
 end
 

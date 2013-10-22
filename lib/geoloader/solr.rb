@@ -27,6 +27,27 @@ module Geoloader
     end
 
     #
+    # Count the number of documents in each workspace.
+    #
+    def get_workspace_counts
+
+      workspaces = []
+
+      # Select all documents, 0 rows, faceting on workspace.
+      query = { :queries => "*:*", :facets => {:fields => "WorkspaceName"}, :rows => 0 }
+
+      # Flatted out the counts.
+      @resource.find(query).facets.each do |facet|
+        facet.items.each do |item|
+          workspaces << [item.value, item.hits] 
+        end
+      end
+
+      workspaces
+
+    end
+
+    #
     # Delete all documents in a workspace.
     #
     # @param [String] workspace
