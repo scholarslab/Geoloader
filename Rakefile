@@ -14,6 +14,6 @@ Jeweler::Tasks.new do |gem|
 end
 
 Rake::TestTask.new do |t|
-  t.libs << "spec"
-  t.pattern = "spec/loaders/*.rb"
+  t.libs << "tests"
+  t.pattern = "tests/loaders/*.rb"
 end
