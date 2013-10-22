@@ -21,7 +21,7 @@ class GeoloaderCLI < Thor
 
   desc "list", "List workspaces and asset counts"
   def list
-    Geoloader::Routines.list
+    puts Geoloader::Routines.list
   end
 
   desc "work", "Start a Resque worker"

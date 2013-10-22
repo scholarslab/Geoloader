@@ -13,7 +13,7 @@ module Geoloader
     # @param [String] manifest
     # @param [Boolean] resque
     #
-    def load(file_path, resque)
+    def self.load(file_path, resque)
 
       # Read the manifest.
       manifest_path = File.expand_path(file_path)
@@ -32,7 +32,7 @@ module Geoloader
           next
         end
 
-        # Execute or enqueue the load.
+        # Perform or enqueue the load.
         if resque
           Resque.enqueue(loader, f, manifest)
         else
@@ -48,7 +48,7 @@ module Geoloader
     #
     # @param [String] workspace
     #
-    def clear(workspace)
+    def self.clear(workspace)
 
       # Delete Geoserver stores.
       Geoloader::Geoserver.new.delete_workspace(workspace)
@@ -64,12 +64,12 @@ module Geoloader
     #
     # List all workspaces with asset counts.
     #
-    def list
+    def self.list
 
       # Query for workspace counts. 
       counts = Geoloader::Solr.new.get_workspace_counts
 
-      # Pretty-print the table.
+      # Render  the table.
       Terminal::Table.new(
         :title    => "GEOLOADER",
         :headings => ["Workspace", "# Assets"],
@@ -81,7 +81,7 @@ module Geoloader
     #
     # Spin up a Resque worker.
     #
-    def work
+    def self.work
       Resque::Worker.new("geoloader").work
     end
 
