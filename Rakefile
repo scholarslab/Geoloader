@@ -13,6 +13,7 @@ Jeweler::Tasks.new do |gem|
   gem.email   = "david.mcclure@virginia.edu"
 end
 
-#task "resque:setup" do
-  #require './lib/geoloader.rb'
-#end
+Rake::TestTask.new do |t|
+  t.libs << "spec"
+  t.pattern = "spec/loaders/*.rb"
+end
