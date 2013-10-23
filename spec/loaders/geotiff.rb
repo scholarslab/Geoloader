@@ -1,33 +1,38 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require "minitest_helper"
+require "spec_helper"
 
-class GeotiffLoaderTest < GeoloaderTest
+describe Geoloader::GeotiffLoader do
 
-  def setup
-    manifest = { :WorkspaceName => "geoloader_test" }
+  include FixtureHelpers
+
+  let(:manifest) {
+    { :WorkspaceName => "geoloader_test" }
+  }
+
+  before do
     @loader = Geoloader::GeotiffLoader.new(get_fixture_path("geotiff.tif"), manifest)
     @loader.load
   end
 
-  def teardown
+  after do
     Geoloader::Routines.clear("geoloader_test")
   end
 
-  def test_create_geoserver_coveragestore
+  it "should create a coveragestore on Geoserver" do
     response = @loader.geoserver.resource["workspaces/#{@workspace}/coveragestores/tif"].get
-    assert_equal 200, response.code
+    response.code.must_equal 200
   end
 
-  def test_publish_geoserver_layer
+  it "should publish a layer on Geoserver" do
     response = @loader.geoserver.resource["layers/geotiff"].get
-    assert_equal 200, response.code
+    response.code.must_equal 200
   end
 
-  def test_create_solr_record
+  it "should add a Solr document" do
     response = @loader.solr.resource.find({ :queries => "LayerId:#{@loader.geotiff.slug}" })
-    assert_equal 1, response.total
+    response.total.must_equal 1
   end
 
 end

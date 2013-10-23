@@ -1,7 +1,7 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-class GeoloaderTest < MiniTest::Test
+module FixtureHelpers
 
   #
   # Get the full path of a fixture file.
@@ -9,7 +9,7 @@ class GeoloaderTest < MiniTest::Test
   # @param [String] filename
   #
   def get_fixture_path(filename)
-    File.expand_path("fixtures/#{filename}", File.dirname(__FILE__))
+    File.expand_path("../fixtures/#{filename}", File.dirname(__FILE__))
   end
 
 end

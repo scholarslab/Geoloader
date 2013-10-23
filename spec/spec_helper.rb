@@ -4,4 +4,4 @@
 require "geoloader"
 require "minitest/autorun"
 require "minitest/pride"
-require "geoloader_test"
+require "helpers/fixture"
