@@ -31,16 +31,16 @@ module Geoloader
     #
     def create_copies
 
-      # Create the working directory.
-      @archive = "#{File.expand_path(Geoloader.config.archive)}/#{Time.now.to_i}"
-      FileUtils.mkdir(@archive)
+      # Create the warehouse directory.
+      @warehouse = "#{File.expand_path(Geoloader.config.warehouse)}/#{Time.now.to_i}"
+      FileUtils.mkdir(@warehouse)
 
       # Copy the assets into the archive.
       files = Dir.glob("#{File.dirname(@file_path)}/#{@base_name}.*")
-      FileUtils.cp(files, @archive)
+      FileUtils.cp(files, @warehouse)
 
       # Update the working file path.
-      @file_path = "#{@archive}/#{File.basename(@file_path)}"
+      @file_path = "#{@warehouse}/#{File.basename(@file_path)}"
 
     end
 
@@ -48,7 +48,7 @@ module Geoloader
     # Delete the working copies.
     #
     def delete_copies
-      FileUtils.rm_rf(@archive)
+      FileUtils.rm_rf(@warehouse)
     end
 
   end

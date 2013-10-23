@@ -7,31 +7,36 @@ describe Geoloader::GeotiffLoader do
 
   include FixtureHelpers
 
-  let(:manifest) {
-    { :WorkspaceName => "geoloader_test" }
+  let(:workspace) {
+    Geoloader.config.test.workspace
+  }
+
+  let(:loader) {
+    Geoloader::GeotiffLoader.new(get_fixture_path("geotiff.tif"), {
+      :WorkspaceName => workspace
+    })
   }
 
   before do
-    @loader = Geoloader::GeotiffLoader.new(get_fixture_path("geotiff.tif"), manifest)
-    @loader.load
+    loader.load
   end
 
   after do
-    Geoloader::Routines.clear("geoloader_test")
+    Geoloader::Routines.clear(workspace)
   end
 
   it "should create a coveragestore on Geoserver" do
-    response = @loader.geoserver.resource["workspaces/#{@workspace}/coveragestores/tif"].get
+    response = loader.geoserver.resource["workspaces/#{workspace}/coveragestores/geotiff"].get
     response.code.must_equal 200
   end
 
   it "should publish a layer on Geoserver" do
-    response = @loader.geoserver.resource["layers/geotiff"].get
+    response = loader.geoserver.resource["layers/geotiff"].get
     response.code.must_equal 200
   end
 
   it "should add a Solr document" do
-    response = @loader.solr.resource.find({ :queries => "LayerId:#{@loader.geotiff.slug}" })
+    response = loader.solr.resource.find({ :queries => "LayerId:#{loader.geotiff.slug}" })
     response.total.must_equal 1
   end
 
