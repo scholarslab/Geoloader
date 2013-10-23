@@ -32,7 +32,7 @@ module Geoloader
     def create_copies
 
       # Create the warehouse directory.
-      @warehouse = "#{File.expand_path(Geoloader.config.warehouse)}/#{Time.now.to_i}"
+      @warehouse = "#{File.dirname(@file_path)}/#{Time.now.to_i}"
       FileUtils.mkdir(@warehouse)
 
       # Copy the assets into the archive.

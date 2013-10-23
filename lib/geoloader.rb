@@ -52,4 +52,4 @@ require_dir("geoloader")
 
 # Apply default configuration.
 Geoloader.configure_from_yaml(File.expand_path("../config.yaml", __FILE__))
-Geoloader.configure_from_yaml("~/.geoloader/config.yaml")
+Geoloader.configure_from_yaml("~/.geoloader.yaml")
