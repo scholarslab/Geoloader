@@ -22,15 +22,19 @@ module Geoloader
   #
   # Set configuration options.
   #
-  # @param [Hash] config
+  # @param [Hash] opts
   #
-  def self.configure(config)
-    puts config
-    if config.is_a?(String)
-      @config.configure(YAML::load(File.read(File.expand_path(config))))
-    else
-      @config.configure(config)
-    end
+  def self.configure(opts)
+    @config.configure(opts)
+  end
+
+  #
+  # Set configuration from a YAML file.
+  #
+  # @param [String] file_path
+  #
+  def self.configure_from_yaml(file_path)
+    @config.configure(YAML::load(File.read(File.expand_path(file_path))))
   end
 
   #
@@ -47,5 +51,5 @@ require_dir("geoloader/abstract")
 require_dir("geoloader")
 
 # Apply default configuration.
-Geoloader.configure(File.expand_path("../config.yaml", __FILE__))
-Geoloader.configure("~/.geoloader/config.yaml")
+Geoloader.configure_from_yaml(File.expand_path("../config.yaml", __FILE__))
+Geoloader.configure_from_yaml("~/.geoloader/config.yaml")

@@ -24,7 +24,7 @@ module Geoloader
 
         # Get a loader class.
         loader = case File.extname(f)
-        when ".shp" then
+        when ".shp"
           Geoloader::ShapefileLoader
         when ".tif"
           Geoloader::GeotiffLoader
