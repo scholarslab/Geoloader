@@ -89,10 +89,10 @@ module Geoloader
       payload = Builder::XmlMarkup.new.dataStore { |d|
         d.name shapefile.base_name
         d.connectionParameters { |c|
-          c.host      Geoloader.config.postgis.host
-          c.port      Geoloader.config.postgis.port
-          c.user      Geoloader.config.postgis.username
-          c.passwd    Geoloader.config.postgis.password
+          c.host      Geoloader.config.postgres.host
+          c.port      Geoloader.config.postgres.port
+          c.user      Geoloader.config.postgres.username
+          c.passwd    Geoloader.config.postgres.password
           c.database  shapefile.slug
           c.dbtype    "postgis"
         }

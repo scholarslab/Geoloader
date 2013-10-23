@@ -9,15 +9,15 @@ module Geoloader
     attr_accessor :pg
 
     #
-    # Connect to Postgres.
+    # Connect to PostgreSQL.
     #
     # @param [String] name
     #
     def connect(database = "postgres")
       @pg = PG.connect(
-        :host => Geoloader.config.postgis.host,
-        :port => Geoloader.config.postgis.port,
-        :user => Geoloader.config.postgis.username,
+        :host => Geoloader.config.postgres.host,
+        :port => Geoloader.config.postgres.port,
+        :user => Geoloader.config.postgres.username,
         :dbname => database
       )
     end
