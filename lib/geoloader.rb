@@ -34,7 +34,7 @@ module Geoloader
   # @param [String] file_path
   #
   def self.configure_from_yaml(file_path)
-    @config.configure(YAML::load(File.read(File.expand_path(file_path))))
+    @config.configure(YAML::load(File.read(File.expand_path(file_path)))) rescue nil
   end
 
   #
