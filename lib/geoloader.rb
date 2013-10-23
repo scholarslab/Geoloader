@@ -25,9 +25,9 @@ module Geoloader
   # @param [Hash] config
   #
   def self.configure(config = "~/.geoloader/config.yaml")
-    if config.is_a? String
+    if config.is_a?(String)
       @config.configure(YAML::load(File.read(File.expand_path(config))))
-    elsif config.is_a? Hash
+    else
       @config.configure(config)
     end
   end
