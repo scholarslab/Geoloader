@@ -45,5 +45,6 @@ end
 require_dir("geoloader/abstract")
 require_dir("geoloader")
 
-# Set defaults.
-Geoloader.configure
+# Apply default configuration.
+Geoloader.configure(File.expand_path("config.yaml", __FILE__))
+Geoloader.configure("~/.geoloader/config.yaml")

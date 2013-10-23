@@ -1,0 +1,17 @@
+postgis:
+  host:       localhost
+  port:       5432
+  username:   admin
+  password:   postgis
+
+geoserver:
+  url:        http://localhost:8080/geoserver
+  username:   admin
+  password:   geoserver
+  srs:        EPSG:900913
+
+solr:
+  url:        http://localhost:8080/solr/geoloader
+
+test:
+  workspace:  gl_test
