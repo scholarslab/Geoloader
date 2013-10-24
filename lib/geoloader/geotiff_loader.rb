@@ -19,7 +19,7 @@ module Geoloader
     end
 
     #
-    # Consruct the asset instance.
+    # Construct the asset instance.
     #
     # @param [String] file_name
     # @param [Hash] manifest
@@ -33,17 +33,17 @@ module Geoloader
     # Load the asset to Geoserver and Solr.
     #
     def load
-      @geotiff.copy do |file|
+      @geotiff.copy do |geotiff|
 
         # (1) Post-process.
-        file.remove_border
-        file.convert_to_4326
+        geotiff.remove_border
+        geotiff.convert_to_4326
 
         # (2) Push to Geoserver.
-        @geoserver.create_coveragestore(file)
+        @geoserver.create_coveragestore(geotiff)
 
         # (3) Push to Solr.
-        @solr.create_document(file, @manifest)
+        @solr.create_document(geotiff, @manifest)
 
       end
     end

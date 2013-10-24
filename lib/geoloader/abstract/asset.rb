@@ -27,11 +27,11 @@ module Geoloader
     end
 
     #
-    # Create copies, yield to a block, remove the copies.
+    # Create working copies, yield to a block, remove the copies.
     #
     def copy
       create_copies
-      yield self
+      yield self rescue nil
       delete_copies
     end
 
@@ -43,15 +43,15 @@ module Geoloader
     def create_copies
 
       # Create the warehouse directory.
-      @warehouse = "#{File.dirname(@file_path)}/#{Time.now.to_i}"
-      FileUtils.mkdir(@warehouse)
+      @copies = "#{File.dirname(@file_path)}/#{Time.now.to_i}"
+      FileUtils.mkdir(@copies)
 
       # Copy the assets into the archive.
       files = Dir.glob("#{File.dirname(@file_path)}/#{@base_name}.*")
-      FileUtils.cp(files, @warehouse)
+      FileUtils.cp(files, @copies)
 
       # Update the working file path.
-      @file_path = "#{@warehouse}/#{File.basename(@file_path)}"
+      @file_path = "#{@copies}/#{File.basename(@file_path)}"
 
     end
 
@@ -59,7 +59,7 @@ module Geoloader
     # Delete the working copies.
     #
     def delete_copies
-      FileUtils.rm_rf(@warehouse)
+      FileUtils.rm_rf(@copies)
     end
 
   end
