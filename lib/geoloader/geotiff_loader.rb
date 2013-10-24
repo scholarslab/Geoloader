@@ -15,7 +15,7 @@ module Geoloader
     # @param [Hash] manifest
     #
     def self.perform(file_path, manifest)
-      Geoloader::GeotiffLoader.new(file_path, manifest).load
+      new(file_path, manifest).load
     end
 
     #
