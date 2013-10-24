@@ -50,16 +50,18 @@ module Geoloader
       files = Dir.glob("#{File.dirname(@file_path)}/#{@base_name}.*")
       FileUtils.cp(files, @copies)
 
-      # Update the working file path.
+      # Update the working file path, saving the original.
+      @file_path_ = @file_path
       @file_path = "#{@copies}/#{File.basename(@file_path)}"
 
     end
 
     #
-    # Delete the working copies.
+    # Delete the working copies, restore the original path.
     #
     def delete_copies
       FileUtils.rm_rf(@copies)
+      @file_path = @file_path_
     end
 
   end
