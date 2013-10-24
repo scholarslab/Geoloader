@@ -15,8 +15,8 @@ module Geoloader
     def initialize(file_path, manifest)
 
       @manifest   = Confstruct::Configuration.new(manifest)
-      @solr       = Geoloader::Solr.new
       @geoserver  = Geoloader::Geoserver.new
+      @solr       = Geoloader::Solr.new
 
       # Ensure that the Geoserver workspace exists.
       @geoserver.ensure_workspace(@manifest.WorkspaceName)

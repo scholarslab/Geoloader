@@ -27,6 +27,17 @@ module Geoloader
     end
 
     #
+    # Create copies, yield to a block, remove the copies.
+    #
+    def copy
+      create_copies
+      yield self
+      delete_copies
+    end
+
+    private
+
+    #
     # Copy the file and its siblings for manipulation.
     #
     def create_copies

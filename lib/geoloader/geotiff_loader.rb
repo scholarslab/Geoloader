@@ -33,21 +33,19 @@ module Geoloader
     # Load the asset to Geoserver and Solr.
     #
     def load
+      @geotiff.copy do |file|
 
-      # (1) Process the file.
-      @geotiff.create_copies
-      @geotiff.remove_border
-      @geotiff.convert_to_4326
+        # (1) Post-process.
+        file.remove_border
+        file.convert_to_4326
 
-      # (2) Push to Geoserver.
-      @geoserver.create_coveragestore(@geotiff)
+        # (2) Push to Geoserver.
+        @geoserver.create_coveragestore(file)
 
-      # (3) Push to Solr.
-      @solr.create_document(@geotiff, @manifest)
+        # (3) Push to Solr.
+        @solr.create_document(file, @manifest)
 
-      # (4) Cleanup.
-      @geotiff.delete_copies
-
+      end
     end
 
   end
