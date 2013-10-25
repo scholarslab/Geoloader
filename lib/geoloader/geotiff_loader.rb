@@ -35,7 +35,7 @@ module Geoloader
     def load
       @geotiff.stage do
 
-        # (1) Post-process.
+        # (1) Process.
         @geotiff.remove_border
         @geotiff.convert_to_4326
 
