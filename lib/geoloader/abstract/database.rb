@@ -23,6 +23,13 @@ module Geoloader
     end
 
     #
+    # List all databases.
+    #
+    def list_databases
+      get_column("pg_database", "datname")
+    end
+
+    #
     # Get an array of all column values in a table.
     #
     # @param [String] table

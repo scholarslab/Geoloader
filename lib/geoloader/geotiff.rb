@@ -9,14 +9,14 @@ module Geoloader
     #
     # Remove the black borders added by ArcMap.
     #
-    def remove_border
+    def make_borders_transparent
       system "gdalwarp -srcnodata 0 -dstalpha #{@file_path} #{@file_path}"
     end
 
     #
     # (Re)build a EPSG:4326 header.
     #
-    def convert_to_4326
+    def reproject_to_4326
       system "gdal_translate -of GTiff -a_srs EPSG:4326 #{@file_path} #{@file_path}_"
       FileUtils.rm(@file_path)
       FileUtils.mv("#{@file_path}_", @file_path)

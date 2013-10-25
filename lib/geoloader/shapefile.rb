@@ -10,11 +10,22 @@ module Geoloader
     include Database
 
     #
-    # Connect to Postgres.
+    # Connect to PostgreSQL.
     #
     def initialize(*args)
       super
-      connect!
+      begin
+        connect!(@slug)
+      rescue
+        connect!
+      end
+    end
+
+    #
+    # Does a PostgreSQL database exist for the file?
+    #
+    def database_exists?
+      list_databases.include?(@slug)
     end
 
     #
@@ -38,6 +49,14 @@ module Geoloader
     #
     def get_layers
       get_column("geometry_columns", "f_table_name")
+    end
+
+    #
+    # When work is finished, disconnect from PostgreSQL.
+    #
+    def dequeue
+      super
+      disconnect!
     end
 
   end

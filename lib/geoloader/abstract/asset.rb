@@ -30,9 +30,9 @@ module Geoloader
     # Create working copies, yield to a block, remove the copies.
     #
     def stage
-      create_copies
+      enqueue
       yield rescue nil
-      delete_copies
+      dequeue
     end
 
     private
@@ -40,7 +40,7 @@ module Geoloader
     #
     # Copy the file and its siblings for manipulation.
     #
-    def create_copies
+    def enqueue
 
       # Create the warehouse directory.
       @copies = "#{File.dirname(@file_path)}/#{Time.now.to_i}"
@@ -59,7 +59,7 @@ module Geoloader
     #
     # Delete the working copies, restore the original path.
     #
-    def delete_copies
+    def dequeue
       FileUtils.rm_rf(@copies)
       @file_path = @file_path_
     end

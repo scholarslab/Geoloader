@@ -14,6 +14,8 @@ module Geoloader
     #
     def initialize(file_path, manifest)
 
+      @file_path = file_path
+
       # Set the manifest, alias the workspace.
       @manifest = Confstruct::Configuration.new(manifest)
       @workspace = @manifest.WorkspaceName

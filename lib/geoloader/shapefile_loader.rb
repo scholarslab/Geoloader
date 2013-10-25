@@ -26,7 +26,7 @@ module Geoloader
     #
     def initialize(file_path, manifest)
       super
-      @shapefile = Geoloader::Shapefile.new(file_path, @workspace)
+      @shapefile = Geoloader::Shapefile.new(@file_path, @workspace)
     end
 
     #
@@ -36,22 +36,33 @@ module Geoloader
     #
     def load
       @shapefile.stage do
-
-        # (1) Create database.
-        @shapefile.create_database!
-        @shapefile.insert_tables
-
-        # (2) Push to Geoserver.
-        @geoserver.create_datastore(@shapefile)
-        @geoserver.create_featuretypes(@shapefile)
-
-        # (3) Push to Solr.
-        @solr.create_document(@shapefile, @manifest)
-
-        # (4) Cleanup.
-        @shapefile.disconnect!
-
+        load_postgis
+        load_geoserver
+        load_solr
       end
+    end
+
+    #
+    # Create a PostGIS table and insert tables.
+    #
+    def load_postgis
+      @shapefile.create_database!
+      @shapefile.insert_tables
+    end
+
+    #
+    # Create datastore on Geoserver.
+    #
+    def load_geoserver
+      @geoserver.create_datastore(@shapefile)
+      @geoserver.create_featuretypes(@shapefile)
+    end
+
+    #
+    # Add a document to Solr.
+    #
+    def load_solr
+      @solr.create_document(@shapefile, @manifest)
     end
 
   end
