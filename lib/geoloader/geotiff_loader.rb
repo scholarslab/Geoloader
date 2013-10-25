@@ -4,46 +4,27 @@
 module Geoloader
   class GeotiffLoader < AssetLoader
 
-    attr_reader :geotiff
-
     #
     # Construct the asset instance.
     #
-    # @param [String] file_name
-    # @param [Hash] manifest
-    #
-    def initialize(file_path, manifest)
-      super
-      @geotiff = Geoloader::Geotiff.new(@file_path, @workspace)
-    end
-
-    #
-    # Load the asset to Geoserver and Solr.
-    #
-    # @param [Array] steps
-    #
-    def load(steps = [:geoserver, :solr])
-      @geotiff.stage do
-        steps.each do |step|
-          send("load_#{step}")
-        end
-      end
+    def create_asset
+      @asset = Geoloader::Geotiff.new(@file_path, @workspace)
     end
 
     #
     # Post-process the file and push to Geoserver.
     #
     def load_geoserver
-      @geotiff.make_borders_transparent
-      @geotiff.reproject_to_4326
-      @geoserver.create_coveragestore(@geotiff)
+      @asset.make_borders_transparent
+      @asset.reproject_to_4326
+      @geoserver.create_coveragestore(@asset)
     end
 
     #
     # Add a document to the Solr index.
     #
     def load_solr
-      @solr.create_document(@geotiff, @manifest)
+      @solr.create_document(@asset, @manifest)
     end
 
   end

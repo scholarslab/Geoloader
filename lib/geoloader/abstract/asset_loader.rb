@@ -4,7 +4,7 @@
 module Geoloader
   class AssetLoader
 
-    attr_reader :geoserver, :solr
+    attr_reader :geoserver, :solr, :asset
 
     @queue = :geoloader
 
@@ -39,6 +39,29 @@ module Geoloader
       # Ensure that the workspace exists.
       @geoserver.ensure_workspace(@workspace)
 
+      create_asset
+
+    end
+
+    #
+    # Initialize the `@asset` instance.
+    #
+    def create_asset
+      raise NotImplementedError.new
+    end
+
+    #
+    # Distpatch loading steps.
+    #
+    # @param [Array] steps
+    #
+    def load(steps = [:postgis, :geoserver, :solr])
+      @asset.stage do
+        steps.each do |step|
+          method = "load_#{step}"
+          send(method) unless not respond_to?(method)
+        end
+      end
     end
 
   end
