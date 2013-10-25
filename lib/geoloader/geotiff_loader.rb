@@ -32,10 +32,13 @@ module Geoloader
     #
     # Load the asset to Geoserver and Solr.
     #
-    def load
+    # @param [Array] steps
+    #
+    def load(steps = [:geoserver, :solr])
       @geotiff.stage do
-        load_geoserver
-        load_solr
+        steps.each do |step|
+          send("load_#{step}")
+        end
       end
     end
 

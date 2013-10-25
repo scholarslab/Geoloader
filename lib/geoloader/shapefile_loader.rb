@@ -34,11 +34,11 @@ module Geoloader
     #
     # @param [Array] steps
     #
-    def load
+    def load(steps = [:postgis, :geoserver, :solr])
       @shapefile.stage do
-        load_postgis
-        load_geoserver
-        load_solr
+        steps.each do |step|
+          send("load_#{step}")
+        end
       end
     end
 
