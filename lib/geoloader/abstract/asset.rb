@@ -29,7 +29,7 @@ module Geoloader
     #
     # Create working copies, yield to a block, remove the copies.
     #
-    def copy
+    def stage
       create_copies
       yield self rescue nil
       delete_copies

@@ -14,15 +14,15 @@ module Geoloader
     #
     def initialize(*args)
       super
-      connect
+      connect!
     end
 
     #
     # Create a new database.
     #
-    def create_database
+    def create_database!
       @pg.exec("CREATE DATABASE #{PG::Connection.quote_ident(@slug)}")
-      connect(@slug)
+      connect!(@slug)
     end
 
     #

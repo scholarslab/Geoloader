@@ -13,7 +13,7 @@ module Geoloader
     #
     # @param [String] name
     #
-    def connect(database = "postgres")
+    def connect!(database = "postgres")
       @pg = PG.connect(
         :host => Geoloader.config.postgres.host,
         :port => Geoloader.config.postgres.port,
@@ -35,7 +35,7 @@ module Geoloader
     #
     # Close the PostgreSQL connection.
     #
-    def disconnect
+    def disconnect!
       @pg.close
     end
 

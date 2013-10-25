@@ -26,17 +26,17 @@ module Geoloader
     #
     def initialize(file_path, manifest)
       super
-      @shapefile = Geoloader::Shapefile.new(file_path, @manifest.WorkspaceName)
+      @shapefile = Geoloader::Shapefile.new(file_path, @workspace)
     end
 
     #
     # Load the asset to Geoserver and Solr.
     #
     def load
-      @shapefile.copy do |shapefile|
+      @shapefile.stage do |shapefile|
 
         # (1) Create database.
-        shapefile.create_database
+        shapefile.create_database!
         shapefile.enable_postgis
         shapefile.insert_tables
 
@@ -48,7 +48,7 @@ module Geoloader
         @solr.create_document(shapefile, @manifest)
 
         # (4) Cleanup.
-        shapefile.disconnect
+        shapefile.disconnect!
 
       end
     end

@@ -13,7 +13,7 @@ module Geoloader
     # Connect to the default database.
     #
     def initialize
-      connect
+      connect!
     end
 
     #

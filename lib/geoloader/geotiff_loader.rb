@@ -26,14 +26,14 @@ module Geoloader
     #
     def initialize(file_path, manifest)
       super
-      @geotiff = Geoloader::Geotiff.new(file_path, @manifest.WorkspaceName)
+      @geotiff = Geoloader::Geotiff.new(file_path, @workspace)
     end
 
     #
     # Load the asset to Geoserver and Solr.
     #
     def load
-      @geotiff.copy do |geotiff|
+      @geotiff.stage do |geotiff|
 
         # (1) Post-process.
         geotiff.remove_border
