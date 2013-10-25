@@ -8,7 +8,7 @@ module Geoloader
   class CLI < Thor
 
     desc "load MANIFEST", "Load a YAML batch manifest"
-    option "resque", :aliases => "q", :type => :boolean, :default => false
+    option "queue", :aliases => "q", :type => :boolean, :default => false
     def load(manifest)
       Geoloader::Routines.load(manifest, options[:resque])
     end

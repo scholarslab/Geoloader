@@ -6,6 +6,18 @@ module Geoloader
 
     attr_reader :geoserver, :solr
 
+    @queue = :geoloader
+
+    #
+    # Perform an upload (used by Resque).
+    #
+    # @param [String] file_name
+    # @param [Hash] manifest
+    #
+    def self.perform(file_path, manifest)
+      new(file_path, manifest).load
+    end
+
     #
     # Store metadata, create service wrappers.
     #
