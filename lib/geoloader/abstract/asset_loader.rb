@@ -14,15 +14,15 @@ module Geoloader
     #
     def initialize(file_path, manifest)
 
-      # Store the manifest, alias the workspace.
+      # Set the manifest, alias the workspace.
       @manifest = Confstruct::Configuration.new(manifest)
       @workspace = @manifest.WorkspaceName
 
-      # Connect to Geoserver and Solr.
+      # Initialize service wrappers.
       @geoserver = Geoloader::Geoserver.new
       @solr = Geoloader::Solr.new
 
-      # Ensure that the workspace existson Geoserver.
+      # Ensure that the workspace exists.
       @geoserver.ensure_workspace(@workspace)
 
     end

@@ -39,7 +39,6 @@ module Geoloader
 
         # (1) Create database.
         @shapefile.create_database!
-        @shapefile.enable_postgis
         @shapefile.insert_tables
 
         # (2) Push to Geoserver.

@@ -23,12 +23,6 @@ module Geoloader
     def create_database!
       @pg.exec("CREATE DATABASE #{PG::Connection.quote_ident(@slug)}")
       connect!(@slug)
-    end
-
-    #
-    # Enable the PostGIS extension.
-    #
-    def enable_postgis
       @pg.exec("CREATE EXTENSION postgis")
     end
 
