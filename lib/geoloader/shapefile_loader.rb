@@ -30,25 +30,27 @@ module Geoloader
     end
 
     #
-    # Load the asset to Geoserver and Solr.
+    # Distpatch loading steps.
+    #
+    # @param [Array] steps
     #
     def load
-      @shapefile.stage do |shapefile|
+      @shapefile.stage do
 
         # (1) Create database.
-        shapefile.create_database!
-        shapefile.enable_postgis
-        shapefile.insert_tables
+        @shapefile.create_database!
+        @shapefile.enable_postgis
+        @shapefile.insert_tables
 
         # (2) Push to Geoserver.
-        @geoserver.create_datastore(shapefile)
-        @geoserver.create_featuretypes(shapefile)
+        @geoserver.create_datastore(@shapefile)
+        @geoserver.create_featuretypes(@shapefile)
 
         # (3) Push to Solr.
-        @solr.create_document(shapefile, @manifest)
+        @solr.create_document(@shapefile, @manifest)
 
         # (4) Cleanup.
-        shapefile.disconnect!
+        @shapefile.disconnect!
 
       end
     end

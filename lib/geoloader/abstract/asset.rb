@@ -31,7 +31,7 @@ module Geoloader
     #
     def stage
       create_copies
-      yield self rescue nil
+      yield rescue nil
       delete_copies
     end
 
