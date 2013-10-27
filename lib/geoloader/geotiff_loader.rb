@@ -4,27 +4,24 @@
 module Geoloader
   class GeotiffLoader < AssetLoader
 
-    #
-    # Construct the asset instance.
-    #
-    def before
+    def load
+
       @asset = Geoloader::Geotiff.new(@file_path, @workspace)
-    end
 
-    #
-    # Post-process the file and push to Geoserver.
-    #
-    def load_geoserver
-      @asset.make_borders_transparent
-      @asset.reproject_to_4326
-      @geoserver.create_coveragestore(@asset)
-    end
+      @asset.stage do
 
-    #
-    # Add a document to the Solr index.
-    #
-    def load_solr
-      @solr.create_document(@asset, @manifest)
+        # (1) Prepare the file.
+        @asset.remove_borders
+        @asset.project_to_4326
+
+        # (2) Push to Geoserver.
+        @geoserver.create_coveragestore(@asset)
+
+        # (3) Push to Solr.
+        @solr.create_document(@asset, @manifest)
+
+      end
+
     end
 
   end

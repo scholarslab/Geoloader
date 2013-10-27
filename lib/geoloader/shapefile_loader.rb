@@ -4,34 +4,25 @@
 module Geoloader
   class ShapefileLoader < AssetLoader
 
-    #
-    # Construct the asset instance.
-    #
-    def before
+    def load
+
       @asset = Geoloader::Shapefile.new(@file_path, @workspace)
-    end
 
-    #
-    # Create a PostGIS table and insert tables.
-    #
-    def load_postgis
-      @asset.create_database!
-      @asset.insert_tables
-    end
+      @asset.stage do
 
-    #
-    # Create datastore on Geoserver.
-    #
-    def load_geoserver
-      @geoserver.create_datastore(@asset)
-      @geoserver.create_featuretypes(@asset)
-    end
+        # (1) Create database.
+        @asset.create_database!
+        @asset.insert_tables
 
-    #
-    # Add a document to Solr.
-    #
-    def load_solr
-      @solr.create_document(@asset, @manifest)
+        # (2) Push to Geoserver.
+        @geoserver.create_datastore(@asset)
+        @geoserver.create_featuretypes(@asset)
+
+        # (3) Push to Solr.
+        @solr.create_document(@asset, @manifest)
+
+      end
+
     end
 
   end
