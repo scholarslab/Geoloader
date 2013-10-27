@@ -13,11 +13,17 @@ module Geoloader
     #
     def initialize(*args)
       super
-      begin
+      connect!
+      if database_exists?
         connect!(@slug)
-      rescue
-        connect!
       end
+    end
+
+    #
+    # Does a PostgreSQL database exist for the file?
+    #
+    def database_exists?
+      list_databases.include?(@slug)
     end
 
     #
@@ -40,7 +46,7 @@ module Geoloader
     # Fetch a list of layers in the database.
     #
     def get_layers
-      fetch_column("geometry_columns", "f_table_name")
+      get_column("geometry_columns", "f_table_name")
     end
 
     #
