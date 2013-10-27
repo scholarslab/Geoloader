@@ -6,13 +6,44 @@ require "pg"
 module Geoloader
   class Postgres
 
-    include Database
+    attr_reader :pg
 
     #
     # Connect to the default database.
     #
     def initialize
       connect!
+    end
+
+    #
+    # Connect to PostgreSQL.
+    #
+    # @param [String] database
+    #
+    def connect!(database = "postgres")
+      @pg = PG.connect(
+        :host => Geoloader.config.postgres.host,
+        :port => Geoloader.config.postgres.port,
+        :user => Geoloader.config.postgres.username,
+        :dbname => database
+      )
+    end
+
+    #
+    # List all databases.
+    #
+    def list_databases
+      fetch_column("pg_database", "datname")
+    end
+
+    #
+    # Get an array of all column values in a table.
+    #
+    # @param [String] table
+    # @param [String] column
+    #
+    def fetch_column(table, column)
+      @pg.exec("SELECT * FROM #{table}").field_values(column)
     end
 
     #
@@ -35,6 +66,13 @@ module Geoloader
           drop_database(database)
         end
       end
+    end
+
+    #
+    # Close the PostgreSQL connection.
+    #
+    def disconnect!
+      @pg.close
     end
 
   end

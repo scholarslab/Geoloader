@@ -1,7 +1,6 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require "fileutils"
 require "pg"
 
 module Geoloader
@@ -41,7 +40,7 @@ module Geoloader
     # Fetch a list of layers in the database.
     #
     def get_layers
-      get_column("geometry_columns", "f_table_name")
+      fetch_column("geometry_columns", "f_table_name")
     end
 
     #

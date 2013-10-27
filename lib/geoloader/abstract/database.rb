@@ -26,7 +26,7 @@ module Geoloader
     # List all databases.
     #
     def list_databases
-      get_column("pg_database", "datname")
+      fetch_column("pg_database", "datname")
     end
 
     #
@@ -35,7 +35,7 @@ module Geoloader
     # @param [String] table
     # @param [String] column
     #
-    def get_column(table, column)
+    def fetch_column(table, column)
       @pg.exec("SELECT * FROM #{table}").field_values(column)
     end
 
