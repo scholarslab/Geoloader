@@ -22,13 +22,6 @@ module Geoloader
     end
 
     #
-    # Does a PostgreSQL database exist for the file?
-    #
-    def database_exists?
-      list_databases.include?(@slug)
-    end
-
-    #
     # Create a new database.
     #
     def create_database!
