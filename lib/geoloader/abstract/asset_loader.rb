@@ -29,8 +29,8 @@ module Geoloader
       @file_path = file_path
 
       # Set the manifest, alias the workspace.
-      @manifest = Confstruct::Configuration.new(manifest)
-      @workspace = @manifest.WorkspaceName
+      @manifest   = Confstruct::Configuration.new(manifest)
+      @workspace  = @manifest.WorkspaceName
 
       # Initialize service wrappers.
       @geoserver = Geoloader::Geoserver.new
@@ -39,15 +39,6 @@ module Geoloader
       # Ensure that the workspace exists.
       @geoserver.ensure_workspace(@workspace)
 
-      create_asset
-
-    end
-
-    #
-    # Initialize the `@asset` instance.
-    #
-    def create_asset
-      raise NotImplementedError.new
     end
 
     #
@@ -56,12 +47,20 @@ module Geoloader
     # @param [Array] steps
     #
     def load(steps = [:postgis, :geoserver, :solr])
+      before
       @asset.stage do
         steps.each do |step|
           method = "load_#{step}"
           send(method) unless not respond_to?(method)
         end
       end
+    end
+
+    #
+    # Called before the load.
+    #
+    def before
+      raise NotImplementedError.new
     end
 
   end

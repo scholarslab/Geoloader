@@ -7,7 +7,7 @@ module Geoloader
     #
     # Construct the asset instance.
     #
-    def create_asset
+    def before
       @asset = Geoloader::Geotiff.new(@file_path, @workspace)
     end
 
