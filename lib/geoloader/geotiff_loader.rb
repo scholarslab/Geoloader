@@ -4,6 +4,9 @@
 module Geoloader
   class GeotiffLoader < AssetLoader
 
+    #
+    # Push a GeoTIFF to Geoserver and Solr.
+    #
     def load
 
       @asset = Geoloader::Geotiff.new(@file_path, @workspace)

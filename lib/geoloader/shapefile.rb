@@ -14,9 +14,6 @@ module Geoloader
     def initialize(*args)
       super
       connect!
-      if database_exists?
-        connect!(@slug)
-      end
     end
 
     #

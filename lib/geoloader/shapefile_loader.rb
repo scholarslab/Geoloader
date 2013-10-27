@@ -4,6 +4,9 @@
 module Geoloader
   class ShapefileLoader < AssetLoader
 
+    #
+    # Push a Shapefile to PostGIS, Geoserver, Solr.
+    #
     def load
 
       @asset = Geoloader::Shapefile.new(@file_path, @workspace)
