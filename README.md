@@ -32,7 +32,7 @@ test:
   workspace:  gl_test
 ```
 
-Depending on your needs, you can override some or all of these settings. For example, you'll almost always need to set custom login credentials for PostgreSQL and Geoserver. If you're using Geoloader programmatically in code, just use the top-level `configure` and `configure_from_yaml` methods:
+Depending on your needs, you can override some or all of these settings. For example, you'll almost always need to set custom credentials for PostgreSQL and Geoserver. If you're using Geoloader programmatically in code, just use the top-level `configure` method:
 
 ```ruby
 require "geoloader"
@@ -63,15 +63,13 @@ geoserver:
   password: gs_password
 ```
 
-And merge in the custom settings in bulk:
+And used `configure_from_yaml` to apply the settings in bulk:
 
 ```ruby
 require "geoloader"
 
 Geoloader.configure_from_yaml("/path/to/geoloader.yaml")
 ```
-
-If you're using Geoloader from the command line, **set global configuration defaults in a `~/.geoloader.yaml` file**, which is automatically loaded and applied before tasks are executed.
 
 ## Usage
 
@@ -103,7 +101,9 @@ For now, Geoloader assumes that the Solr core implements the [OpenGeoportal Solr
 
 ### CLI Application
 
-Alternatively, batches of assets be loaded in bulk from the command line by defining a separate "manifest" YAML file that defines (a) a set of files that should be included in the upload and (b) a common packet of metadata that should be used to describe the assets in Solr.
+Alternatively, batches of assets be loaded in bulk from the command line by defining a separate manifest file that defines (a) a set of files that should be included in the upload and (b) a common packet of metadata that should be used to describe the assets in Solr.
+
+To use Geoloader from the command line, **set global configuration defaults in a `~/.geoloader.yaml` file**, which is automatically loaded and applied before tasks are executed.
 
 #### load
 
