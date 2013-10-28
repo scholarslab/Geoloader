@@ -73,7 +73,7 @@ Geoloader.configure_from_yaml("/path/to/geoloader.yaml")
 
 ## Usage
 
-Individual assets can be loaded programmatically by instantiating one of the two loader classes with a filename and a metadata hash:
+Load individual GeoTIFFs and Shapefiles by instantiating one of the two loader classes with a filename and metadata hash:
 
 ```ruby
 require "geoloader"
