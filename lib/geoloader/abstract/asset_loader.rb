@@ -4,7 +4,7 @@
 module Geoloader
   class AssetLoader
 
-    attr_reader :geoserver, :solr, :asset
+    attr_reader :geoserver, :solr
 
     @queue = :geoloader
 
