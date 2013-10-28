@@ -71,7 +71,7 @@ require "geoloader"
 Geoloader.configure_from_yaml("/path/to/geoloader.yaml")
 ```
 
-If you're using Geoloader from the command line, **can set global configuration defaults in a `~/.geoloader.yaml` file**, which is automatically loaded and applied before tasks are executed.
+If you're using Geoloader from the command line, **set global configuration defaults in a `~/.geoloader.yaml` file**, which is automatically loaded and applied before tasks are executed.
 
 ## Usage
 
