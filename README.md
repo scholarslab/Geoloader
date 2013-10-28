@@ -32,7 +32,7 @@ test:
   workspace:  gl_test
 ```
 
-Depending on your needs, you can override some or all of these settings. For example, you'll almost always need to set custom login credentials for PostgreSQL and Geoserver. If you're using Geoloader programmatically, just use the top-level `configure` and `configure_from_yaml` methods:
+Depending on your needs, you can override some or all of these settings. For example, you'll almost always need to set custom login credentials for PostgreSQL and Geoserver. If you're using Geoloader programmatically in code, just use the top-level `configure` and `configure_from_yaml` methods:
 
 ```ruby
 require "geoloader"
@@ -71,7 +71,7 @@ require "geoloader"
 Geoloader.configure_from_yaml("/path/to/geoloader.yaml")
 ```
 
-If you're using Geoloader from the command line, **you can set global configuration defaults in a `~/.geoloader.yaml` file**, which are automatically merged before tasks are executed.
+If you're using Geoloader from the command line, **can set global configuration defaults in a `~/.geoloader.yaml` file**, which is automatically loaded and applied before tasks are executed.
 
 ## Usage
 
@@ -111,8 +111,8 @@ First, create a manifest file, which can sit anywhere on the filesystem:
 
 ```yaml
 
-files: "/path/to/assets/*"  # ** required
-WorkspaceName: "aerials"    # ** required
+files: "/path/to/assets/*"  # required
+WorkspaceName: "aerials"    # required
 
 LayerDisplayName: "Geoloader Development"
 Abstract: "1937 Aerials of Charlottesville, Virginia."
