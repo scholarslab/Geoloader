@@ -10,7 +10,7 @@ module Geoloader
     desc "load MANIFEST", "Load a YAML batch manifest"
     option "queue", :aliases => "q", :type => :boolean, :default => false
     def load(manifest)
-      Geoloader::Routines.load(manifest, options[:resque])
+      Geoloader::Routines.load(manifest, options[:queue])
     end
 
     desc "clear WORKSPACE", "Clear a workspace"

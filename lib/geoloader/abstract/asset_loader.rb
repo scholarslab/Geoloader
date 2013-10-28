@@ -6,8 +6,6 @@ module Geoloader
 
     attr_reader :geoserver, :solr
 
-    @queue = :geoloader
-
     #
     # Perform an upload (used by Resque).
     #

@@ -6,6 +6,8 @@ module Geoloader
 
     attr_reader :geotiff
 
+    @queue = :geoloader
+
     #
     # Initialize the GeoTIFF instance.
     #

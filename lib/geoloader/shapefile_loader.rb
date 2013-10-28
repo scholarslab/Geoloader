@@ -6,6 +6,8 @@ module Geoloader
 
     attr_reader :shapefile
 
+    @queue = :geoloader
+
     #
     # Initialize the shapefile instance.
     #

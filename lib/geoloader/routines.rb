@@ -51,13 +51,13 @@ module Geoloader
     def self.clear(workspace)
 
       # Delete Geoserver stores.
-      Geoloader::Geoserver.new.delete_workspace(workspace)
+      Geoloader::Geoserver.new.delete_workspace(workspace) rescue nil
 
       # Drop PostGIS tables.
-      Geoloader::Postgres.new.drop_databases_by_workspace(workspace)
+      Geoloader::Postgres.new.drop_databases_by_workspace(workspace) rescue nil
 
       # Delete Solr documents.
-      Geoloader::Solr.new.delete_by_workspace(workspace)
+      Geoloader::Solr.new.delete_by_workspace(workspace) rescue nil
 
     end
 
