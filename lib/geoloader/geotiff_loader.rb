@@ -16,7 +16,7 @@ module Geoloader
       @geotiff.stage do
 
         # (1) Prepare the file.
-        @geotiff.remove_borders
+        @geotiff.make_borders_transparent
         @geotiff.project_to_4326
 
         # (2) Push to Geoserver.
