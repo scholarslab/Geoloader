@@ -4,7 +4,7 @@ Geoloader is a little gem that automates the process of loading [GeoTIFFs][geoti
 
 ## Installation and Configuration
 
-For now, while things are still in development, install the gem by cloning this repository and using the [Jeweler][jeweler] rake task:
+For now, install the gem by cloning this repository and using the [Jeweler][jeweler] rake task:
 
 ```
 rake install
@@ -63,7 +63,7 @@ geoserver:
   password: gs_password
 ```
 
-And used `configure_from_yaml` to apply the settings in bulk:
+And use `configure_from_yaml` to apply the settings in bulk:
 
 ```ruby
 require "geoloader"
@@ -125,7 +125,7 @@ The `files` and `WorkspaceName` fields are required, and the manifest can option
 geoloader load path/to/manifest.yaml
 ```
 
-If you have access to Redis, add the `--queue` / `-q` flag on the command to push the job onto a Resque queue.
+If you have access to Redis, add the `--queue` / `-q` flag to push the job onto a Resque queue.
 
 ```
 geoloader load path/to/manifest.yaml -q
