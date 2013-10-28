@@ -105,7 +105,7 @@ Alternatively, batches of assets be loaded in bulk from the command line by defi
 
 To use Geoloader from the command line, **set global configuration defaults in a `~/.geoloader.yaml` file**, which is automatically loaded and applied before tasks are executed.
 
-#### load
+#### `load`
 
 First, create a manifest file, which can sit anywhere on the filesystem:
 
