@@ -7,12 +7,17 @@ module Geoloader
     attr_reader :shapefile
 
     #
+    # Initialize the shapefile instance.
+    #
+    def initialize(*args)
+      super
+      @shapefile = Geoloader::Shapefile.new(@file_path, @workspace)
+    end
+
+    #
     # Push a Shapefile to PostGIS, Geoserver, Solr.
     #
     def load
-
-      @shapefile = Geoloader::Shapefile.new(@file_path, @workspace)
-
       @shapefile.stage do
 
         # (1) Create database.
@@ -27,7 +32,6 @@ module Geoloader
         @solr.create_document(@shapefile, @manifest)
 
       end
-
     end
 
   end

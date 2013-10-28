@@ -7,12 +7,17 @@ module Geoloader
     attr_reader :geotiff
 
     #
+    # Initialize the GeoTIFF instance.
+    #
+    def initialize(*args)
+      super
+      @geotiff = Geoloader::Geotiff.new(@file_path, @workspace)
+    end
+
+    #
     # Push a GeoTIFF to Geoserver and Solr.
     #
     def load
-
-      @geotiff = Geoloader::Geotiff.new(@file_path, @workspace)
-
       @geotiff.stage do
 
         # (1) Prepare the file.
@@ -26,7 +31,6 @@ module Geoloader
         @solr.create_document(@geotiff, @manifest)
 
       end
-
     end
 
   end
