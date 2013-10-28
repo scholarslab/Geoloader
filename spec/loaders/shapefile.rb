@@ -53,7 +53,7 @@ describe Geoloader::ShapefileLoader do
 
   it "should add a Solr document" do
 
-    response = loader.solr.resource.find({ :queries => "LayerId:#{loader.asset.slug}" })
+    response = loader.solr.resource.find({ :queries => "LayerId:#{loader.shapefile.slug}" })
     response.total.must_equal 1
 
     # Should point to the correct workspace.

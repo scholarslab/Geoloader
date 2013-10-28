@@ -4,24 +4,26 @@
 module Geoloader
   class GeotiffLoader < AssetLoader
 
+    attr_reader :geotiff
+
     #
     # Push a GeoTIFF to Geoserver and Solr.
     #
     def load
 
-      @asset = Geoloader::Geotiff.new(@file_path, @workspace)
+      @geotiff = Geoloader::Geotiff.new(@file_path, @workspace)
 
-      @asset.stage do
+      @geotiff.stage do
 
         # (1) Prepare the file.
-        @asset.remove_borders
-        @asset.project_to_4326
+        @geotiff.remove_borders
+        @geotiff.project_to_4326
 
         # (2) Push to Geoserver.
-        @geoserver.create_coveragestore(@asset)
+        @geoserver.create_coveragestore(@geotiff)
 
         # (3) Push to Solr.
-        @solr.create_document(@asset, @manifest)
+        @solr.create_document(@geotiff, @manifest)
 
       end
 

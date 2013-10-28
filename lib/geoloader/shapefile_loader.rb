@@ -4,25 +4,27 @@
 module Geoloader
   class ShapefileLoader < AssetLoader
 
+    attr_reader :shapefile
+
     #
     # Push a Shapefile to PostGIS, Geoserver, Solr.
     #
     def load
 
-      @asset = Geoloader::Shapefile.new(@file_path, @workspace)
+      @shapefile = Geoloader::Shapefile.new(@file_path, @workspace)
 
-      @asset.stage do
+      @shapefile.stage do
 
         # (1) Create database.
-        @asset.create_database!
-        @asset.insert_tables
+        @shapefile.create_database!
+        @shapefile.insert_tables
 
         # (2) Push to Geoserver.
-        @geoserver.create_datastore(@asset)
-        @geoserver.create_featuretypes(@asset)
+        @geoserver.create_datastore(@shapefile)
+        @geoserver.create_featuretypes(@shapefile)
 
         # (3) Push to Solr.
-        @solr.create_document(@asset, @manifest)
+        @solr.create_document(@shapefile, @manifest)
 
       end
 
