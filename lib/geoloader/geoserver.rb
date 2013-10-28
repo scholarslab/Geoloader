@@ -84,24 +84,8 @@ module Geoloader
     # @param [Geoloader::Shapefile] shapefile
     #
     def create_datastore(shapefile)
-
-      # Construct the request.
-      payload = Builder::XmlMarkup.new.dataStore { |d|
-        d.name shapefile.base_name
-        d.connectionParameters { |c|
-          c.host      Geoloader.config.postgres.host
-          c.port      Geoloader.config.postgres.port
-          c.user      Geoloader.config.postgres.username
-          c.passwd    Geoloader.config.postgres.password
-          c.database  shapefile.slug
-          c.dbtype    "postgis"
-        }
-      }
-
-      # Create the new datastore.
-      url = "workspaces/#{shapefile.workspace}/datastores"
+      url = "workspaces/#{shapefile.workspace}/datastores/#{shapefile.base_name}/file.shp"
       @resource[url].post(payload, :content_type => :xml)
-
     end
 
     #
@@ -112,29 +96,6 @@ module Geoloader
     def delete_datastore(shapefile)
       url = "workspaces/#{shapefile.workspace}/datastores/#{shapefile.base_name}"
       @resource[url].delete({:params => {:recurse => true}})
-    end
-
-    #
-    # Publish layers from the PostGIS tables corresponding to a shapefile.
-    #
-    # @param [Geoloader::Shapefile] shapefile
-    #
-    def create_featuretypes(shapefile)
-
-      shapefile.get_layers.each { |layer|
-
-        # Construct the request.
-        payload = Builder::XmlMarkup.new.featureType { |f|
-          f.name layer
-          f.srs Geoloader.config.geoserver.srs
-        }
-
-        # Create the new featuretype.
-        url = "workspaces/#{shapefile.workspace}/datastores/#{shapefile.base_name}/featuretypes"
-        @resource[url].post(payload, :content_type => :xml)
-
-      }
-
     end
 
   end

@@ -5,7 +5,7 @@ require "terminal-table"
 require "thor"
 
 module Geoloader
-  class CLI < Thor
+  class App < Thor
 
     desc "load MANIFEST", "Load a YAML batch manifest"
     option "queue", :aliases => "q", :type => :boolean, :default => false

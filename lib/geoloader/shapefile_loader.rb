@@ -22,15 +22,10 @@ module Geoloader
     def load
       @shapefile.stage do
 
-        # (1) Create database.
-        @shapefile.create_database!
-        @shapefile.insert_tables
-
-        # (2) Push to Geoserver.
+        # (1) Push to Geoserver.
         @geoserver.create_datastore(@shapefile)
-        @geoserver.create_featuretypes(@shapefile)
 
-        # (3) Push to Solr.
+        # (2) Push to Solr.
         @solr.create_document(@shapefile, @manifest)
 
       end
