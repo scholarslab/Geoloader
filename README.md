@@ -131,7 +131,7 @@ If you have access to Redis, add the `--queue` / `-q` flag to push the job onto 
 geoloader load path/to/manifest.yaml -q
 ```
 
-#### work
+#### `work`
 
 Then, at any point in the future, start the job by spinning up a Resque worker:
 
@@ -139,7 +139,7 @@ Then, at any point in the future, start the job by spinning up a Resque worker:
 geoloader work
 ```
 
-#### list
+#### `list`
 
 To view a list of existing workspaces and the number of assets they contain, use the `list` task:
 
@@ -157,7 +157,7 @@ geoloader list
 +------------+----------+
 ```
 
-#### clear
+#### `clear`
 
 Use the `clear` command to delete all assets in a workspace:
 
