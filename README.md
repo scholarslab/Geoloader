@@ -10,7 +10,7 @@ For now, install the gem by cloning this repository and using the [Jeweler][jewe
 rake install
 ```
 
-Then, you'll need to point Geoloader at instances of PostgreSQL, Geoserver, and Solr. Depending on whether you're using Geoloader programmatically in code or as a command-line program, this is done a bit differently. By default, Geoloader uses the settings defined in the top-level `config.yaml` file:
+Then, you'll need to point Geoloader at instances of PostgreSQL, Geoserver, and Solr. Depending on whether you're using Geoloader programmatically in code or from the command-line, this is done a bit differently. By default, Geoloader uses the settings defined in the top-level `config.yaml` file:
 
 ```yaml
 postgres:
@@ -101,7 +101,7 @@ For now, Geoloader assumes that the Solr core implements the [OpenGeoportal Solr
 
 ### CLI Application
 
-Alternatively, batches of assets be loaded in bulk from the command line by defining a separate manifest file that defines (a) a set of files that should be included in the upload and (b) a common packet of metadata that should be used to describe the assets in Solr.
+Alternatively, batches of assets ("data stacks") can be loaded in bulk from the command line by defining a separate manifest file that defines (a) a set of files that should be included in the upload and (b) a common packet of metadata that should be used to describe the assets in Solr.
 
 To use Geoloader from the command line, **set global configuration defaults in a `~/.geoloader.yaml` file**, which is automatically loaded and applied before tasks are executed.
 
