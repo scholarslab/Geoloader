@@ -9,17 +9,19 @@ module Geoloader
     #
     # Zip up the Shapefile and its companion files.
     #
-    def create_zipfile
+    def get_zipfile
 
       # Get the file path, minus the extension.
-      path = "#{File.dirname(@file_path)}/#{@base_name}"
+      base = "#{File.dirname(@file_path)}/#{@base_name}"
 
       # Create the zipfile.
-      Zip::File.open("#{path}.zip") do |zipfile|
-        Dir.glob("#{path}.*") do |file|
-          zipfile.add(File.basename(file, ".*"), file)
+      Zip::File.open("#{base}.zip", Zip::File::CREATE) do |zipfile|
+        Dir.glob("#{base}.*") do |file|
+          zipfile.add(File.basename(file), file)
         end
       end
+
+      File.read("#{base}.zip")
 
     end
 

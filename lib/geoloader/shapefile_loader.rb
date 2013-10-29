@@ -22,10 +22,13 @@ module Geoloader
     def load
       @shapefile.stage do
 
-        # (1) Push to Geoserver.
+        # (1) Prepare the file.
+        @shapefile.create_zipfile
+
+        # (2) Push to Geoserver.
         @geoserver.create_datastore(@shapefile)
 
-        # (2) Push to Solr.
+        # (3) Push to Solr.
         @solr.create_document(@shapefile)
 
       end

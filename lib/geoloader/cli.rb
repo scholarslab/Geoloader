@@ -50,7 +50,7 @@ module Geoloader
 
     desc "test [FILE]", "test"
     def test(file_path)
-      Geoloader::Shapefile.new(file_path, "geoloader").create_zipfile
+      puts Geoloader::Shapefile.new(file_path, "geoloader").get_zipfile
     end
 
   end

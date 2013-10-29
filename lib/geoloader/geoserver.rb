@@ -85,7 +85,7 @@ module Geoloader
     #
     def create_datastore(shapefile)
       url = "workspaces/#{shapefile.workspace}/datastores/#{shapefile.base_name}/file.shp"
-      @resource[url].put(File.read(shapefile.file_path))
+      @resource[url].put(shapefile.get_zipfile, :content_type => "application/zip")
     end
 
     #
