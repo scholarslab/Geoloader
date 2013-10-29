@@ -43,7 +43,6 @@ GEM
       multi_json (~> 1.0)
       multi_xml (~> 0.5)
       rack (~> 1.2)
-    pg (0.17.0)
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
@@ -65,6 +64,7 @@ GEM
       builder (>= 2.1.2)
     rsolr-ext (1.0.3)
       rsolr (>= 1.0.2)
+    rubyzip (0.9.9)
     sinatra (1.4.3)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -83,9 +83,9 @@ DEPENDENCIES
   jeweler
   minitest
   nokogiri
-  pg
   resque
   rest-client
   rsolr-ext
+  rubyzip
   terminal-table
   thor

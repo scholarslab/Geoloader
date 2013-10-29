@@ -8,7 +8,7 @@ gem "thor"
 gem "terminal-table"
 gem "resque"
 gem "nokogiri"
-gem "pg"
+gem "rubyzip"
 
 group :test do
   gem "minitest"
