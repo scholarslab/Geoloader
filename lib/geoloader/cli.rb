@@ -48,10 +48,5 @@ module Geoloader
       Resque::Worker.new("geoloader").work
     end
 
-    desc "test [FILE]", "test"
-    def test(file_path)
-      puts Geoloader::Shapefile.new(file_path, "geoloader").get_zipfile
-    end
-
   end
 end

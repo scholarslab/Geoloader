@@ -31,8 +31,11 @@ module Geoloader
     #
     def stage
       enqueue
-      yield rescue nil
-      dequeue
+      begin
+        yield
+      rescue
+        dequeue
+      end
     end
 
     private

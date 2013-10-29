@@ -22,14 +22,14 @@ module Geoloader
     def load
       @geotiff.stage do
 
-        # (1) Prepare the file.
+        # Prepare the file.
         @geotiff.make_borders_transparent
         @geotiff.project_to_4326
 
-        # (2) Push to Geoserver.
+        # Push to Geoserver.
         @geoserver.create_coveragestore(@geotiff)
 
-        # (3) Push to Solr.
+        # Push to Solr.
         @solr.create_document(@geotiff)
 
       end
