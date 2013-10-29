@@ -27,6 +27,18 @@ module Geoloader
     end
 
     #
+    # TODO|dev
+    # Get metadata for Solr document.
+    #
+    def metadata
+      {
+        :LayerId => @slug,
+        :WorkspaceName => @workspace,
+        :Name => @base_name
+      }
+    end
+
+    #
     # Create working copies, yield to a block, remove the copies.
     #
     def stage

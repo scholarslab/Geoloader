@@ -79,7 +79,7 @@ module Geoloader
     end
 
     #
-    # Publish the PostGIS database corresponding to a shapefile.
+    # Create a new datastore and layer for a Shapefile.
     #
     # @param [Geoloader::Shapefile] shapefile
     #

@@ -21,7 +21,7 @@ module Geoloader
     # @param [Geoloader::Asset] asset
     #
     def create_document(asset)
-      @resource.add({ :LayerId => asset.slug, :Name => asset.base_name })
+      @resource.add(asset.metadata)
       @resource.commit
     end
 
