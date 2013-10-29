@@ -20,7 +20,7 @@ module Geoloader
     desc "list", "List workspaces and asset counts"
     def list
 
-      # Query for workspace counts. 
+      # Query for workspace counts.
       counts = Geoloader::Solr.new.get_workspace_counts
 
       # Render the table.
