@@ -19,10 +19,9 @@ module Geoloader
     # Add a new document to the index.
     #
     # @param [Geoloader::Asset] asset
-    # @param [Confstruct::Configuration] data
     #
-    def create_document(asset, data)
-      @resource.add(data.merge({ :LayerId => asset.slug, :Name => asset.base_name }))
+    def create_document(asset)
+      @resource.add({ :LayerId => asset.slug, :Name => asset.base_name })
       @resource.commit
     end
 

@@ -7,25 +7,45 @@ require "thor"
 module Geoloader
   class App < Thor
 
-    desc "load MANIFEST", "Load a YAML batch manifest"
-    option "queue", :aliases => "q", :type => :boolean, :default => false
-    def load(manifest)
-      Geoloader::Routines.load(manifest, options[:queue])
-    end
-
-    desc "clear WORKSPACE", "Clear a workspace"
-    def clear(workspace)
-      Geoloader::Routines.clear(workspace)
+    desc "load [FILE]", "Load a YAML batch manifest"
+    def load(file_path)
+      case File.extname(file_path)
+      when ".tif"
+        Geoloader::GeotiffLoader.new(file_path, "geoloader").load
+      when ".shp"
+        Geoloader::ShapefileLoader.new(file_path, "geoloader").load
+      end
     end
 
     desc "list", "List workspaces and asset counts"
     def list
-      puts Geoloader::Routines.list
+
+      # Query for workspace counts. 
+      counts = Geoloader::Solr.new.get_workspace_counts
+
+      # Render the table.
+      puts Terminal::Table.new(
+        :title    => "GEOLOADER",
+        :headings => ["Workspace", "# Assets"],
+        :rows     => counts
+      )
+
+    end
+
+    desc "clear [WORKSPACE]", "Clear a workspace"
+    def clear(workspace)
+
+      # Delete Geoserver stores.
+      Geoloader::Geoserver.new.delete_workspace(workspace) rescue nil
+
+      # Delete Solr documents.
+      Geoloader::Solr.new.delete_by_workspace(workspace) rescue nil
+
     end
 
     desc "work", "Start a Resque worker"
     def work
-      Geoloader::Routines.work
+      Resque::Worker.new("geoloader").work
     end
 
   end

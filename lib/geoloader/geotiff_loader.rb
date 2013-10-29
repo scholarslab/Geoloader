@@ -30,7 +30,7 @@ module Geoloader
         @geoserver.create_coveragestore(@geotiff)
 
         # (3) Push to Solr.
-        @solr.create_document(@geotiff, @manifest)
+        @solr.create_document(@geotiff)
 
       end
     end

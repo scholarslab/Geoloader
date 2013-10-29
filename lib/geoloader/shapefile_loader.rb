@@ -13,7 +13,7 @@ module Geoloader
     #
     def initialize(*args)
       super
-      @shapefile = Geoloader::Shapefile.new(@file_path, @workspace)
+      @shapefile = Geoloader::Asset.new(@file_path, @workspace)
     end
 
     #
@@ -26,7 +26,7 @@ module Geoloader
         @geoserver.create_datastore(@shapefile)
 
         # (2) Push to Solr.
-        @solr.create_document(@shapefile, @manifest)
+        @solr.create_document(@shapefile)
 
       end
     end

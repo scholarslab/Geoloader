@@ -85,7 +85,7 @@ module Geoloader
     #
     def create_datastore(shapefile)
       url = "workspaces/#{shapefile.workspace}/datastores/#{shapefile.base_name}/file.shp"
-      @resource[url].post(payload, :content_type => :xml)
+      @resource[url].put(File.read(shapefile.file_path))
     end
 
     #

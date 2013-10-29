@@ -10,27 +10,24 @@ module Geoloader
     # Perform an upload (used by Resque).
     #
     # @param [String] file_name
-    # @param [Hash] manifest
+    # @param [String] workspace
     #
-    def self.perform(file_path, manifest)
-      new(file_path, manifest).load
+    def self.perform(file_path, workspace)
+      new(file_path, workspace).load
     end
 
     #
-    # Store metadata, create service wrappers.
+    # Initialize service wrappers, create workspace.
     #
     # @param [String] file_name
-    # @param [Hash] manifest
+    # @param [String] workspace
     #
-    def initialize(file_path, manifest)
+    def initialize(file_path, workspace)
 
       @file_path = file_path
+      @workspace = workspace
 
-      # Set the manifest, alias the workspace.
-      @manifest   = Confstruct::Configuration.new(manifest)
-      @workspace  = @manifest.WorkspaceName
-
-      # Initialize service wrappers.
+      # Initialize Geoserver / Solr.
       @geoserver = Geoloader::Geoserver.new
       @solr = Geoloader::Solr.new
 
