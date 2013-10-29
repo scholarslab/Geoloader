@@ -22,8 +22,6 @@ module Geoloader
     def load
       @shapefile.stage do
 
-        puts "shapefile load"
-
         # Push to Geoserver.
         @geoserver.create_datastore(@shapefile)
 

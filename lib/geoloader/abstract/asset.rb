@@ -33,7 +33,7 @@ module Geoloader
       enqueue
       begin
         yield
-      rescue
+      ensure
         dequeue
       end
     end
