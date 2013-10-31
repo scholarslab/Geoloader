@@ -5,7 +5,7 @@ require "terminal-table"
 require "thor"
 
 module Geoloader
-  class CLI < Thor
+  class Application < Thor
 
     include Routines
 
