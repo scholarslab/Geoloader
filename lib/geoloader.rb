@@ -34,7 +34,7 @@ module Geoloader
   # @param [String] file_path
   #
   def self.configure_from_yaml(file_path)
-    @config.configure(YAML::load(File.read(File.expand_path(file_path)))) rescue nil
+    @config.configure(YAML::load(File.read(File.expand_path(file_path))))
   end
 
   #
@@ -52,4 +52,4 @@ require_dir("geoloader")
 
 # Apply default configuration.
 Geoloader.configure_from_yaml(File.expand_path("../../config.yaml", __FILE__))
-Geoloader.configure_from_yaml("~/.geoloader.yaml")
+Geoloader.configure_from_yaml("~/.geoloader.yaml") rescue nil
