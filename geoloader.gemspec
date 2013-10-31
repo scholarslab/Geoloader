@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
     "lib/geoloader/geoserver.rb",
     "lib/geoloader/geotiff.rb",
     "lib/geoloader/geotiff_loader.rb",
+    "lib/geoloader/routines.rb",
     "lib/geoloader/shapefile.rb",
     "lib/geoloader/shapefile_loader.rb",
     "lib/geoloader/solr.rb",

@@ -5,9 +5,9 @@ require "terminal-table"
 require "thor"
 
 module Geoloader
-  class App < Thor
+  class CLI < Thor
 
-    include Geoloader::Routines
+    include Routines
 
     desc "load [FILE]", "Load a YAML batch manifest"
     def load(file_path)
