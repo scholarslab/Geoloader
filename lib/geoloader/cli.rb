@@ -5,37 +5,47 @@ require "terminal-table"
 require "thor"
 
 module Geoloader
-  class CLI < Thor
-
-    include Routines
+  class App < Thor
 
     desc "load [FILE]", "Load a YAML batch manifest"
     def load(file_path)
       case File.extname(file_path)
       when ".tif"
-        load_geotiff(file_path, "geoloader")
+        Geoloader::GeotiffLoader.new(file_path, "geoloader").load
       when ".shp"
-        load_shapefile(file_path, "geoloader")
+        Geoloader::ShapefileLoader.new(file_path, "geoloader").load
       end
     end
 
     desc "list", "List workspaces and asset counts"
     def list
+
+      # Query for workspace counts.
+      counts = Geoloader::Solr.new.get_workspace_counts
+
+      # Render the table.
       puts Terminal::Table.new(
         :title    => "GEOLOADER",
         :headings => ["Workspace", "# Assets"],
-        :rows     => count_assets
+        :rows     => counts
       )
+
     end
 
     desc "clear [WORKSPACE]", "Clear a workspace"
     def clear(workspace)
-      clear_workspace(workspace)
+
+      # Delete Geoserver stores.
+      Geoloader::Geoserver.new.delete_workspace(workspace) rescue nil
+
+      # Delete Solr documents.
+      Geoloader::Solr.new.delete_by_workspace(workspace) rescue nil
+
     end
 
     desc "work", "Start a Resque worker"
     def work
-      start_worker
+      Resque::Worker.new("geoloader").work
     end
 
   end

@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
 require "geoloader"
-Geoloader::CLI.start(ARGV)
+Geoloader::App.start(ARGV)

@@ -5,13 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = "geoloader"
-  s.version = "0.0.1"
+  s.version = "0.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David McClure"]
-  s.date = "2013-10-31"
+  s.date = "2013-09-12"
   s.email = "david.mcclure@virginia.edu"
-  s.executables = ["geoloader"]
   s.extra_rdoc_files = [
     "README.md"
   ]
@@ -21,35 +20,9 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "VERSION",
-    "bin/geoloader",
-    "config.yaml",
     "geoloader.gemspec",
     "lib/geoloader.rb",
-    "lib/geoloader/abstract/asset.rb",
-    "lib/geoloader/abstract/loader.rb",
-    "lib/geoloader/cli.rb",
-    "lib/geoloader/geoserver.rb",
-    "lib/geoloader/geotiff.rb",
-    "lib/geoloader/geotiff_loader.rb",
-    "lib/geoloader/routines.rb",
-    "lib/geoloader/shapefile.rb",
-    "lib/geoloader/shapefile_loader.rb",
-    "lib/geoloader/solr.rb",
-    "spec/fixtures/geotiff.tfw",
-    "spec/fixtures/geotiff.tif",
-    "spec/fixtures/geotiff.tif.aux.xml",
-    "spec/fixtures/geotiff.tif.ovr",
-    "spec/fixtures/geotiff.tif.vat.dbf",
-    "spec/fixtures/geotiff.tif.xml",
-    "spec/fixtures/shapefile.dbf",
-    "spec/fixtures/shapefile.prj",
-    "spec/fixtures/shapefile.sbn",
-    "spec/fixtures/shapefile.sbx",
-    "spec/fixtures/shapefile.shp",
-    "spec/fixtures/shapefile.shp.xml",
-    "spec/fixtures/shapefile.shx",
-    "spec/helpers/fixture.rb",
-    "spec/spec_helper.rb"
+    "lib/geoloader/geotiff.rb"
   ]
   s.require_paths = ["lib"]
   s.rubygems_version = "2.0.3"
@@ -59,36 +32,15 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<jeweler>, [">= 0"])
-      s.add_runtime_dependency(%q<rest-client>, [">= 0"])
-      s.add_runtime_dependency(%q<confstruct>, [">= 0"])
-      s.add_runtime_dependency(%q<rsolr-ext>, [">= 0"])
-      s.add_runtime_dependency(%q<thor>, [">= 0"])
-      s.add_runtime_dependency(%q<terminal-table>, [">= 0"])
-      s.add_runtime_dependency(%q<resque>, [">= 0"])
-      s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
-      s.add_runtime_dependency(%q<rubyzip>, [">= 0"])
+      s.add_runtime_dependency(%q<jeweler>, ["~> 1.8.7"])
+      s.add_runtime_dependency(%q<gdal>, ["~> 0.0.5"])
     else
-      s.add_dependency(%q<jeweler>, [">= 0"])
-      s.add_dependency(%q<rest-client>, [">= 0"])
-      s.add_dependency(%q<confstruct>, [">= 0"])
-      s.add_dependency(%q<rsolr-ext>, [">= 0"])
-      s.add_dependency(%q<thor>, [">= 0"])
-      s.add_dependency(%q<terminal-table>, [">= 0"])
-      s.add_dependency(%q<resque>, [">= 0"])
-      s.add_dependency(%q<nokogiri>, [">= 0"])
-      s.add_dependency(%q<rubyzip>, [">= 0"])
+      s.add_dependency(%q<jeweler>, ["~> 1.8.7"])
+      s.add_dependency(%q<gdal>, ["~> 0.0.5"])
     end
   else
-    s.add_dependency(%q<jeweler>, [">= 0"])
-    s.add_dependency(%q<rest-client>, [">= 0"])
-    s.add_dependency(%q<confstruct>, [">= 0"])
-    s.add_dependency(%q<rsolr-ext>, [">= 0"])
-    s.add_dependency(%q<thor>, [">= 0"])
-    s.add_dependency(%q<terminal-table>, [">= 0"])
-    s.add_dependency(%q<resque>, [">= 0"])
-    s.add_dependency(%q<nokogiri>, [">= 0"])
-    s.add_dependency(%q<rubyzip>, [">= 0"])
+    s.add_dependency(%q<jeweler>, ["~> 1.8.7"])
+    s.add_dependency(%q<gdal>, ["~> 0.0.5"])
   end
 end
 

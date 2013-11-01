@@ -4,6 +4,17 @@
 require "confstruct"
 require "yaml"
 
+#
+# Require all files in a directory.
+#
+# @param [String] path
+#
+def require_dir(path)
+  Dir["#{File.dirname(__FILE__)}/#{path}/*.rb"].each { |file|
+    require file
+  }
+end
+
 module Geoloader
 
   @config = Confstruct::Configuration.new
@@ -35,23 +46,9 @@ module Geoloader
 
 end
 
-# Assets:
-require "geoloader/asset"
-require "geoloader/shapefile"
-require "geoloader/geotiff"
-
-# Services:
-require "geoloader/geoserver"
-require "geoloader/solr"
-
-# Loaders:
-require "geoloader/loader"
-require "geoloader/shapefile_loader"
-require "geoloader/geotiff_loader"
-
-# Usage:
-require "geoloader/routines"
-require "geoloader/cli"
+# Load assets.
+require_dir("geoloader/abstract")
+require_dir("geoloader")
 
 # Apply default configuration.
 Geoloader.configure_from_yaml(File.expand_path("../../config.yaml", __FILE__))
