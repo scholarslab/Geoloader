@@ -2,7 +2,7 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 module Geoloader
-  class ShapefileLoader < AssetLoader
+  class ShapefileLoader < Loader
 
     attr_reader :shapefile
 
