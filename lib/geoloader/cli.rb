@@ -11,9 +11,11 @@ module Geoloader
     def load(file_path)
       case File.extname(file_path)
       when ".tif"
-        Geoloader::GeotiffLoader.new(file_path, "geoloader").load
+        Geoloader::GeoserverGeotiffLoader.new(file_path, "geoloader").load
+        Geoloader::SolrGeotiffLoader.new(file_path, "geoloader").load
       when ".shp"
-        Geoloader::ShapefileLoader.new(file_path, "geoloader").load
+        Geoloader::GeoserverShapefileLoader.new(file_path, "geoloader").load
+        Geoloader::SolrShapefileLoader.new(file_path, "geoloader").load
       end
     end
 
