@@ -2,9 +2,8 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 module Geoloader
-  class Loader
 
-    attr_reader :geoserver, :solr
+  class Loader
 
     #
     # Perform an upload (used by Resque).
@@ -17,24 +16,73 @@ module Geoloader
     end
 
     #
-    # Initialize service wrappers, create workspace.
+    # Set the file path and workspace.
     #
     # @param [String] file_name
     # @param [String] workspace
     #
     def initialize(file_path, workspace)
-
       @file_path = file_path
       @workspace = workspace
+    end
 
-      # Initialize Geoserver / Solr.
-      @geoserver = Geoloader::Geoserver.new
-      @solr = Geoloader::Solr.new
+    #
+    # Connect to Geoserver.
+    #
+    module GeoserverLoader
 
-      # Ensure that the workspace exists.
-      @geoserver.ensure_workspace(@workspace)
+      attr_reader :geoserver
+
+      def initialize(*args)
+        super
+        @geoserver = Geoloader.Geoserver.new
+        @geoserver.ensure_workspace(@workspace)
+      end
+
+    end
+
+    #
+    # Connect to Solr.
+    #
+    module SolrLoader
+
+      attr_reader :solr
+
+      def initialize(*args)
+        super
+        @solr = Geoloader.Solr.new
+      end
+
+    end
+
+    #
+    # Create GeoTIFF.
+    #
+    module GeotiffLoader
+
+      attr_reader :geotiff
+
+      def initialize(*args)
+        super
+        @geotiff = Geoloader.Geotiff.new(@file_path, @workspace)
+      end
+
+    end
+
+    #
+    # Create Shapefile.
+    #
+    module ShapefileLoader
+
+      attr_reader :shapefile
+
+      def initialize(*args)
+        super
+        @shapefile = Geoloader.Shapefile.new(@file_path, @workspace)
+      end
 
     end
 
   end
+
 end
