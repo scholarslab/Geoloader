@@ -48,6 +48,9 @@ end
 
 # Load assets.
 require_dir("geoloader/abstract")
+require_dir("geoloader/assets")
+require_dir("geoloader/services")
+require_dir("geoloader/loaders")
 require_dir("geoloader")
 
 # Apply default configuration.
