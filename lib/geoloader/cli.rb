@@ -9,11 +9,12 @@ module Geoloader
 
     include Tasks
 
+    @services = ["geoserver", "solr"]
+
     desc "load [FILES]", "Load a YAML batch manifest"
+    option :services,   :aliases => "-s", :type => :array, :default => @services
     option :workspace,  :aliases => "-w", :type => :string
     option :queue,      :aliases => "-q", :type => :boolean, :default => false
-    option :geoserver,  :aliases => "-g", :type => :boolean, :default => false
-    option :solr,       :aliases => "-s", :type => :boolean, :default => false
     def load(*files)
 
       workspace = (options[:workspace] or Geoloader.config.workspace)
@@ -22,23 +23,16 @@ module Geoloader
         case File.extname(file_path)
         when ".tif" # GEOTIFF
 
-          if options[:geoserver]
-            load_geotiff_geoserver(file_path, workspace, options[:queue])
-          end
-
-          if options[:solr]
-            load_geotiff_solr(file_path, workspace, options[:queue])
-          end
+          options[:services].each { |service|
+            send("load_geotiff_#{service}", file_path, workspace, options[:queue])
+          }
 
         when ".shp" # SHAPEFILE
 
-          if options[:geoserver]
-            load_shapefile_geoserver(file_path, workspace, options[:queue])
-          end
+          options[:services].each { |service|
+            send("load_shapefile_#{service}", file_path, workspace, options[:queue])
+          }
 
-          if options[:solr]
-            load_shapefile_solr(file_path, workspace, options[:queue])
-          end
         end
       }
 
