@@ -14,7 +14,7 @@ describe Geoloader::GeotiffGeoserverLoader do
   }
 
   let(:loader) {
-    Geoloader::GeotiffLoader.new(get_fixture_path("geotiff.tif"), workspace)
+    Geoloader::GeotiffGeoserverLoader.new(get_fixture_path("geotiff.tif"), workspace)
   }
 
   before do
