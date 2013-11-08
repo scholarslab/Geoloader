@@ -60,6 +60,76 @@ Geoloader::ShapefileSolrLoader.new("/path/to/file", "workspace", {:solr => "meta
 Resque.enqueue(Geoloader::GeotiffSolrLoader, "/path/to/file", "workspace", {:solr => "metadata"})
 ```
 
+## Installation and Configuration
+
+To get started, clone the repo and install the gem with the [Jeweler][jeweler] task:
+
+```
+rake install
+```
+
+Then, you'll need to point Geoloader at running instances of Geoserver and Solr. By default, Geoloader starts by applying the configuration settings in the top-level `config.yaml` file:
+
+```yaml
+workspaces:
+  default:    geoloader
+  testing:    geoloader_test
+
+geoserver:
+  url:        http://localhost:8080/geoserver
+  username:   admin
+  password:   geoserver
+  srs:        EPSG:900913
+
+solr:
+  url:        http://localhost:8080/solr/geoloader
+```
+
+Depending on your needs, you can override some or all of these settings. For example, you'll almost always need to set custom credentials for Geoserver.
+
+#### Ruby
+
+If you're using Geoloader programmatically in code, pass any hash-like object to the `configure` method on the `Geoloader` module to set configuration options directly:
+
+```ruby
+require "geoloader"
+
+Geoloader.configure({
+  :geoserver => {
+    :username => "gs_username",
+    :username => "gs_password"
+  }
+})
+```
+
+Or, put your custom settings in a separate YAML file:
+
+```yaml
+geoserver:
+  username: gs_username
+  password: gs_password
+```
+
+And apply them in bulk with `configure_from_yaml`:
+
+```ruby
+require "geoloader"
+
+Geoloader.configure_from_yaml("/path/to/geoloader.yaml")
+```
+
+#### CLI Application
+
+If you're using Geoloader as a command-line tool, provide custom connection parameters in `~/.geoloader.yaml`, and the values will automatically be merged into the default configuration at runtime:
+
+```yaml
+# ~/.geoloader.yaml
+
+geoserver:
+  username: gs_username
+  password: gs_password
+```
+
 [geotiff]: http://en.wikipedia.org/wiki/Geotiff
 [shapefile]: http://en.wikipedia.org/wiki/Shapefile
 [geoserver]: http://geoserver.org/
