@@ -36,15 +36,6 @@ geoloader work
 
 # List all existing workspaces with asset counts:
 geoloader list
->>>
-+------------+----------+
-|       GEOLOADER       |
-+------------+----------+
-| Workspace  | # Assets |
-+------------+----------+
-| aerials    | 67       |
-| cville     | 10       |
-+------------+----------+
 
 # Clear all assets in a workspace:
 geoloader clear aerials
