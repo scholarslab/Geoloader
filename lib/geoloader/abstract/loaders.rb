@@ -20,10 +20,12 @@ module Geoloader
     #
     # @param [String] file_name
     # @param [String] workspace
+    # @param [Hash] metadata
     #
-    def initialize(file_path, workspace)
+    def initialize(file_path, workspace, metadata)
       @file_path = file_path
       @workspace = workspace
+      @metadata  = metadata
     end
 
     #
@@ -35,7 +37,7 @@ module Geoloader
 
       def initialize(*args)
         super
-        @geotiff = Geoloader::Geotiff.new(@file_path, @workspace)
+        @geotiff = Geoloader::Geotiff.new(@file_path, @workspace, @metadata)
       end
 
     end
@@ -49,7 +51,7 @@ module Geoloader
 
       def initialize(*args)
         super
-        @shapefile = Geoloader::Shapefile.new(@file_path, @workspace)
+        @shapefile = Geoloader::Shapefile.new(@file_path, @workspace, @metadata)
       end
 
     end

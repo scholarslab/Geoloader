@@ -15,22 +15,31 @@ module Geoloader
     option :services,   :aliases => "-s", :type => :array, :default => @services
     option :workspace,  :aliases => "-w", :type => :string
     option :queue,      :aliases => "-q", :type => :boolean, :default => false
+    option :metadata,   :aliases => "-m", :type => :string
     def load(*files)
 
+      # If no workspace is defined, use the global default.
       workspace = (options[:workspace] or Geoloader.config.workspace)
+
+      # If provided, load the metadata YAML manifest.
+      if options[:metadata]
+        metadata = YAML::load(File.read(File.expand_path(options[:metadata])))
+      else
+        metadata = {}
+      end
 
       files.each { |file_path|
         case File.extname(file_path)
         when ".tif" # GEOTIFF
 
           options[:services].each { |service|
-            send("load_geotiff_#{service}", file_path, workspace, options[:queue])
+            send("load_geotiff_#{service}", file_path, workspace, metadata, options[:queue])
           }
 
         when ".shp" # SHAPEFILE
 
           options[:services].each { |service|
-            send("load_shapefile_#{service}", file_path, workspace, options[:queue])
+            send("load_shapefile_#{service}", file_path, workspace, metadata, options[:queue])
           }
 
         end

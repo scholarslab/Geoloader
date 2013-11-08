@@ -14,12 +14,16 @@ module Geoloader
     #
     # @param [String] file_path
     # @param [String] workspace
+    # @param [Hash] metadata
     #
-    def initialize(file_path, workspace)
+    def initialize(file_path, workspace, metadata)
 
       @file_path = file_path
-      @base_name = File.basename(@file_path, ".*")
       @workspace = workspace
+      @metadata  = metadata
+
+      # Set the file name without the extension.
+      @base_name = File.basename(@file_path, ".*")
 
       # Set a workspace-prefixed slug.
       @slug = "#{@workspace}_#{@base_name}"
@@ -30,12 +34,12 @@ module Geoloader
     # TODO|dev
     # Get metadata for Solr document.
     #
-    def metadata
-      {
+    def document
+      @metadata.merge({
         :LayerId => @slug,
         :WorkspaceName => @workspace,
         :Name => @base_name
-      }
+      })
     end
 
     #
