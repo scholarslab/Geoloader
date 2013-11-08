@@ -1,8 +1,4 @@
-postgres:
-  host:       localhost
-  port:       5432
-  username:   admin
-  password:   postgres
+workspace:    geoloader
 
 geoserver:
   url:        http://localhost:8080/geoserver

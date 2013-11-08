@@ -8,15 +8,21 @@ module Geoloader
   class CLI < Thor
 
     desc "load [FILE]", "Load a YAML batch manifest"
+    option :workspace, :type => :string, :aliases => "-w"
     def load(file_path)
+
+      workspace = (options[:workspace] or Geoloader.config.workspace)
+
       case File.extname(file_path)
       when ".tif"
-        Geoloader::GeoserverGeotiffLoader.new(file_path, "geoloader").load
-        Geoloader::SolrGeotiffLoader.new(file_path, "geoloader").load
+        Geoloader::GeoserverGeotiffLoader.new(file_path, workspace).load
+        Geoloader::SolrGeotiffLoader.new(file_path, workspace).load
+
       when ".shp"
-        Geoloader::GeoserverShapefileLoader.new(file_path, "geoloader").load
-        Geoloader::SolrShapefileLoader.new(file_path, "geoloader").load
+        Geoloader::GeoserverShapefileLoader.new(file_path, workspace).load
+        Geoloader::SolrShapefileLoader.new(file_path, workspace).load
       end
+
     end
 
     desc "list", "List workspaces and asset counts"

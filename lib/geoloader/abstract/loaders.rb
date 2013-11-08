@@ -35,7 +35,7 @@ module Geoloader
 
       def initialize(*args)
         super
-        @geoserver = Geoloader.Geoserver.new
+        @geoserver = Geoloader::Geoserver.new
         @geoserver.ensure_workspace(@workspace)
       end
 
@@ -50,7 +50,7 @@ module Geoloader
 
       def initialize(*args)
         super
-        @solr = Geoloader.Solr.new
+        @solr = Geoloader::Solr.new
       end
 
     end
@@ -64,7 +64,7 @@ module Geoloader
 
       def initialize(*args)
         super
-        @geotiff = Geoloader.Geotiff.new(@file_path, @workspace)
+        @geotiff = Geoloader::Geotiff.new(@file_path, @workspace)
       end
 
     end
@@ -78,7 +78,7 @@ module Geoloader
 
       def initialize(*args)
         super
-        @shapefile = Geoloader.Shapefile.new(@file_path, @workspace)
+        @shapefile = Geoloader::Shapefile.new(@file_path, @workspace)
       end
 
     end
