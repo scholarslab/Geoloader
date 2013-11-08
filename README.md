@@ -16,10 +16,10 @@ geoloader load /path/to/shapefile.shp
 # Load all files matched by wildcard to Geoserver and Solr:
 geoloader load /path/to/files/*
 
-# Just load files to Geoserver:
+# Load files just to Geoserver:
 geoloader load /path/to/files/* --services geoserver
 
-# Just load files to Solr:
+# Load files just to Solr:
 geoloader load /path/to/files/* --services solr
 
 # Load files to a custom workspace:

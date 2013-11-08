@@ -10,7 +10,7 @@ describe Geoloader::ShapefileGeoserverLoader do
   include FixtureHelpers
 
   let(:workspace) {
-    Geoloader.config.test.workspace
+    Geoloader.config.workspaces.testing
   }
 
   let(:loader) {

@@ -19,7 +19,7 @@ module Geoloader
     def load(*files)
 
       # If no workspace is defined, use the global default.
-      workspace = (options[:workspace] or Geoloader.config.workspace)
+      workspace = (options[:workspace] or Geoloader.config.workspaces.default)
 
       # If provided, load the metadata YAML manifest.
       if options[:metadata]

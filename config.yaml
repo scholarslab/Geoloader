@@ -1,4 +1,6 @@
-workspace:    geoloader
+workspaces:
+  default:    geoloader
+  testing:    geoloader_test
 
 geoserver:
   url:        http://localhost:8080/geoserver
@@ -8,6 +10,3 @@ geoserver:
 
 solr:
   url:        http://localhost:8080/solr/geoloader
-
-test:
-  workspace:  gl_test
