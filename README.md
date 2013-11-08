@@ -54,16 +54,16 @@ Ruby:
 
 ```ruby
 # Load a Geotiff to Geoserver:
-Geoloader::GeotiffGeoserverLoader.new("/path/to/file", "workspace", {:solr => "metadata"})
+Geoloader::GeotiffGeoserverLoader.new("/path/to/file", "workspace", {:solr => "metadata"}).load
 
 # Load a Geotiff to Solr:
-Geoloader::GeotiffSolrLoader.new("/path/to/file", "workspace", {:solr => "metadata"})
+Geoloader::GeotiffSolrLoader.new("/path/to/file", "workspace", {:solr => "metadata"}).load
 
 # Load a Shapefile to Geoserver:
-Geoloader::ShapefileGeotiffLoader.new("/path/to/file", "workspace", {:solr => "metadata"})
+Geoloader::ShapefileGeotiffLoader.new("/path/to/file", "workspace", {:solr => "metadata"}).load
 
 # Load a Shapefile to Solr:
-Geoloader::ShapefileSolrLoader.new("/path/to/file", "workspace", {:solr => "metadata"})
+Geoloader::ShapefileSolrLoader.new("/path/to/file", "workspace", {:solr => "metadata"}).load
 
 # Or use any of the loader classes as a Resque job:
 Resque.enqueue(Geoloader::GeotiffSolrLoader, "/path/to/file", "workspace", {:solr => "metadata"})
