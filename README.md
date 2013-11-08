@@ -4,8 +4,15 @@ Geoloader is a simple little gem that automates the process of loading [GeoTIFFs
 
 ## Quick Examples
 
-```shell
+```bash
 geoloader load /path/to/geotiff.tif
+geoloader load /path/to/shapefile.shp
+geoloader load /path/to/files/*
+geoloader load /path/to/files/* --services geoserver
+geoloader load /path/to/files/* --services solr
+geoloader load /path/to/files/* --workspace aerials
+geoloader load /path/to/files/* --metadata /path/to/yaml
+geoloader load /path/to/files/* --queue
 ```
 
 [geotiff]: http://en.wikipedia.org/wiki/Geotiff
