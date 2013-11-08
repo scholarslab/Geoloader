@@ -13,6 +13,7 @@ module Geoloader
     option :workspace,  :aliases => "-w", :type => :string
     option :geoserver,  :aliases => "-g", :type => :boolean, :default => false
     option :solr,       :aliases => "-s", :type => :boolean, :default => false
+    option :queue,      :aliases => "-q", :type => :boolean, :default => false
     def load(file_path)
 
       workspace = (options[:workspace] or Geoloader.config.workspace)
@@ -20,12 +21,25 @@ module Geoloader
       case File.extname(file_path)
 
       when ".tif" # GEOTIFF
-        load_geotiff_geoserver(file_path, workspace) unless not options[:geoserver]
-        load_geotiff_solr(file_path, workspace) unless not options[:solr]
+
+        if options[:geoserver]
+          load_geotiff_geoserver(file_path, workspace, options[:queue])
+        end
+
+        if options[:solr]
+          load_geotiff_solr(file_path, workspace, options[:queue])
+        end
 
       when ".shp" # SHAPEFILE
-        load_shapefile_geoserver(file_path, workspace) unless not options[:geoserver]
-        load_shapefile_solr(file_path, workspace) unless not options[:solr]
+
+        if options[:geoserver]
+          load_shapefile_geoserver(file_path, workspace, options[:queue])
+        end
+
+        if options[:solr]
+          load_shapefile_solr(file_path, workspace, options[:queue])
+        end
+
       end
 
     end
@@ -47,13 +61,8 @@ module Geoloader
 
     desc "clear [WORKSPACE]", "Clear a workspace"
     def clear(workspace)
-
-      # Delete Geoserver stores.
-      Geoloader::Geoserver.new.delete_workspace(workspace) rescue nil
-
-      # Delete Solr documents.
-      Geoloader::Solr.new.delete_by_workspace(workspace) rescue nil
-
+      clear_geoserver_workspace(workspace) rescue nil
+      clear_solr_workspace(workspace) rescue nil
     end
 
     desc "work", "Start a Resque worker"
