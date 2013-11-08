@@ -7,20 +7,25 @@ require "thor"
 module Geoloader
   class CLI < Thor
 
+    include Tasks
+
     desc "load [FILE]", "Load a YAML batch manifest"
-    option :workspace, :type => :string, :aliases => "-w"
+    option :workspace,  :aliases => "-w", :type => :string
+    option :geoserver,  :aliases => "-g", :type => :boolean, :default => false
+    option :solr,       :aliases => "-s", :type => :boolean, :default => false
     def load(file_path)
 
       workspace = (options[:workspace] or Geoloader.config.workspace)
 
       case File.extname(file_path)
-      when ".tif"
-        Geoloader::GeoserverGeotiffLoader.new(file_path, workspace).load
-        Geoloader::SolrGeotiffLoader.new(file_path, workspace).load
 
-      when ".shp"
-        Geoloader::GeoserverShapefileLoader.new(file_path, workspace).load
-        Geoloader::SolrShapefileLoader.new(file_path, workspace).load
+      when ".tif" # GEOTIFF
+        load_geotiff_geoserver(file_path, workspace) unless not options[:geoserver]
+        load_geotiff_solr(file_path, workspace) unless not options[:solr]
+
+      when ".shp" # SHAPEFILE
+        load_shapefile_geoserver(file_path, workspace) unless not options[:geoserver]
+        load_shapefile_solr(file_path, workspace) unless not options[:solr]
       end
 
     end

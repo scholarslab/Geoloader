@@ -27,6 +27,34 @@ module Geoloader
     end
 
     #
+    # Create GeoTIFF.
+    #
+    module GeotiffLoader
+
+      attr_reader :geotiff
+
+      def initialize(*args)
+        super
+        @geotiff = Geoloader::Geotiff.new(@file_path, @workspace)
+      end
+
+    end
+
+    #
+    # Create Shapefile.
+    #
+    module ShapefileLoader
+
+      attr_reader :shapefile
+
+      def initialize(*args)
+        super
+        @shapefile = Geoloader::Shapefile.new(@file_path, @workspace)
+      end
+
+    end
+
+    #
     # Connect to Geoserver.
     #
     module GeoserverLoader
@@ -51,34 +79,6 @@ module Geoloader
       def initialize(*args)
         super
         @solr = Geoloader::Solr.new
-      end
-
-    end
-
-    #
-    # Create GeoTIFF.
-    #
-    module GeotiffLoader
-
-      attr_reader :geotiff
-
-      def initialize(*args)
-        super
-        @geotiff = Geoloader::Geotiff.new(@file_path, @workspace)
-      end
-
-    end
-
-    #
-    # Create Shapefile.
-    #
-    module ShapefileLoader
-
-      attr_reader :shapefile
-
-      def initialize(*args)
-        super
-        @shapefile = Geoloader::Shapefile.new(@file_path, @workspace)
       end
 
     end

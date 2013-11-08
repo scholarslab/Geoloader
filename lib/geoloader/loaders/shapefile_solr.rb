@@ -2,10 +2,10 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 module Geoloader
-  class SolrShapefileLoader < Loader
+  class ShapefileSolrLoader < Loader
 
-    include SolrLoader
     include ShapefileLoader
+    include SolrLoader
 
     @queue = :geoloader
 
