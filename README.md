@@ -37,7 +37,7 @@ geoloader work
 # List all existing workspaces with asset counts:
 geoloader list
 
-# Clear all assets in a workspace:
+# Delete all assets in a workspace:
 geoloader clear aerials
 ```
 
@@ -120,7 +120,7 @@ Geoloader.configure_from_yaml("/path/to/geoloader.yaml")
 
 #### CLI Application
 
-If you're using Geoloader as a command-line tool, provide custom connection parameters in `~/.geoloader.yaml`, and the values will automatically be merged into the default configuration at runtime:
+If you're using Geoloader as a command-line tool, provide custom settings in `~/.geoloader.yaml`, and the values will automatically be merged into the default configuration at runtime:
 
 ```yaml
 # ~/.geoloader.yaml
