@@ -102,7 +102,7 @@ Geoloader.configure({
 })
 ```
 
-Or, put your custom settings in a separate YAML file:
+Or, put any combination of custom settings in a separate YAML file:
 
 ```yaml
 geoserver:
@@ -110,7 +110,7 @@ geoserver:
   password: gs_password
 ```
 
-And apply them in bulk with `configure_from_yaml`:
+And apply them with `configure_from_yaml`:
 
 ```ruby
 require "geoloader"
