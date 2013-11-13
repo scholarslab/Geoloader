@@ -19,8 +19,7 @@ module Geoloader
       if queue
         Resque.enqueue(loader, file_path, workspace, metadata)
       else
-        loader.new(file_path, workspace, metadata).load
-        puts "Loaded #{File.basename(file_path)}."
+        loader.perform(file_path, workspace, metadata)
       end
     end
 
