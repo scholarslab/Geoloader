@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "jeweler"
+gem "jeweler", "1.8.8"
 gem "rest-client"
 gem "confstruct"
 gem "rsolr-ext"

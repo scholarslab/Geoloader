@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David McClure"]
-  s.date = "2013-11-07"
+  s.date = "2014-02-06"
   s.email = "david.mcclure@virginia.edu"
   s.executables = ["geoloader"]
   s.extra_rdoc_files = [
@@ -27,13 +27,14 @@ Gem::Specification.new do |s|
     "lib/geoloader.rb",
     "lib/geoloader/abstract/asset.rb",
     "lib/geoloader/abstract/loaders.rb",
+    "lib/geoloader/abstract/tasks.rb",
     "lib/geoloader/assets/geotiff.rb",
     "lib/geoloader/assets/shapefile.rb",
     "lib/geoloader/cli.rb",
-    "lib/geoloader/loaders/geoserver_geotiff.rb",
-    "lib/geoloader/loaders/geoserver_shapefile.rb",
-    "lib/geoloader/loaders/solr_geotiff.rb",
-    "lib/geoloader/loaders/solr_shapefile.rb",
+    "lib/geoloader/loaders/geotiff_geoserver.rb",
+    "lib/geoloader/loaders/geotiff_solr.rb",
+    "lib/geoloader/loaders/shapefile_geoserver.rb",
+    "lib/geoloader/loaders/shapefile_solr.rb",
     "lib/geoloader/services/geoserver.rb",
     "lib/geoloader/services/solr.rb",
     "spec/fixtures/geotiff.tfw",
@@ -50,6 +51,10 @@ Gem::Specification.new do |s|
     "spec/fixtures/shapefile.shp.xml",
     "spec/fixtures/shapefile.shx",
     "spec/helpers/fixture.rb",
+    "spec/loaders/geotiff_geoserver.rb",
+    "spec/loaders/geotiff_solr.rb",
+    "spec/loaders/shapefile_geoserver.rb",
+    "spec/loaders/shapefile_solr.rb",
     "spec/spec_helper.rb"
   ]
   s.require_paths = ["lib"]
