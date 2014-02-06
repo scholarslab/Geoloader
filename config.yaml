@@ -1,5 +1,5 @@
 workspaces:
-  default:    geoloader
+  production: geoloader
   testing:    geoloader_test
 
 geoserver:
