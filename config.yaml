@@ -2,11 +2,16 @@ workspaces:
   production: geoloader
   testing:    geoloader_test
 
+solr:
+  url:        http://localhost:8080/solr/geoloader
+
 geoserver:
   url:        http://localhost:8080/geoserver
   username:   admin
   password:   geoserver
   srs:        EPSG:900913
 
-solr:
-  url:        http://localhost:8080/solr/geoloader
+geonetwork:
+  url:        http://localhost:8080/geonetwork/srv/en
+  username:   admin
+  password:   admin
