@@ -2,7 +2,6 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 require "fileutils"
-require "digest/sha1"
 
 module Geoloader
   class Asset
@@ -31,15 +30,24 @@ module Geoloader
     end
 
     #
-    # TODO|dev
     # Get metadata for Solr document.
     #
-    def document
+    def get_solr_document
       @metadata.merge({
         :LayerId => @slug,
         :WorkspaceName => @workspace,
         :Name => @base_name
       })
+    end
+
+    #
+    # Convert the raw XML into a iso19139 record.
+    #
+    # @return [String]
+    #
+    def get_iso19139_xml
+      xslt_path = File.expand_path("../../stylesheets/iso19139.xsl", __FILE__)
+      `saxon #{@file_path}.xml #{xslt_path}`
     end
 
     #
