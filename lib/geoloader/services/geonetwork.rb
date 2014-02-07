@@ -14,26 +14,15 @@ module Geoloader
     # Initialize the API wrapper.
     #
     def initialize
-
-      # Alias the Geonetwork config.
-      @config = Geoloader.config.geonetwork
-
-      # Create the REST resource.
       @resource = RestClient::Resource.new(@config.url, {
-        :user     => @config.username,
-        :password => @config.password,
+        :user     => @Geoloader.config.geonetwork.username,
+        :password => @Geoloader.config.geonetwork.password,
         :headers  => { :content_type => :xml }
       })
-
-      # Create the group.
-      create_group unless group_exists?
-
     end
 
     #
     # List all groups on the node.
-    #
-    # @return [RestClient::Response]
     #
     def get_groups
       @resource["xml.group.list"].get
@@ -42,65 +31,59 @@ module Geoloader
     #
     # Get a group with a given name.
     #
-    # @param  [String] name
-    # @return [Nokogiri::XML]
+    # @param [String] group
     #
-    def get_group(name = @config.group)
-      Nokogiri::XML(get_groups).at_xpath("//record[name[text()='#{name}']]")
+    def get_group(group)
+      Nokogiri::XML(get_groups).at_xpath("//record[name[text()='#{group}']]")
     end
 
     #
     # Does a group with a given name exist?
     #
-    # @param  [String] name
-    # @return [Boolean]
+    # @param [String] group
     #
-    def group_exists?(name = @config.group)
-      !!get_group(name)
+    def group_exists?(group)
+      !!get_group(group)
     end
 
     #
     # Get the id of a group with a given name.
     #
-    # @param  [String] name
-    # @return [Integer]
+    # @param [String] group
     #
-    def get_group_id(name = @config.group)
+    def get_group_id(group)
       get_group(name).at_xpath("id").content.to_i
     end
 
     #
     # Create a new group with a given name.
     #
-    # @param  [String] name
-    # @return [RestClient::Response]
+    # @param [String] group
     #
-    def create_group(name = @config.group)
+    def create_group(group)
       post("group.update", self.class.xml_doc.request { |r|
-        r.name name
+        r.name group
       })
     end
 
     #
     # Delete group with a given name.
     #
-    # @param  [String] name
-    # @return [RestClient::Response]
+    # @param [String] group
     #
-    def delete_group(name = @config.group)
-      delete_records_by_group(name)
+    def delete_group(group)
+      delete_records_by_group(group)
       post("group.remove", self.class.xml_doc.request { |r|
-        r.id get_group_id(name)
+        r.id get_group_id(group)
       })
     end
 
     #
     # Insert a new record.
     #
-    # @param  [Geoloader::Asset] asset
-    # @param  [String] style_sheet
-    # @param  [String] category
-    # @return [RestClient::Response]
+    # @param [Geoloader::Asset] asset
+    # @param [String] style_sheet
+    # @param [String] category
     #
     def create_record(asset, style_sheet = "_none_", category = "_none_")
       post("metadata.insert", self.class.xml_doc.request { |r|
@@ -114,30 +97,27 @@ module Geoloader
     #
     # Get all records in a given group.
     #
-    # @param  [String] name
-    # @return [RestClient::Response]
+    # @param [String] group
     #
-    def get_records_in_group(name = @config.group)
+    def get_records_in_group(group)
       post("xml.search", self.class.xml_doc.request { |r|
-        r.group get_group_id(name)
+        r.group get_group_id(group)
       })
     end
 
     #
     # Count the number of records in a given group.
     #
-    # @param  [String] name
-    # @return [Integer]
+    # @param [String] group
     #
-    def count_records_in_group(name = @config.group)
-      Nokogiri::XML(get_records_in_group(name)).at_xpath("//summary/@count").content.to_i
+    def count_records_in_group(group)
+      Nokogiri::XML(get_records_in_group(group)).at_xpath("//summary/@count").content.to_i
     end
 
     #
     # Delete a record by id.
     #
-    # @param  [Integer] id
-    # @return [RestClient::Response]
+    # @param [Integer] id
     #
     def delete_record_by_id(id)
       post("metadata.delete", self.class.xml_doc.request { |r|
@@ -148,11 +128,10 @@ module Geoloader
     #
     # Delete all records in a group with a given name.
     #
-    # @param  [Integer] name
-    # @return [RestClient::Response]
+    # @param [Integer] group
     #
-    def delete_records_by_group(name = @config.group)
-      Nokogiri::XML(get_records_in_group(name)).xpath("//metadata//id").each do |m|
+    def delete_records_by_group(group)
+      Nokogiri::XML(get_records_in_group(group)).xpath("//metadata//id").each do |m|
         delete_record_by_id(m.content.to_i)
       end
     end

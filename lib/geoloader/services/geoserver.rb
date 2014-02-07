@@ -33,7 +33,7 @@ module Geoloader
     #
     # Create a new workspace.
     #
-    # @param [String] name
+    # @param [String] workspace
     #
     def create_workspace(workspace)
       payload = Builder::XmlMarkup.new.workspace { |w| w.name workspace }
@@ -43,7 +43,7 @@ module Geoloader
     #
     # Check to see if a workspace exists, and if not, create it.
     #
-    # @param [String] name
+    # @param [String] workspace
     #
     def ensure_workspace(workspace)
       create_workspace(workspace) unless workspace_exists?(workspace)
@@ -52,7 +52,7 @@ module Geoloader
     #
     # Delete a workspace.
     #
-    # @param [String] name
+    # @param [String] workspace
     #
     def delete_workspace(workspace)
       @resource["workspaces/#{workspace}"].delete({:params => {:recurse => true}})
