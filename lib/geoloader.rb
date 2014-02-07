@@ -38,6 +38,13 @@ module Geoloader
   end
 
   #
+  # Get the root gem directory.
+  #
+  def self.gem_dir
+    File.expand_path('../../', __FILE__)
+  end
+
+  #
   # Get the configuration object.
   #
   def self.config
@@ -54,5 +61,5 @@ require_dir("geoloader/loaders")
 require_dir("geoloader")
 
 # Apply default configuration.
-Geoloader.configure_from_yaml(File.expand_path("../../config.yaml", __FILE__))
+Geoloader.configure_from_yaml("#{Geoloader.gem_dir}/config.yaml")
 Geoloader.configure_from_yaml("~/.geoloader.yaml") rescue nil

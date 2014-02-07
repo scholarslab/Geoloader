@@ -32,7 +32,6 @@ GEM
       multi_json (>= 1.5)
     mime-types (2.1)
     mini_portile (0.5.2)
-    minitest (5.2.2)
     mono_logger (1.1.0)
     multi_json (1.8.4)
     multi_xml (0.5.5)
@@ -83,7 +82,6 @@ PLATFORMS
 DEPENDENCIES
   confstruct
   jeweler
-  minitest
   nokogiri
   resque
   rest-client

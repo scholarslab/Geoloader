@@ -46,7 +46,7 @@ module Geoloader
     # @return [String]
     #
     def get_iso19139_xml
-      xslt_path = File.expand_path("../../stylesheets/iso19139.xsl", __FILE__)
+      xslt_path = "#{Geoloader.gem_dir}/stylesheets/iso19139.xsl"
       `saxon #{@file_path}.xml #{xslt_path}`
     end
 

@@ -139,9 +139,8 @@ module Geoloader
     #
     # POST to an XML service.
     #
-    # @param  [String] service
-    # @param  [String] payload
-    # @return [RestClient::Response]
+    # @param [String] service
+    # @param [String] payload
     #
     def post(service, payload)
       @resource[service].post(payload) { |response, request, result, &block|
@@ -155,8 +154,6 @@ module Geoloader
 
     #
     # Get an XML builder instance.
-    #
-    # @return [Builder::XmlMarkup]
     #
     def self.xml_doc
       xml = Builder::XmlMarkup.new
