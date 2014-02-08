@@ -1,6 +1,6 @@
 # Geoloader
 
-Geoloader is a gem that automates the process of loading [GeoTIFFs][geotiff] and [Shapfiles][shapefile] into [Geoserver][geoserver], [Geonetwork][geonetwork], and [Solr][solr], the services that power the geospatial search interface at the University of Virginia Library.
+Geoloader automates the process of loading [GeoTIFFs][geotiff] and [Shapfiles][shapefile] into [Geoserver][geoserver], [Geonetwork][geonetwork], and [Solr][solr], the services that power the geospatial search interface at the University of Virginia Library.
 
 ## Quick Examples
 
