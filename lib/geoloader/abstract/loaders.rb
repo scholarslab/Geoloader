@@ -12,7 +12,7 @@ module Geoloader
     # @param [String] workspace
     # @param [Hash] metadata
     #
-    def self.perform(file_path, workspace, metadata)
+    def self.perform(file_path, workspace, metadata = {})
       new(file_path, workspace, metadata).load
       puts "Loaded #{File.basename(file_path)}."
     end
@@ -24,7 +24,7 @@ module Geoloader
     # @param [String] workspace
     # @param [Hash] metadata
     #
-    def initialize(file_path, workspace, metadata={})
+    def initialize(file_path, workspace, metadata = {})
       @file_path = file_path
       @workspace = workspace
       @metadata  = metadata

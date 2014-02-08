@@ -2,322 +2,386 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:gmd="http://www.isotc211.org/2005/gmd"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:gts="http://www.isotc211.org/2005/gts"
-    xmlns:gco="http://www.isotc211.org/2005/gco"
-    xmlns:gml="http://www.opengis.net/gml"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gco="http://www.isotc211.org/2005/gco"
+    xmlns:gml="http://www.opengis.net/gml" xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:geonet="http://www.fao.org/geonetwork"
     xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd"
     version="2.0">
 
-    <xsl:output method="xml" indent="yes" />
+    <xsl:output method="xml" indent="yes"/>
 
     <xsl:template match="/">
-        <MD_Metadata>
+        <gmd:MD_Metadata>
 
-            <fileIdentifier>
+            <gmd:fileIdentifier>
                 <gco:CharacterString xmlns:srv="http://www.isotc211.org/2005/srv">
-                    <xsl:copy-of select="/metadata/dataIdInfo/descKeys/thesaName[@uuidref]" />
+                    <xsl:copy-of select="/metadata/dataIdInfo/descKeys/thesaName[@uuidref]"/>
                 </gco:CharacterString>
-            </fileIdentifier>
+            </gmd:fileIdentifier>
 
-            <language>
+            <gmd:language>
                 <gco:CharacterString>
                     <xsl:copy-of select="/metadata/dataIdInfo/dataLang/languageCode[@value]"/>
                 </gco:CharacterString>
-            </language>
+            </gmd:language>
 
-            <characterSet>
-                <MD_CharacterSetCode codeListValue="utf8"
+            <gmd:characterSet>
+                <gmd:MD_CharacterSetCode codeListValue="utf8"
                     codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_CharacterSetCode"
                 />
-            </characterSet>
+            </gmd:characterSet>
 
-            <contact>
-                <CI_ResponsibleParty>
-                    <organisationName>
+            <gmd:contact>
+                <gmd:CI_ResponsibleParty>
+                    <gmd:organisationName>
                         <gco:CharacterString>Scholars' Lab</gco:CharacterString>
-                    </organisationName>
-                    <contactInfo>
-                        <CI_Contact>
-                            <phone>
-                                <CI_Telephone>
-                                    <voice>
+                    </gmd:organisationName>
+                    <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                            <gmd:phone>
+                                <gmd:CI_Telephone>
+                                    <gmd:voice>
                                         <gco:CharacterString>1-434-243-8800</gco:CharacterString>
-                                    </voice>
-                                </CI_Telephone>
-                            </phone>
-                            <address>
-                                <CI_Address>
-                                    <deliveryPoint>
-                                        <gco:CharacterString>Alderman Library, PO Box 400113</gco:CharacterString>
-                                    </deliveryPoint>
-                                    <city>
+                                    </gmd:voice>
+                                </gmd:CI_Telephone>
+                            </gmd:phone>
+                            <gmd:address>
+                                <gmd:CI_Address>
+                                    <gmd:deliveryPoint>
+                                        <gco:CharacterString>Alderman Library, PO Box
+                                            400113</gco:CharacterString>
+                                    </gmd:deliveryPoint>
+                                    <gmd:city>
                                         <gco:CharacterString>Charlottesville</gco:CharacterString>
-                                    </city>
-                                    <administrativeArea>
+                                    </gmd:city>
+                                    <gmd:administrativeArea>
                                         <gco:CharacterString>VA</gco:CharacterString>
-                                    </administrativeArea>
-                                    <postalCode>
+                                    </gmd:administrativeArea>
+                                    <gmd:postalCode>
                                         <gco:CharacterString>22904-00113</gco:CharacterString>
-                                    </postalCode>
-                                    <country>
+                                    </gmd:postalCode>
+                                    <gmd:country>
                                         <gco:CharacterString>USA</gco:CharacterString>
-                                    </country>
-                                    <electronicMailAddress>
+                                    </gmd:country>
+                                    <gmd:electronicMailAddress>
                                         <gco:CharacterString>scholars.lab@gmail.com</gco:CharacterString>
-                                    </electronicMailAddress>
-                                </CI_Address>
-                            </address>
-                        </CI_Contact>
-                    </contactInfo>
-                    <role>
-                        <CI_RoleCode codeListValue="pointOfContact" odeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_RoleCode" />
-                    </role>
-                </CI_ResponsibleParty>
-            </contact>
+                                    </gmd:electronicMailAddress>
+                                </gmd:CI_Address>
+                            </gmd:address>
+                        </gmd:CI_Contact>
+                    </gmd:contactInfo>
+                    <gmd:role>
+                        <gmd:CI_RoleCode codeListValue="pointOfContact"
+                            odeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_RoleCode"
+                        />
+                    </gmd:role>
+                </gmd:CI_ResponsibleParty>
+            </gmd:contact>
 
-            <dateStamp>
+            <gmd:dateStamp>
                 <gco:DateTime xmlns:srv="http://www.isotc211.org/2005/srv">
                     <!-- may need to calculate this from the Esri/CreaDate and Esri/CreaTime -->
                     <xsl:value-of select="current-dateTime()"/>
                 </gco:DateTime>
-            </dateStamp>
+            </gmd:dateStamp>
 
-            <metadataStandardName>
-                <gco:CharacterString xmlns:srv="http://www.isotc211.org/2005/srv">ISO 19115:2003/19139</gco:CharacterString>
-            </metadataStandardName>
+            <gmd:metadataStandardName>
+                <gco:CharacterString xmlns:srv="http://www.isotc211.org/2005/srv">ISO
+                    19115:2003/19139</gco:CharacterString>
+            </gmd:metadataStandardName>
 
-            <metadataStandardVersion>
-                <gco:CharacterString xmlns:srv="http://www.isotc211.org/2005/srv">1.0</gco:CharacterString>
-            </metadataStandardVersion>
+            <gmd:metadataStandardVersion>
+                <gco:CharacterString xmlns:srv="http://www.isotc211.org/2005/srv"
+                    >1.0</gco:CharacterString>
+            </gmd:metadataStandardVersion>
 
-            <referenceSystemInfo>
-                <MD_ReferenceSystem>
-                    <referenceSystemIdentifier>
-                        <RS_Identifier>
-                            <code>
-                                <gco:CharacterString><xsl:apply-templates select="/metadata/Esri/DataProperties/coordRef"/></gco:CharacterString>
-                            </code>
-                        </RS_Identifier>
-                    </referenceSystemIdentifier>
-                </MD_ReferenceSystem>
-            </referenceSystemInfo>
+            <gmd:referenceSystemInfo>
+                <gmd:MD_ReferenceSystem>
+                    <gmd:referenceSystemIdentifier>
+                        <gmd:RS_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>
+                                    <xsl:apply-templates
+                                        select="/metadata/Esri/DataProperties/coordRef"/>
+                                </gco:CharacterString>
+                            </gmd:code>
+                        </gmd:RS_Identifier>
+                    </gmd:referenceSystemIdentifier>
+                </gmd:MD_ReferenceSystem>
+            </gmd:referenceSystemInfo>
 
-            <identificationInfo>
-                <MD_DataIdentification>
+            <gmd:identificationInfo>
+                <gmd:MD_DataIdentification>
 
-                    <citation>
-                        <CI_Citation>
-                            <title>
+                    <gmd:citation>
+                        <gmd:CI_Citation>
+                            <gmd:title>
                                 <gco:CharacterString>Albemarle Aerial Dataset</gco:CharacterString>
-                            </title>
-                            <date>
-                                <CI_Date>
-                                    <date>
-                                        <gco:DateTime><xsl:value-of select="current-dateTime()"/></gco:DateTime>
-                                    </date>
-                                    <dateType>
-                                        <CI_DateTypeCode codeListValue="publication" codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode"/>
-                                    </dateType>
-                                </CI_Date>
-                            </date>
-                            <presentationForm>
-                                <CI_PresentationFormCode codeListValue="mapDigital" codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_PresentationFormCode"/>
-                            </presentationForm>
-                        </CI_Citation>
-                    </citation>
+                            </gmd:title>
+                            <gmd:date>
+                                <gmd:CI_Date>
+                                    <gmd:date>
+                                        <gco:DateTime>
+                                            <xsl:value-of select="current-dateTime()"/>
+                                        </gco:DateTime>
+                                    </gmd:date>
+                                    <gmd:dateType>
+                                        <CI_DateTypeCode codeListValue="publication"
+                                            codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_DateTypeCode"
+                                        />
+                                    </gmd:dateType>
+                                </gmd:CI_Date>
+                            </gmd:date>
+                            <gmd:presentationForm>
+                                <gmd:CI_PresentationFormCode codeListValue="mapDigital"
+                                    codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_PresentationFormCode"
+                                />
+                            </gmd:presentationForm>
+                        </gmd:CI_Citation>
+                    </gmd:citation>
 
-                    <abstract>
+                    <gmd:abstract>
                         <gco:CharacterString><!-- todo: needs an abstract --></gco:CharacterString>
-                    </abstract>
+                    </gmd:abstract>
 
-                    <purpose gco:nilReason="missing">
+                    <gmd:purpose gco:nilReason="missing">
                         <gco:CharacterString/>
-                    </purpose>
+                    </gmd:purpose>
 
-                    <status>
-                        <MD_ProgressCode codeListValue="" codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_ProgressCode"/>
-                    </status>
+                    <gmd:status>
+                        <gmd:MD_ProgressCode codeListValue=""
+                            codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_ProgressCode"
+                        />
+                    </gmd:status>
 
-                    <pointOfContact>
-                        <CI_ResponsibleParty>
+                    <gmd:pointOfContact>
+                        <gmd:CI_ResponsibleParty>
 
-                            <organisationName>
-                                <gco:CharacterString>Scholars' Lab, Alderman Library, University of Virginia Library</gco:CharacterString>
-                            </organisationName>
+                            <gmd:organisationName>
+                                <gco:CharacterString>Scholars' Lab, Alderman Library, University of
+                                    Virginia Library</gco:CharacterString>
+                            </gmd:organisationName>
 
-                            <contactInfo>
-                                <CI_Contact>
-                                    <phone>
-                                        <CI_Telephone>
-                                            <voice>
+                            <gmd:contactInfo>
+                                <gmd:CI_Contact>
+                                    <gmd:phone>
+                                        <gmd:CI_Telephone>
+                                            <gmd:voice>
                                                 <gco:CharacterString>1-434-243-8800</gco:CharacterString>
-                                            </voice>
-                                        </CI_Telephone>
-                                    </phone>
-                                    <address>
-                                        <CI_Address>
-                                            <deliveryPoint>
+                                            </gmd:voice>
+                                        </gmd:CI_Telephone>
+                                    </gmd:phone>
+                                    <gmd:address>
+                                        <gmd:CI_Address>
+                                            <gmd:deliveryPoint>
                                                 <gco:CharacterString>Alderman Library, PO Box 400113</gco:CharacterString>
-                                            </deliveryPoint>
-                                            <city>
+                                            </gmd:deliveryPoint>
+                                            <gmd:city>
                                                 <gco:CharacterString>Charlottesville</gco:CharacterString>
-                                            </city>
-                                            <administrativeArea>
+                                            </gmd:city>
+                                            <gmd:administrativeArea>
                                                 <gco:CharacterString>VA</gco:CharacterString>
-                                            </administrativeArea>
-                                            <postalCode>
+                                            </gmd:administrativeArea>
+                                            <gmd:postalCode>
                                                 <gco:CharacterString>22904-00113</gco:CharacterString>
-                                            </postalCode>
-                                            <country>
+                                            </gmd:postalCode>
+                                            <gmd:country>
                                                 <gco:CharacterString>USA</gco:CharacterString>
-                                            </country>
-                                            <electronicMailAddress>
+                                            </gmd:country>
+                                            <gmd:electronicMailAddress>
                                                 <gco:CharacterString>scholars.lab@gmail.com</gco:CharacterString>
-                                            </electronicMailAddress>
-                                        </CI_Address>
-                                    </address>
-                                </CI_Contact>
-                            </contactInfo>
+                                            </gmd:electronicMailAddress>
+                                        </gmd:CI_Address>
+                                    </gmd:address>
+                                </gmd:CI_Contact>
+                            </gmd:contactInfo>
 
-                            <role>
-                                <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_RoleCode"
+                            <gmd:role>
+                                <gmd:CI_RoleCode
+                                    codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_RoleCode"
                                     codeListValue="pointOfContact"/>
-                            </role>
+                            </gmd:role>
 
-                        </CI_ResponsibleParty>
-                    </pointOfContact>
+                        </gmd:CI_ResponsibleParty>
+                    </gmd:pointOfContact>
 
-                    <spatialRepresentationInfo>
-                        <MD_Georectified>
+                    <gmd:spatialRepresentationInfo>
+                        <gmd:MD_Georectified>
 
-                            <numberOfDimensions>
-                                <gco:Integer><xsl:value-of select="/metadata/spatRepInfo/Georect/numDims" /></gco:Integer>
-                            </numberOfDimensions>
+                            <gmd:numberOfDimensions>
+                                <gco:Integer>
+                                    <xsl:value-of select="/metadata/spatRepInfo/Georect/numDims"/>
+                                </gco:Integer>
+                            </gmd:numberOfDimensions>
 
                             <xsl:for-each select="/metadata/spatRepInfo/Georect/axisDimension">
-                                <axisDimensionProperties>
-                                    <MD_Dimension>
-                                        <dimensionName>
-                                            <MD_DimensionNameTypeCode
+                                <gmd:axisDimensionProperties>
+                                    <gmd:MD_Dimension>
+                                        <gmd:dimensionName>
+                                            <gmd:MD_DimensionNameTypeCode
                                                 codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_DimensionNameTypeCode"
                                                 codeListValue="column" codeSpace="ISOTC211/19115"
-                                                >column</MD_DimensionNameTypeCode>
-                                        </dimensionName>
-                                        <dimensionSize>
-                                            <gco:Integer><xsl:value-of select="dimSize"/></gco:Integer>
-                                        </dimensionSize>
-                                        <resolution>
-                                            <gco:Measure uom="Degree"><xsl:value-of select="dimResol/value" /></gco:Measure>
-                                        </resolution>
-                                    </MD_Dimension>
-                                </axisDimensionProperties>
+                                                >column</gmd:MD_DimensionNameTypeCode>
+                                        </gmd:dimensionName>
+                                        <gmd:dimensionSize>
+                                            <gco:Integer>
+                                                <xsl:value-of select="dimSize"/>
+                                            </gco:Integer>
+                                        </gmd:dimensionSize>
+                                        <gmd:resolution>
+                                            <gco:Measure uom="Degree">
+                                                <xsl:value-of select="dimResol/value"/>
+                                            </gco:Measure>
+                                        </gmd:resolution>
+                                    </gmd:MD_Dimension>
+                                </gmd:axisDimensionProperties>
                             </xsl:for-each>
 
-                            <cellGeometry>
-                                <MD_CellGeometryCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CellGeometryCode" codeListValue="area" codeSpace="ISOTC211/19115">area</MD_CellGeometryCode>
-                            </cellGeometry>
+                            <gmd:cellGeometry>
+                                <gmd:MD_CellGeometryCode
+                                    codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CellGeometryCode"
+                                    codeListValue="area" codeSpace="ISOTC211/19115"
+                                    >area</gmd:MD_CellGeometryCode>
+                            </gmd:cellGeometry>
 
-                            <transformationParameterAvailability>
+                            <gmd:transformationParameterAvailability>
                                 <gco:Boolean>true</gco:Boolean>
-                            </transformationParameterAvailability>
+                            </gmd:transformationParameterAvailability>
 
-                            <checkPointAvailability>
+                            <gmd:checkPointAvailability>
                                 <gco:Boolean>false</gco:Boolean>
-                            </checkPointAvailability>
+                            </gmd:checkPointAvailability>
 
                             <xsl:for-each select="/metadata/spatRepInfo/Georect/cornerPts">
-                                <cornerPoints>
+                                <gmd:cornerPoints>
                                     <gml:Point gml:id="{generate-id()}">
                                         <xsl:value-of select="pos"/>
                                     </gml:Point>
-                                </cornerPoints>
+                                </gmd:cornerPoints>
                             </xsl:for-each>
 
-                            <centerPoint>
-                                <gml:Point gml:id="{generate-id(/metadata/spatRepInfo/Georect/centerPt)}">
-                                    <gml:pos><xsl:value-of select="/metadata/spatRepInfo/Georect/centerPt/pos"/></gml:pos>
+                            <gmd:centerPoint>
+                                <gml:Point
+                                    gml:id="{generate-id(/metadata/spatRepInfo/Georect/centerPt)}">
+                                    <gml:pos>
+                                        <xsl:value-of
+                                            select="/metadata/spatRepInfo/Georect/centerPt/pos"/>
+                                    </gml:pos>
                                 </gml:Point>
-                            </centerPoint>
+                            </gmd:centerPoint>
 
-                            <pointInPixel>
+                            <gmd:pointInPixel>
                                 <MD_PixelOrientationCode>center</MD_PixelOrientationCode>
-                            </pointInPixel>
+                            </gmd:pointInPixel>
 
-                        </MD_Georectified>
-                    </spatialRepresentationInfo>
+                        </gmd:MD_Georectified>
+                    </gmd:spatialRepresentationInfo>
 
-                    <referenceSystemInfo>
-                        <MD_ReferenceSystem>
-                            <referenceSystemIdentifier>
-                                <RS_Identifier>
-                                    <code>
-                                        <gco:CharacterString><xsl:value-of select="/metadata/refSysInfo/RefSystem/refSysID/identCode[@code]"/></gco:CharacterString>
-                                    </code>
-                                    <codeSpace>
-                                        <gco:CharacterString><xsl:value-of select="/metadata/refSysInfo/RefSystem/refSysID/idCodeSpace"/></gco:CharacterString>
-                                    </codeSpace>
-                                    <version>
-                                        <gco:CharacterString><xsl:value-of select="/metadata/refSysInfo/RefSystem/refSysID/idVersion"/></gco:CharacterString>
-                                    </version>
-                                </RS_Identifier>
-                            </referenceSystemIdentifier>
-                        </MD_ReferenceSystem>
-                    </referenceSystemInfo>
+                    <gmd:referenceSystemInfo>
+                        <gmd:MD_ReferenceSystem>
+                            <gmd:referenceSystemIdentifier>
+                                <gmd:RS_Identifier>
+                                    <gmd:code>
+                                        <gco:CharacterString>
+                                            <xsl:value-of
+                                                select="/metadata/refSysInfo/RefSystem/refSysID/identCode[@code]"
+                                            />
+                                        </gco:CharacterString>
+                                    </gmd:code>
+                                    <gmd:codeSpace>
+                                        <gco:CharacterString>
+                                            <xsl:value-of
+                                                select="/metadata/refSysInfo/RefSystem/refSysID/idCodeSpace"
+                                            />
+                                        </gco:CharacterString>
+                                    </gmd:codeSpace>
+                                    <gmd:version>
+                                        <gco:CharacterString>
+                                            <xsl:value-of
+                                                select="/metadata/refSysInfo/RefSystem/refSysID/idVersion"
+                                            />
+                                        </gco:CharacterString>
+                                    </gmd:version>
+                                </gmd:RS_Identifier>
+                            </gmd:referenceSystemIdentifier>
+                        </gmd:MD_ReferenceSystem>
+                    </gmd:referenceSystemInfo>
 
-                    <spatialRepresentationType>
-                        <MD_SpatialRepresentationTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="grid" codeSpace="ISOTC211/19115">grid</MD_SpatialRepresentationTypeCode>
-                    </spatialRepresentationType>
+                    <gmd:spatialRepresentationType>
+                        <MD_SpatialRepresentationTypeCode
+                            codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
+                            codeListValue="grid" codeSpace="ISOTC211/19115"
+                            >grid</MD_SpatialRepresentationTypeCode>
+                    </gmd:spatialRepresentationType>
 
-                    <language>
-                        <LanguageCode codeList="http://www.loc.gov/standards/iso639-2/php/code_list.php" codeListValue="eng" codeSpace="ISO639-2">eng</LanguageCode>
-                    </language>
+                    <gmd:language>
+                        <LanguageCode
+                            codeList="http://www.loc.gov/standards/iso639-2/php/code_list.php"
+                            codeListValue="eng" codeSpace="ISO639-2">eng</LanguageCode>
+                    </gmd:language>
 
-                    <characterSet>
-                        <MD_CharacterSetCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8" codeSpace="ISOTC211/19115">utf8</MD_CharacterSetCode>
-                    </characterSet>
+                    <gmd:characterSet>
+                        <gmd:MD_CharacterSetCode
+                            codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode"
+                            codeListValue="utf8" codeSpace="ISOTC211/19115"
+                            >utf8</gmd:MD_CharacterSetCode>
+                    </gmd:characterSet>
 
-                    <environmentDescription>
-                        <gco:CharacterString>Microsoft Windows 7 Version 6.1 (Build 7601) Service Pack 1; ESRI ArcGIS 10.0.5.4400</gco:CharacterString>
-                    </environmentDescription>
+                    <gmd:environmentDescription>
+                        <gco:CharacterString>Microsoft Windows 7 Version 6.1 (Build 7601) Service
+                            Pack 1; ESRI ArcGIS 10.0.5.4400</gco:CharacterString>
+                    </gmd:environmentDescription>
 
-                    <extent>
-                        <EX_Extent>
-                            <geographicElement>
-                                <EX_GeographicBoundingBox>
+                    <gmd:extent>
+                        <gmd:EX_Extent>
+                            <gmd:geographicElement>
+                                <gmd:EX_GeographicBoundingBox>
 
-                                    <extentTypeCode>
+                                    <gmd:extentTypeCode>
                                         <gco:Boolean>true</gco:Boolean>
-                                    </extentTypeCode>
+                                    </gmd:extentTypeCode>
 
-                                    <westBoundLongitude>
+                                    <gmd:westBoundLongitude>
                                         <gco:Decimal>
-                                            <xsl:value-of select="/metadata/Esri/DataProperties/itemProps/nativeExtBox/westBL"/>
+                                            <xsl:value-of
+                                                select="/metadata/Esri/DataProperties/itemProps/nativeExtBox/westBL"
+                                            />
                                         </gco:Decimal>
-                                    </westBoundLongitude>
+                                    </gmd:westBoundLongitude>
 
-                                    <eastBoundLongitude>
-                                        <gco:Decimal><xsl:value-of select="/metadata/Esri/DataProperties/itemProps/nativeExtBox/eastBL"/></gco:Decimal>
-                                    </eastBoundLongitude>
+                                    <gmd:eastBoundLongitude>
+                                        <gco:Decimal>
+                                            <xsl:value-of
+                                                select="/metadata/Esri/DataProperties/itemProps/nativeExtBox/eastBL"
+                                            />
+                                        </gco:Decimal>
+                                    </gmd:eastBoundLongitude>
 
-                                    <southBoundLatitude>
-                                        <gco:Decimal><xsl:value-of select="/metadata/Esri/DataProperties/itemProps/nativeExtBox/southBL"/></gco:Decimal>
-                                    </southBoundLatitude>
+                                    <gmd:southBoundLatitude>
+                                        <gco:Decimal>
+                                            <xsl:value-of
+                                                select="/metadata/Esri/DataProperties/itemProps/nativeExtBox/southBL"
+                                            />
+                                        </gco:Decimal>
+                                    </gmd:southBoundLatitude>
 
-                                    <northBoundLatitude>
-                                        <gco:Decimal><xsl:value-of select="/metadata/Esri/DataProperties/itemProps/nativeExtBox/northBL"/></gco:Decimal>
-                                    </northBoundLatitude>
+                                    <gmd:northBoundLatitude>
+                                        <gco:Decimal>
+                                            <xsl:value-of
+                                                select="/metadata/Esri/DataProperties/itemProps/nativeExtBox/northBL"
+                                            />
+                                        </gco:Decimal>
+                                    </gmd:northBoundLatitude>
 
-                                </EX_GeographicBoundingBox>
-                            </geographicElement>
-                        </EX_Extent>
-                    </extent>
+                                </gmd:EX_GeographicBoundingBox>
+                            </gmd:geographicElement>
+                        </gmd:EX_Extent>
+                    </gmd:extent>
 
-                </MD_DataIdentification>
-            </identificationInfo>
+                </gmd:MD_DataIdentification>
+            </gmd:identificationInfo>
 
-        </MD_Metadata>
+        </gmd:MD_Metadata>
     </xsl:template>
 
     <xsl:template match="coordRef">

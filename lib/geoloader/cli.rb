@@ -75,5 +75,10 @@ module Geoloader
       Resque::Worker.new("geoloader").work
     end
 
+    desc "test", "Test"
+    def test(file)
+      puts Geoloader::Asset.new(file, 'geoloader').get_iso19139_xml
+    end
+
   end
 end
