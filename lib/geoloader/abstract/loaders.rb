@@ -31,7 +31,7 @@ module Geoloader
     end
 
     #
-    # Create an abstract asset.
+    # Create asset.
     #
     module Asset
 

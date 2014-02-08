@@ -105,6 +105,15 @@ module Geoloader
     end
 
     #
+    # Delete all stores from a Geonetwork group.
+    #
+    # @param [String] workspace
+    #
+    def clear_geonetwork_group(workspace)
+      Geoloader::Geonetwork.new.delete_records_by_group(workspace)
+    end
+
+    #
     # Delete all Solr documents in a workspace.
     #
     # @param [String] workspace

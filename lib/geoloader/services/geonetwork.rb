@@ -115,15 +115,6 @@ module Geoloader
     end
 
     #
-    # Count the number of records in a given group.
-    #
-    # @param [String] group
-    #
-    def count_records_in_group(group)
-      Nokogiri::XML(get_records_in_group(group)).at_xpath("//summary/@count").content.to_i
-    end
-
-    #
     # Delete a record by id.
     #
     # @param [Integer] id

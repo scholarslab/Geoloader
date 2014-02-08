@@ -9,9 +9,9 @@ module Geoloader
 
     include Tasks
 
-    @services = ["geoserver", "geonetwork", "solr"]
+    @services = ["solr", "geoserver", "geonetwork"]
 
-    desc "load [FILES]", "Load a YAML batch manifest"
+    desc "load [FILES]", "Load GeoTIFFs and Shapefiles to Geoserver, Geonetwork, and Solr"
     option :services,   :aliases => "-s", :type => :array, :default => @services
     option :workspace,  :aliases => "-w", :type => :string
     option :queue,      :aliases => "-q", :type => :boolean, :default => false
@@ -30,6 +30,7 @@ module Geoloader
 
       files.each { |file_path|
         case File.extname(file_path)
+
         when ".tif" # GEOTIFF
 
           options[:services].each { |service|
@@ -64,8 +65,9 @@ module Geoloader
 
     desc "clear [WORKSPACE]", "Clear a workspace"
     def clear(workspace)
-      clear_geoserver_workspace(workspace) rescue nil
       clear_solr_workspace(workspace) rescue nil
+      clear_geoserver_workspace(workspace) rescue nil
+      clear_geonetwork_group(workspace) rescue nil
     end
 
     desc "work", "Start a Resque worker"
