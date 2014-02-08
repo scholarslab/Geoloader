@@ -1,23 +1,26 @@
 # Geoloader
 
-Geoloader is a simple little gem that automates the process of loading [GeoTIFFs][geotiff] and [Shapfiles][shapefile] into [Geoserver][geoserver], and [Solr][solr], the services that power the geospatial search interface at the University of Virginia Library.
+Geoloader is a simple little gem that automates the process of loading [GeoTIFFs][geotiff] and [Shapfiles][shapefile] into [Geoserver][geoserver], [Geonetwork][geonetwork], and [Solr][solr], the services that power the geospatial search interface at the University of Virginia Library.
 
 ## Quick Examples
 
 From the command line:
 
 ```bash
-# Load an individual GeoTIFF to Geoserver and Solr:
+# Load an individual GeoTIFF to all services:
 geoloader load /path/to/geotiff.tif
 
-# Load an individual Shapefile to Geoserver and Solr:
+# Load an individual Shapefile to all services:
 geoloader load /path/to/shapefile.shp
 
-# Load all files matched by wildcard to Geoserver and Solr:
+# Load all files matched by wildcard to all services:
 geoloader load /path/to/files/*
 
 # Load files just to Geoserver:
 geoloader load /path/to/files/* --services geoserver
+
+# Load files just to Geonetwork:
+geoloader load /path/to/files/* --services geonetwork
 
 # Load files just to Solr:
 geoloader load /path/to/files/* --services solr
@@ -72,8 +75,11 @@ Then, you'll need to point Geoloader at running instances of Geoserver and Solr.
 
 ```yaml
 workspaces:
-  default:    geoloader
+  production: geoloader
   testing:    geoloader_test
+
+solr:
+  url:        http://localhost:8080/solr/geoloader
 
 geoserver:
   url:        http://localhost:8080/geoserver
@@ -81,8 +87,11 @@ geoserver:
   password:   geoserver
   srs:        EPSG:900913
 
-solr:
-  url:        http://localhost:8080/solr/geoloader
+geonetwork:
+  url:        http://localhost:8080/geonetwork/srv/en
+  username:   admin
+  password:   admin
+  group:      geoloader
 ```
 
 Depending on your needs, you can override some or all of these settings. For example, you'll almost always need to set custom credentials for Geoserver.
@@ -133,5 +142,6 @@ geoserver:
 [geotiff]: http://en.wikipedia.org/wiki/Geotiff
 [shapefile]: http://en.wikipedia.org/wiki/Shapefile
 [geoserver]: http://geoserver.org/
+[geonetwork]: http://geonetwork-opensource.org/
 [solr]: http://lucene.apache.org/solr/
 [jeweler]: https://github.com/technicalpickles/jeweler
