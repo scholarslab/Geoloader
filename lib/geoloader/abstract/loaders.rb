@@ -31,6 +31,20 @@ module Geoloader
     end
 
     #
+    # Create an abstract asset.
+    #
+    module AssetLoader
+
+      attr_reader :asset
+
+      def initialize(*args)
+        super
+        @asset = Geoloader::Asset.new(@file_path, @workspace, @metadata)
+      end
+
+    end
+
+    #
     # Create GeoTIFF.
     #
     module GeotiffLoader
@@ -69,6 +83,21 @@ module Geoloader
         super
         @geoserver = Geoloader::Geoserver.new
         @geoserver.ensure_workspace(@workspace)
+      end
+
+    end
+
+    #
+    # Connect to Geonetwork.
+    #
+    module GeoserverLoader
+
+      attr_reader :geonetwork
+
+      def initialize(*args)
+        super
+        @geonetwork = Geoloader::Geonetwork.new
+        @geonetwork.ensure_group(@workspace)
       end
 
     end

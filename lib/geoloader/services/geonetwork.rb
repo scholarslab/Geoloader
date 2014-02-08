@@ -67,6 +67,15 @@ module Geoloader
     end
 
     #
+    # Check to see if a group exists, and if not, create it.
+    #
+    # @param [String] group
+    #
+    def ensure_group(group)
+      create_group(group) unless group_exists?(group)
+    end
+
+    #
     # Delete group with a given name.
     #
     # @param [String] group

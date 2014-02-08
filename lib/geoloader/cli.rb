@@ -9,7 +9,7 @@ module Geoloader
 
     include Tasks
 
-    @services = ["geoserver", "solr"]
+    @services = ["solr", "geoserver"]
 
     desc "load [FILES]", "Load a YAML batch manifest"
     option :services,   :aliases => "-s", :type => :array, :default => @services
