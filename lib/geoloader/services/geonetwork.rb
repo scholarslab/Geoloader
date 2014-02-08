@@ -1,9 +1,9 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require 'rest_client'
-require 'builder'
-require 'nokogiri'
+require "rest_client"
+require "builder"
+require "nokogiri"
 
 module Geoloader
   class Geonetwork
@@ -14,9 +14,9 @@ module Geoloader
     # Initialize the API wrapper.
     #
     def initialize
-      @resource = RestClient::Resource.new(@config.url, {
-        :user     => @Geoloader.config.geonetwork.username,
-        :password => @Geoloader.config.geonetwork.password,
+      @resource = RestClient::Resource.new(Geoloader.config.geonetwork.url, {
+        :user     => Geoloader.config.geonetwork.username,
+        :password => Geoloader.config.geonetwork.password,
         :headers  => { :content_type => :xml }
       })
     end
@@ -52,7 +52,7 @@ module Geoloader
     # @param [String] group
     #
     def get_group_id(group)
-      get_group(name).at_xpath("id").content.to_i
+      get_group(group).at_xpath("id").content.to_i
     end
 
     #
@@ -96,7 +96,7 @@ module Geoloader
     #
     def create_record(asset, style_sheet = "_none_", category = "_none_")
       post("metadata.insert", self.class.xml_doc.request { |r|
-        r.group get_group_id
+        r.group get_group_id(asset.workspace)
         r.data { |d| d.cdata! asset.get_iso19139_xml }
         r.category category
         r.styleSheet style_sheet

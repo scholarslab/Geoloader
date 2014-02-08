@@ -33,7 +33,7 @@ module Geoloader
     #
     # Create an abstract asset.
     #
-    module AssetLoader
+    module Asset
 
       attr_reader :asset
 
@@ -47,7 +47,7 @@ module Geoloader
     #
     # Create GeoTIFF.
     #
-    module GeotiffLoader
+    module Geotiff
 
       attr_reader :geotiff
 
@@ -61,7 +61,7 @@ module Geoloader
     #
     # Create Shapefile.
     #
-    module ShapefileLoader
+    module Shapefile
 
       attr_reader :shapefile
 
@@ -75,7 +75,7 @@ module Geoloader
     #
     # Connect to Geoserver.
     #
-    module GeoserverLoader
+    module Geoserver
 
       attr_reader :geoserver
 
@@ -90,7 +90,7 @@ module Geoloader
     #
     # Connect to Geonetwork.
     #
-    module GeoserverLoader
+    module Geonetwork
 
       attr_reader :geonetwork
 
@@ -105,7 +105,7 @@ module Geoloader
     #
     # Connect to Solr.
     #
-    module SolrLoader
+    module Solr
 
       attr_reader :solr
 

@@ -4,8 +4,8 @@
 module Geoloader
   class GeonetworkLoader < Loader
 
-    include AssetLoader
-    include GeonetworkLoader
+    include Loader::Asset
+    include Loader::Geonetwork
 
     @queue = :geoloader
 
