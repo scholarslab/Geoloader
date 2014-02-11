@@ -14,8 +14,8 @@
         <gmd:MD_Metadata>
 
             <gmd:fileIdentifier>
-                <gco:CharacterString xmlns:srv="http://www.isotc211.org/2005/srv">
-                    <xsl:copy-of select="/metadata/dataIdInfo/descKeys/thesaName[@uuidref]"/>
+                <gco:CharacterString>
+                    <xsl:value-of select="/metadata/dataIdInfo/descKeys/thesaName/@uuidref"/>
                 </gco:CharacterString>
             </gmd:fileIdentifier>
 

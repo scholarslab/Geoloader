@@ -104,13 +104,35 @@ module Geoloader
     end
 
     #
+    # Get the metadata record for an asset.
+    #
+    # @param [Geoloader::Asset] asset
+    #
+    def get_record(asset)
+      post("xml.metadata.get", self.class.xml_doc.request { |r|
+        r.uuid asset.get_esri_uuid
+      })
+    end
+
+    #
     # Get all records in a given group.
     #
     # @param [String] group
     #
-    def get_records_in_group(group)
+    def get_records_by_group(group)
       post("xml.search", self.class.xml_doc.request { |r|
         r.group get_group_id(group)
+      })
+    end
+
+    #
+    # Delete the metadata record for an asset.
+    #
+    # @param [Geoloader::Asset] asset
+    #
+    def delete_record(asset)
+      post("metadata.delete", self.class.xml_doc.request { |r|
+        r.uuid asset.get_esri_uuid
       })
     end
 
@@ -131,7 +153,7 @@ module Geoloader
     # @param [Integer] group
     #
     def delete_records_by_group(group)
-      Nokogiri::XML(get_records_in_group(group)).xpath("//metadata//id").each do |m|
+      Nokogiri::XML(get_records_by_group(group)).xpath("//metadata//id").each do |m|
         delete_record_by_id(m.content.to_i)
       end
     end

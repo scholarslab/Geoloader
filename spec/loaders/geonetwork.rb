@@ -21,10 +21,11 @@ describe Geoloader::GeonetworkLoader do
   end
 
   after do
-    clear_geonetwork_group(workspace)
+    loader.geonetwork.delete_record(loader.asset)
   end
 
   it "should add a Geonetwork record" do
+    response = loader.geonetwork.get_record(loader.asset)
     # TODO
   end
 

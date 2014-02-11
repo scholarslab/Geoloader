@@ -41,13 +41,31 @@ module Geoloader
     end
 
     #
-    # Convert the raw XML into a iso19139 record.
+    # Read the raw ESRI XML.
+    #
+    # @return [String]
+    #
+    def get_esri_xml
+      File.read("#{@file_path}.xml")
+    end
+
+    #
+    # Convert the ESRI XML into a iso19139 record.
     #
     # @return [String]
     #
     def get_iso19139_xml
       xslt_path = "#{Geoloader.gem_dir}/lib/geoloader/stylesheets/iso19139.xsl"
       `saxon #{@file_path}.xml #{xslt_path}`
+    end
+
+    #
+    # Get the ESRI uuid.
+    #
+    # @return [String]
+    #
+    def get_esri_uuid
+      Nokogiri::XML(get_esri_xml).at_xpath("//thesaName/@uuidref").value
     end
 
     #
