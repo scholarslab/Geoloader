@@ -7,32 +7,45 @@ require "thor"
 module Geoloader
   module CLI
 
-    class Solr < Thor
+    class Service < Thor
 
       include Tasks
 
-      desc "load [FILES]", "Load files to Solr"
+      desc "load [FILES]", "Load files"
       option :workspace,  :aliases => "-w", :type => :string
       option :queue,      :aliases => "-q", :type => :boolean, :default => false
       option :metadata,   :aliases => "-m", :type => :string
       def load(*files)
 
         # If no workspace is defined, use the global default.
-        workspace = (options[:workspace] or Geoloader.config.workspaces.production)
+        @workspace = (options[:workspace] or Geoloader.config.workspaces.production)
 
         # If provided, load the metadata YAML manifest.
         if options[:metadata]
-          metadata = YAML::load(File.read(File.expand_path(options[:metadata])))
+          @metadata = YAML::load(File.read(File.expand_path(options[:metadata])))
         else
-          metadata = {}
+          @metadata = {}
         end
+
+      end
+
+    end
+
+    class Solr < Service
+
+      include Tasks
+
+      desc "load [FILES]", "Load files to Solr"
+      def load(*files)
+
+        super
 
         files.each { |file_path|
           case File.extname(file_path)
           when ".tif" # GEOTIFF
-            load_geotiff_solr(file_path, workspace, metadata, options[:queue])
+            load_geotiff_solr(file_path, @workspace, @metadata, options[:queue])
           when ".shp" # SHAPEFILE
-            load_shapefile_solr(file_path, workspace, metadata, options[:queue])
+            load_shapefile_solr(file_path, @workspace, @metadata, options[:queue])
           end
         }
 
@@ -45,33 +58,21 @@ module Geoloader
 
     end
 
-    class Geoserver < Thor
+    class Geoserver < Service
 
       include Tasks
 
       desc "load [FILES]", "Load files to Geoserver"
-      option :workspace,  :aliases => "-w", :type => :string
-      option :queue,      :aliases => "-q", :type => :boolean, :default => false
-      option :metadata,   :aliases => "-m", :type => :string
       def load(*files)
 
-        # If no workspace is defined, use the global default.
-        workspace = (options[:workspace] or Geoloader.config.workspaces.production)
+        super
 
-        # If provided, load the metadata YAML manifest.
-        if options[:metadata]
-          metadata = YAML::load(File.read(File.expand_path(options[:metadata])))
-        else
-          metadata = {}
-        end
-
-        # Load (or enqueue) the files.
         files.each { |file_path|
           case File.extname(file_path)
           when ".tif" # GEOTIFF
-            load_geotiff_geoserver(file_path, workspace, metadata, options[:queue])
+            load_geotiff_geoserver(file_path, @workspace, @metadata, options[:queue])
           when ".shp" # SHAPEFILE
-            load_shapefile_geoserver(file_path, workspace, metadata, options[:queue])
+            load_shapefile_geoserver(file_path, @workspace, @metadata, options[:queue])
           end
         }
 
@@ -84,33 +85,21 @@ module Geoloader
 
     end
 
-    class Geonetwork < Thor
+    class Geonetwork < Service
 
       include Tasks
 
       desc "load [FILES]", "Load files to Geonetwork"
-      option :workspace,  :aliases => "-w", :type => :string
-      option :queue,      :aliases => "-q", :type => :boolean, :default => false
-      option :metadata,   :aliases => "-m", :type => :string
       def load(*files)
 
-        # If no workspace is defined, use the global default.
-        workspace = (options[:workspace] or Geoloader.config.workspaces.production)
+        super
 
-        # If provided, load the metadata YAML manifest.
-        if options[:metadata]
-          metadata = YAML::load(File.read(File.expand_path(options[:metadata])))
-        else
-          metadata = {}
-        end
-
-        # Load (or enqueue) the files.
         files.each { |file_path|
           case File.extname(file_path)
           when ".tif" # GEOTIFF
-            load_geotiff_geonetwork(file_path, workspace, metadata, options[:queue])
+            load_geotiff_geonetwork(file_path, @workspace, @metadata, options[:queue])
           when ".shp" # SHAPEFILE
-            load_shapefile_geonetwork(file_path, workspace, metadata, options[:queue])
+            load_shapefile_geonetwork(file_path, @workspace, @metadata, options[:queue])
           end
         }
 
