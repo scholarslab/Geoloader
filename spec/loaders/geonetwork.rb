@@ -16,6 +16,10 @@ describe Geoloader::GeonetworkLoader do
     Geoloader::GeonetworkLoader.new(get_fixture_path("geotiff.tif"), workspace)
   }
 
+  let(:uuid) {
+    loader.asset.get_esri_uuid
+  }
+
   before do
     loader.load
   end
@@ -25,8 +29,13 @@ describe Geoloader::GeonetworkLoader do
   end
 
   it "should add a Geonetwork record" do
+
     response = loader.geonetwork.get_record(loader.asset)
-    # TODO
+    document = Nokogiri::XML(response)
+
+    # Should create a record.
+    document.at_xpath("//gmd:fileIdentifier/gco:CharacterString").content.must_equal uuid
+
   end
 
 end
