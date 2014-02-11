@@ -21,7 +21,7 @@ describe Geoloader::ShapefileGeoserverLoader do
   end
 
   after do
-    clear_geoserver_workspace(workspace)
+    clear_geoserver(workspace)
   end
 
   it "should create a datastore on Geoserver" do

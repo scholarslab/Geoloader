@@ -21,7 +21,7 @@ describe Geoloader::ShapefileSolrLoader do
   end
 
   after do
-    clear_solr_workspace(workspace)
+    clear_solr(workspace)
   end
 
   it "should add a Solr document" do

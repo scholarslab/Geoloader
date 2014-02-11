@@ -100,7 +100,7 @@ module Geoloader
     #
     # @param [String] workspace
     #
-    def clear_geoserver_workspace(workspace)
+    def clear_geoserver(workspace)
       Geoloader::Geoserver.new.delete_workspace(workspace)
     end
 
@@ -109,7 +109,7 @@ module Geoloader
     #
     # @param [String] workspace
     #
-    def clear_geonetwork_group(workspace)
+    def clear_geonetwork(workspace)
       Geoloader::Geonetwork.new.delete_records_by_group(workspace)
     end
 
@@ -118,7 +118,7 @@ module Geoloader
     #
     # @param [String] workspace
     #
-    def clear_solr_workspace(workspace)
+    def clear_solr(workspace)
       Geoloader::Solr.new.delete_by_workspace(workspace)
     end
 

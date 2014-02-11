@@ -21,7 +21,7 @@ describe Geoloader::GeotiffGeoserverLoader do
   end
 
   after do
-    clear_geoserver_workspace(workspace)
+    clear_geoserver(workspace)
   end
 
   it "should create a coveragestore on Geoserver" do
