@@ -58,7 +58,7 @@ require_dir("geoloader/abstract")
 require_dir("geoloader/assets")
 require_dir("geoloader/services")
 require_dir("geoloader/loaders")
-require_dir("geoloader/cli")
+require_dir("geoloader")
 
 # Apply default configuration.
 Geoloader.configure_from_yaml("#{Geoloader.gem_dir}/config.yaml")

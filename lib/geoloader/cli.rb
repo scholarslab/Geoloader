@@ -88,5 +88,32 @@ module Geoloader
 
     end
 
+    class Solr < Thor
+
+      desc "load [FILES]", "Load files to Solr"
+      def load
+        puts "solr load"
+      end
+
+    end
+
+    class Geoserver < Thor
+
+      desc "load [FILES]", "Load files to Geoserver"
+      def load
+        puts "geoserver load"
+      end
+
+    end
+
+    class Geonetwork < Thor
+
+      desc "load [FILES]", "Load files to Geonetwork"
+      def load
+        puts "geonetwork load"
+      end
+
+    end
+
   end
 end
