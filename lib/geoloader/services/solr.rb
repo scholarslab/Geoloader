@@ -38,7 +38,7 @@ module Geoloader
       # Flatted out the counts.
       @resource.find(query).facets.each do |facet|
         facet.items.each do |item|
-          workspaces << [item.value, item.hits] 
+          workspaces << [item.value, item.hits]
         end
       end
 

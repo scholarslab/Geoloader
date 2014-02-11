@@ -36,18 +36,6 @@ module Geoloader
     end
 
     #
-    # Push a GeoTIFF to Geonetwork.
-    #
-    # @param [String] file_name
-    # @param [String] workspace
-    # @param [Hash] metadata
-    # @param [Boolean] queue
-    #
-    def load_geotiff_geonetwork(file_path, workspace, metadata, queue = false)
-      load_or_enqueue(Geoloader::GeonetworkLoader, file_path, workspace, metadata, queue)
-    end
-
-    #
     # Push a GeoTIFF to Solr.
     #
     # @param [String] file_name
@@ -72,18 +60,6 @@ module Geoloader
     end
 
     #
-    # Push a Shapefile to Geonetwork.
-    #
-    # @param [String] file_name
-    # @param [String] workspace
-    # @param [Hash] metadata
-    # @param [Boolean] queue
-    #
-    def load_shapefile_geonetwork(file_path, workspace, metadata, queue = false)
-      load_or_enqueue(Geoloader::GeonetworkLoader, file_path, workspace, metadata, queue)
-    end
-
-    #
     # Push a Shapefile to Solr.
     #
     # @param [String] file_name
@@ -93,6 +69,18 @@ module Geoloader
     #
     def load_shapefile_solr(file_path, workspace, metadata, queue = false)
       load_or_enqueue(Geoloader::ShapefileSolrLoader, file_path, workspace, metadata, queue)
+    end
+
+    #
+    # Push an asset to Geonetwork.
+    #
+    # @param [String] file_name
+    # @param [String] workspace
+    # @param [Hash] metadata
+    # @param [Boolean] queue
+    #
+    def load_geonetwork(file_path, workspace, metadata, queue = false)
+      load_or_enqueue(Geoloader::GeonetworkLoader, file_path, workspace, metadata, queue)
     end
 
     #
