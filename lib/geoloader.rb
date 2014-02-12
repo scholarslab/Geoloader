@@ -4,6 +4,7 @@
 require "confstruct"
 require "yaml"
 
+
 #
 # Require all files in a directory.
 #
