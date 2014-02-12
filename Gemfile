@@ -9,7 +9,3 @@ gem "terminal-table"
 gem "resque"
 gem "nokogiri"
 gem "rubyzip"
-
-group :test do
-  gem "minitest"
-end

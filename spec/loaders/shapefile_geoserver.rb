@@ -2,7 +2,6 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 require "spec_helper"
-require "nokogiri"
 
 describe Geoloader::ShapefileGeoserverLoader do
 
@@ -22,7 +21,7 @@ describe Geoloader::ShapefileGeoserverLoader do
   end
 
   after do
-    clear_geoserver_workspace(workspace)
+    clear_geoserver(workspace)
   end
 
   it "should create a datastore on Geoserver" do

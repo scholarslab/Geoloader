@@ -8,9 +8,11 @@ require "resque/tasks"
 task :default => [:install, :test]
 
 Jeweler::Tasks.new do |gem|
-  gem.name    = "geoloader"
-  gem.author  = "David McClure"
-  gem.email   = "david.mcclure@virginia.edu"
+  gem.name        = "geoloader"
+  gem.author      = "David McClure"
+  gem.homepage    = "https://github.com/scholarslab/Geoloader"
+  gem.email       = "david.mcclure@virginia.edu"
+  gem.license     = "Apache-2.0"
 end
 
 Rake::TestTask.new do |t|

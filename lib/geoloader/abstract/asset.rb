@@ -2,7 +2,6 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 require "fileutils"
-require "digest/sha1"
 
 module Geoloader
   class Asset
@@ -16,7 +15,7 @@ module Geoloader
     # @param [String] workspace
     # @param [Hash] metadata
     #
-    def initialize(file_path, workspace, metadata)
+    def initialize(file_path, workspace, metadata = {})
 
       @file_path = file_path
       @workspace = workspace
@@ -31,15 +30,42 @@ module Geoloader
     end
 
     #
-    # TODO|dev
     # Get metadata for Solr document.
     #
-    def document
+    def get_solr_document
       @metadata.merge({
         :LayerId => @slug,
         :WorkspaceName => @workspace,
         :Name => @base_name
       })
+    end
+
+    #
+    # Read the raw ESRI XML.
+    #
+    # @return [String]
+    #
+    def get_esri_xml
+      File.read("#{@file_path}.xml")
+    end
+
+    #
+    # Convert the ESRI XML into a iso19139 record.
+    #
+    # @return [String]
+    #
+    def get_iso19139_xml
+      xslt_path = "#{Geoloader.gem_dir}/lib/geoloader/stylesheets/iso19139.xsl"
+      `saxon #{@file_path}.xml #{xslt_path}`
+    end
+
+    #
+    # Get the ESRI uuid.
+    #
+    # @return [String]
+    #
+    def get_esri_uuid
+      Nokogiri::XML(get_esri_xml).at_xpath("//thesaName/@uuidref").value
     end
 
     #

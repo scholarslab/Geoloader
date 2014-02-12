@@ -12,7 +12,7 @@ module Geoloader
     # @param [String] workspace
     # @param [Hash] metadata
     #
-    def self.perform(file_path, workspace, metadata)
+    def self.perform(file_path, workspace, metadata = {})
       new(file_path, workspace, metadata).load
       puts "Loaded #{File.basename(file_path)}."
     end
@@ -24,16 +24,30 @@ module Geoloader
     # @param [String] workspace
     # @param [Hash] metadata
     #
-    def initialize(file_path, workspace, metadata={})
+    def initialize(file_path, workspace, metadata = {})
       @file_path = file_path
       @workspace = workspace
       @metadata  = metadata
     end
 
     #
+    # Create asset.
+    #
+    module Asset
+
+      attr_reader :asset
+
+      def initialize(*args)
+        super
+        @asset = Geoloader::Asset.new(@file_path, @workspace, @metadata)
+      end
+
+    end
+
+    #
     # Create GeoTIFF.
     #
-    module GeotiffLoader
+    module Geotiff
 
       attr_reader :geotiff
 
@@ -47,7 +61,7 @@ module Geoloader
     #
     # Create Shapefile.
     #
-    module ShapefileLoader
+    module Shapefile
 
       attr_reader :shapefile
 
@@ -61,7 +75,7 @@ module Geoloader
     #
     # Connect to Geoserver.
     #
-    module GeoserverLoader
+    module Geoserver
 
       attr_reader :geoserver
 
@@ -74,9 +88,24 @@ module Geoloader
     end
 
     #
+    # Connect to Geonetwork.
+    #
+    module Geonetwork
+
+      attr_reader :geonetwork
+
+      def initialize(*args)
+        super
+        @geonetwork = Geoloader::Geonetwork.new
+        @geonetwork.ensure_group(@workspace)
+      end
+
+    end
+
+    #
     # Connect to Solr.
     #
-    module SolrLoader
+    module Solr
 
       attr_reader :solr
 

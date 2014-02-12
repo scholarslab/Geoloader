@@ -72,12 +72,33 @@ module Geoloader
     end
 
     #
+    # Push an asset to Geonetwork.
+    #
+    # @param [String] file_name
+    # @param [String] workspace
+    # @param [Hash] metadata
+    # @param [Boolean] queue
+    #
+    def load_geonetwork(file_path, workspace, metadata, queue = false)
+      load_or_enqueue(Geoloader::GeonetworkLoader, file_path, workspace, metadata, queue)
+    end
+
+    #
     # Delete all stores from a Geoserver workspace.
     #
     # @param [String] workspace
     #
-    def clear_geoserver_workspace(workspace)
+    def clear_geoserver(workspace)
       Geoloader::Geoserver.new.delete_workspace(workspace)
+    end
+
+    #
+    # Delete all stores from a Geonetwork group.
+    #
+    # @param [String] workspace
+    #
+    def clear_geonetwork(workspace)
+      Geoloader::Geonetwork.new.delete_records_by_group(workspace)
     end
 
     #
@@ -85,7 +106,7 @@ module Geoloader
     #
     # @param [String] workspace
     #
-    def clear_solr_workspace(workspace)
+    def clear_solr(workspace)
       Geoloader::Solr.new.delete_by_workspace(workspace)
     end
 

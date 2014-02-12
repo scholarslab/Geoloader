@@ -4,8 +4,8 @@
 module Geoloader
   class ShapefileGeoserverLoader < Loader
 
-    include ShapefileLoader
-    include GeoserverLoader
+    include Loader::Shapefile
+    include Loader::Geoserver
 
     @queue = :geoloader
 

@@ -4,8 +4,8 @@
 module Geoloader
   class GeotiffSolrLoader < Loader
 
-    include GeotiffLoader
-    include SolrLoader
+    include Loader::Geotiff
+    include Loader::Solr
 
     @queue = :geoloader
 

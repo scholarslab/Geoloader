@@ -1,47 +1,85 @@
 # Geoloader
 
-Geoloader is a simple little gem that automates the process of loading [GeoTIFFs][geotiff] and [Shapfiles][shapefile] into [Geoserver][geoserver], and [Solr][solr], the services that power the geospatial search interface at the University of Virginia Library.
+Geoloader automates the process of loading [GeoTIFFs][geotiff] and [Shapfiles][shapefile] into [Geoserver][geoserver], [Geonetwork][geonetwork], and [Solr][solr], the services that power the geospatial search interface at the University of Virginia Library.
 
 ## Quick Examples
 
-From the command line:
+#### `geoloader solr`
+
+Load files to Solr.
 
 ```bash
-# Load an individual GeoTIFF to Geoserver and Solr:
-geoloader load /path/to/geotiff.tif
+# Load files matched by wildcard:
+geoloader solr load /path/to/files/*
 
-# Load an individual Shapefile to Geoserver and Solr:
-geoloader load /path/to/shapefile.shp
+# Load an individual Geotiff:
+geoloader solr load /path/to/geotiff.tif
 
-# Load all files matched by wildcard to Geoserver and Solr:
-geoloader load /path/to/files/*
-
-# Load files just to Geoserver:
-geoloader load /path/to/files/* --services geoserver
-
-# Load files just to Solr:
-geoloader load /path/to/files/* --services solr
+# Load an individual Shapefile:
+geoloader solr load /path/to/shapefile.sh
 
 # Load files to a custom workspace:
-geoloader load /path/to/files/* --workspace aerials
+geoloader solr load /path/to/files/* --workspace aerials
 
 # Merge YAML-defined metadata into the Solr documents:
-geoloader load /path/to/files/* --metadata /path/to/yaml
+geoloader solr load /path/to/files/* --metadata /path/to/yaml
 
-# Push the upload jobs onto a Resque queue:
-geoloader load /path/to/files/* --queue
+# Push the jobs onto a Resque queue:
+geoloader solr load /path/to/files/* --queue
 
-# Start a Resque worker on the Geoloader queue:
-geoloader work
-
-# List all existing workspaces with asset counts:
-geoloader list
-
-# Delete all assets in a workspace:
-geoloader clear aerials
+# Clear all documents in a workspace:
+geoloader solr clear workspace
 ```
 
-Ruby:
+#### `geoloader geoserver`
+
+Load files to Geoserver.
+
+```bash
+# Load files matched by wildcard:
+geoloader geoserver load /path/to/files/*
+
+# Load an individual Geotiff:
+geoloader geoserver load /path/to/geotiff.tif
+
+# Load an individual Shapefile:
+geoloader geoserver load /path/to/shapefile.sh
+
+# Load files to a custom workspace:
+geoloader geoserver load /path/to/files/* --workspace aerials
+
+# Push the jobs onto a Resque queue:
+geoloader geoserver load /path/to/files/* --queue
+
+# Clear all documents in a workspace:
+geoloader geoserver clear workspace
+```
+
+#### `geoloader geonetwork`
+
+Load files to Geonetwork.
+
+```bash
+# Load files matched by wildcard:
+geoloader geonetwork load /path/to/files/*
+
+# Load an individual Geotiff:
+geoloader geonetwork load /path/to/geotiff.tif
+
+# Load an individual Shapefile:
+geoloader geonetwork load /path/to/shapefile.sh
+
+# Load files to a custom workspace:
+geoloader geonetwork load /path/to/files/* --workspace aerials
+
+# Push the jobs onto a Resque queue:
+geoloader geonetwork load /path/to/files/* --queue
+
+# Clear all documents in a workspace:
+geoloader geonetwork clear workspace
+```
+
+#### Or, from ruby
 
 ```ruby
 # Load a Geotiff to Geoserver:
@@ -55,6 +93,9 @@ Geoloader::ShapefileGeotiffLoader.new("/path/to/file", "workspace", {:solr => "m
 
 # Load a Shapefile to Solr:
 Geoloader::ShapefileSolrLoader.new("/path/to/file", "workspace", {:solr => "metadata"}).load
+
+# Load a Geotiff or Shapefile to Geonetwork:
+Geoloader::GeonetworkLoader.new("/path/to/file", "workspace", {:solr => "metadata"}).load
 
 # Or use any of the loader classes as a Resque job:
 Resque.enqueue(Geoloader::GeotiffSolrLoader, "/path/to/file", "workspace", {:solr => "metadata"})
@@ -72,8 +113,11 @@ Then, you'll need to point Geoloader at running instances of Geoserver and Solr.
 
 ```yaml
 workspaces:
-  default:    geoloader
+  production: geoloader
   testing:    geoloader_test
+
+solr:
+  url:        http://localhost:8080/solr/geoloader
 
 geoserver:
   url:        http://localhost:8080/geoserver
@@ -81,8 +125,11 @@ geoserver:
   password:   geoserver
   srs:        EPSG:900913
 
-solr:
-  url:        http://localhost:8080/solr/geoloader
+geonetwork:
+  url:        http://localhost:8080/geonetwork/srv/en
+  username:   admin
+  password:   admin
+  group:      geoloader
 ```
 
 Depending on your needs, you can override some or all of these settings. For example, you'll almost always need to set custom credentials for Geoserver.
@@ -133,5 +180,6 @@ geoserver:
 [geotiff]: http://en.wikipedia.org/wiki/Geotiff
 [shapefile]: http://en.wikipedia.org/wiki/Shapefile
 [geoserver]: http://geoserver.org/
+[geonetwork]: http://geonetwork-opensource.org/
 [solr]: http://lucene.apache.org/solr/
 [jeweler]: https://github.com/technicalpickles/jeweler

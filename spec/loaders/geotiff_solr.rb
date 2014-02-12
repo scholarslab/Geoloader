@@ -2,7 +2,6 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 require "spec_helper"
-require "nokogiri"
 
 describe Geoloader::GeotiffSolrLoader do
 
@@ -22,7 +21,7 @@ describe Geoloader::GeotiffSolrLoader do
   end
 
   after do
-    clear_solr_workspace(workspace)
+    clear_solr(workspace)
   end
 
   it "should add a Solr document" do
