@@ -4,47 +4,73 @@ Geoloader automates the process of loading [GeoTIFFs][geotiff] and [Shapfiles][s
 
 ## Quick Examples
 
-From the command line:
+#### `geoloader solr`
+
+Load files to Solr.
 
 ```bash
-# Load an individual GeoTIFF to all services:
-geoloader load /path/to/geotiff.tif
+# Load files matched by wildcard:
+geoloader solr load /path/to/files/*
 
-# Load an individual Shapefile to all services:
-geoloader load /path/to/shapefile.shp
+# Load an individual Geotiff:
+geoloader solr load /path/to/geotiff.tif
 
-# Load all files matched by wildcard to all services:
-geoloader load /path/to/files/*
-
-# Load files just to Geoserver:
-geoloader load /path/to/files/* --services geoserver
-
-# Load files just to Geonetwork:
-geoloader load /path/to/files/* --services geonetwork
-
-# Load files just to Solr:
-geoloader load /path/to/files/* --services solr
+# Load an individual Shapefile:
+geoloader solr load /path/to/shapefile.sh
 
 # Load files to a custom workspace:
-geoloader load /path/to/files/* --workspace aerials
+geoloader solr load /path/to/files/* --workspace aerials
 
 # Merge YAML-defined metadata into the Solr documents:
-geoloader load /path/to/files/* --metadata /path/to/yaml
+geoloader solr load /path/to/files/* --metadata /path/to/yaml
 
-# Push the upload jobs onto a Resque queue:
-geoloader load /path/to/files/* --queue
-
-# Start a Resque worker on the Geoloader queue:
-geoloader work
-
-# List all existing workspaces with asset counts:
-geoloader list
-
-# Delete all assets in a workspace:
-geoloader clear aerials
+# Clear all documents in a workspace:
+geoloader solr clear workspace
 ```
 
-Ruby:
+#### `geoloader geoserver`
+
+Load files to Geoserver.
+
+```bash
+# Load files matched by wildcard:
+geoloader geoserver load /path/to/files/*
+
+# Load an individual Geotiff:
+geoloader geoserver load /path/to/geotiff.tif
+
+# Load an individual Shapefile:
+geoloader geoserver load /path/to/shapefile.sh
+
+# Load files to a custom workspace:
+geoloader geoserver load /path/to/files/* --workspace aerials
+
+# Clear all documents in a workspace:
+geoloader geoserver clear workspace
+```
+
+#### `geoloader geonetwork`
+
+Load files to Geonetwork.
+
+```bash
+# Load files matched by wildcard:
+geoloader geonetwork load /path/to/files/*
+
+# Load an individual Geotiff:
+geoloader geonetwork load /path/to/geotiff.tif
+
+# Load an individual Shapefile:
+geoloader geonetwork load /path/to/shapefile.sh
+
+# Load files to a custom workspace:
+geoloader geonetwork load /path/to/files/* --workspace aerials
+
+# Clear all documents in a workspace:
+geoloader geonetwork clear workspace
+```
+
+#### Or programmatically from ruby
 
 ```ruby
 # Load a Geotiff to Geoserver:
@@ -58,6 +84,9 @@ Geoloader::ShapefileGeotiffLoader.new("/path/to/file", "workspace", {:solr => "m
 
 # Load a Shapefile to Solr:
 Geoloader::ShapefileSolrLoader.new("/path/to/file", "workspace", {:solr => "metadata"}).load
+
+# Load a Geotiff or Shapefile to Geonetwork:
+Geoloader::GeonetworkLoader.new("/path/to/file", "workspace", {:solr => "metadata"}).load
 
 # Or use any of the loader classes as a Resque job:
 Resque.enqueue(Geoloader::GeotiffSolrLoader, "/path/to/file", "workspace", {:solr => "metadata"})
