@@ -24,6 +24,9 @@ geoloader solr load /path/to/files/* --workspace aerials
 # Merge YAML-defined metadata into the Solr documents:
 geoloader solr load /path/to/files/* --metadata /path/to/yaml
 
+# Push the jobs onto a Resque queue:
+geoloader solr load /path/to/files/* --queue
+
 # Clear all documents in a workspace:
 geoloader solr clear workspace
 ```
@@ -44,6 +47,9 @@ geoloader geoserver load /path/to/shapefile.sh
 
 # Load files to a custom workspace:
 geoloader geoserver load /path/to/files/* --workspace aerials
+
+# Push the jobs onto a Resque queue:
+geoloader geoserver load /path/to/files/* --queue
 
 # Clear all documents in a workspace:
 geoloader geoserver clear workspace
@@ -66,11 +72,14 @@ geoloader geonetwork load /path/to/shapefile.sh
 # Load files to a custom workspace:
 geoloader geonetwork load /path/to/files/* --workspace aerials
 
+# Push the jobs onto a Resque queue:
+geoloader geonetwork load /path/to/files/* --queue
+
 # Clear all documents in a workspace:
 geoloader geonetwork clear workspace
 ```
 
-#### Or programmatically from ruby
+#### Or, from ruby
 
 ```ruby
 # Load a Geotiff to Geoserver:
