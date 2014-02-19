@@ -19,3 +19,11 @@ Rake::TestTask.new do |t|
   t.libs << "spec"
   t.pattern = "spec/loaders/*.rb"
 end
+
+task :console do
+  require 'irb'
+  require 'irb/completion'
+  require 'geoloader'
+  ARGV.clear
+  IRB.start
+end
