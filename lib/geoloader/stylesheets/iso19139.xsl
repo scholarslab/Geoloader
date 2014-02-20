@@ -9,6 +9,11 @@
     version="2.0">
 
     <xsl:output method="xml" indent="yes"/>
+    
+    <xsl:param name="title"/>
+    <xsl:param name="abstract"/>
+    <xsl:param name="wmsAddress"/>
+    <xsl:param name="wmsLayers"/>
 
     <xsl:template match="/">
         <gmd:MD_Metadata>
@@ -116,7 +121,9 @@
                     <gmd:citation>
                         <gmd:CI_Citation>
                             <gmd:title>
-                                <gco:CharacterString>Albemarle Aerial Dataset</gco:CharacterString>
+                                <gco:CharacterString>
+                                    <xsl:value-of select="$title"/>
+                                </gco:CharacterString>
                             </gmd:title>
                             <gmd:date>
                                 <gmd:CI_Date>
@@ -174,7 +181,8 @@
                                     <gmd:address>
                                         <gmd:CI_Address>
                                             <gmd:deliveryPoint>
-                                                <gco:CharacterString>Alderman Library, PO Box 400113</gco:CharacterString>
+                                                <gco:CharacterString>Alderman Library, PO Box
+                                                  400113</gco:CharacterString>
                                             </gmd:deliveryPoint>
                                             <gmd:city>
                                                 <gco:CharacterString>Charlottesville</gco:CharacterString>
