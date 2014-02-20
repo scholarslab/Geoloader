@@ -88,16 +88,16 @@ module Geoloader
     def enqueue
 
       # Create the warehouse directory.
-      @copies = "#{File.dirname(@file_path)}/#{Time.now.to_i}"
-      FileUtils.mkdir(@copies)
+      @temp = "#{File.dirname(@file_path)}/#{Time.now.to_i}"
+      FileUtils.mkdir(@temp)
 
       # Copy the assets into the archive.
       files = Dir.glob("#{File.dirname(@file_path)}/#{@base_name}.*")
-      FileUtils.cp(files, @copies)
+      FileUtils.cp(files, @temp)
 
       # Update the working file path, saving the original.
       @file_path_ = @file_path
-      @file_path = "#{@copies}/#{File.basename(@file_path)}"
+      @file_path = "#{@temp}/#{File.basename(@file_path)}"
 
     end
 
@@ -105,7 +105,7 @@ module Geoloader
     # Delete the working copies, restore the original path.
     #
     def dequeue
-      FileUtils.rm_rf(@copies)
+      FileUtils.rm_rf(@temp)
       @file_path = @file_path_
     end
 

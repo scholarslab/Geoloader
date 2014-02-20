@@ -9,7 +9,7 @@
     version="2.0">
 
     <xsl:output method="xml" indent="yes"/>
-    
+
     <xsl:param name="title"/>
     <xsl:param name="abstract"/>
     <xsl:param name="wmsAddress"/>
@@ -96,11 +96,6 @@
             </gmd:metadataStandardName>
 
             <gmd:metadataStandardVersion>
-                <gco:CharacterString xmlns:srv="http://www.isotc211.org/2005/srv"
-                    >1.0</gco:CharacterString>
-            </gmd:metadataStandardVersion>
-
-            <gmd:referenceSystemInfo>
                 <gmd:MD_ReferenceSystem>
                     <gmd:referenceSystemIdentifier>
                         <gmd:RS_Identifier>
@@ -113,7 +108,7 @@
                         </gmd:RS_Identifier>
                     </gmd:referenceSystemIdentifier>
                 </gmd:MD_ReferenceSystem>
-            </gmd:referenceSystemInfo>
+            </gmd:metadataStandardVersion>
 
             <gmd:identificationInfo>
                 <gmd:MD_DataIdentification>
@@ -148,7 +143,9 @@
                     </gmd:citation>
 
                     <gmd:abstract>
-                        <gco:CharacterString><!-- todo: needs an abstract --></gco:CharacterString>
+                        <gco:CharacterString>
+                            <xsl:value-of select="$abstract"/>
+                        </gco:CharacterString>
                     </gmd:abstract>
 
                     <gmd:purpose gco:nilReason="missing">
@@ -388,6 +385,37 @@
 
                 </gmd:MD_DataIdentification>
             </gmd:identificationInfo>
+
+            <gmd:distributionInfo>
+                <gmd:MD_Distribution>
+                    <gmd:transferOptions>
+                        <gmd:MD_DigitalTransferOptions>
+                            <gmd:onLine>
+                                <gmd:CI_OnlineResource>
+                                    <gmd:linkage>
+                                        <gmd:URL>
+                                            <xsl:value-of select="$wmsAddress"/>
+                                        </gmd:URL>
+                                    </gmd:linkage>
+                                    <gmd:protocol>
+                                        <gco:CharacterString>OGC:WMS-1.1.1-http-get-map</gco:CharacterString>
+                                    </gmd:protocol>
+                                    <gmd:name>
+                                        <gco:CharacterString>
+                                            <xsl:value-of select="$wmsLayers"/>
+                                        </gco:CharacterString>
+                                    </gmd:name>
+                                    <gmd:description>
+                                        <gco:CharacterString>
+                                            <xsl:value-of select="$title"/>
+                                        </gco:CharacterString>
+                                    </gmd:description>
+                                </gmd:CI_OnlineResource>
+                            </gmd:onLine>
+                        </gmd:MD_DigitalTransferOptions>
+                    </gmd:transferOptions>
+                </gmd:MD_Distribution>
+            </gmd:distributionInfo>
 
         </gmd:MD_Metadata>
     </xsl:template>
