@@ -17,8 +17,11 @@ module Geoloader
     def initialize(file_path, workspace)
 
       @file_path = file_path
-      @file_base = File.basename(@file_path, ".*")
       @workspace = workspace
+
+      # File name, with and without extension.
+      @file_base = File.basename(@file_path, ".*")
+      @file_name = File.basename(@file_path)
 
       # Set a workspace-prefixed slug.
       @slug = "#{@workspace}_#{@file_base}"
@@ -68,41 +71,25 @@ module Geoloader
     # Create working copies, yield to a block, remove the copies.
     #
     def stage
-      enqueue
+
+      @tempdir = Dir.mktmpdir
+
       begin
-        yield
+
+        # Copy the assets into the temp dir.
+        files = Dir.glob("#{File.dirname(@file_path)}/#{@file_base}.*")
+        FileUtils.cp(files, @tempdir)
+
+        # Change into the temp dir.
+        FileUtils.cd(@tempdir) do yield end
+
       ensure
-        dequeue
+
+        # Delete the copies.
+        FileUtils.remove_entry @tempdir
+
       end
-    end
 
-    private
-
-    #
-    # Copy the file and its siblings for manipulation.
-    #
-    def enqueue
-
-      # Create the warehouse directory.
-      @temp = "#{File.dirname(@file_path)}/#{Time.now.to_i}"
-      FileUtils.mkdir(@temp)
-
-      # Copy the assets into the archive.
-      files = Dir.glob("#{File.dirname(@file_path)}/#{@file_base}.*")
-      FileUtils.cp(files, @temp)
-
-      # Update the working file path, saving the original.
-      @file_path_ = @file_path
-      @file_path = "#{@temp}/#{File.basename(@file_path)}"
-
-    end
-
-    #
-    # Delete the working copies, restore the original path.
-    #
-    def dequeue
-      FileUtils.rm_rf(@temp)
-      @file_path = @file_path_
     end
 
   end
