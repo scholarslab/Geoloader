@@ -17,10 +17,8 @@ module Geoloader
     def initialize(file_path, workspace)
 
       @file_path = file_path
-      @workspace = workspace
-
-      # Set the file name without the extension.
       @file_base = File.basename(@file_path, ".*")
+      @workspace = workspace
 
       # Set a workspace-prefixed slug.
       @slug = "#{@workspace}_#{@file_base}"
