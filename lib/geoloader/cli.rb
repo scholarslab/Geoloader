@@ -36,7 +36,6 @@ module Geoloader
             load_shapefile_solr(file_path, @workspace, options[:queue])
           end
         }
-
       end
 
       desc "clear [WORKSPACE]", "Clear all documents in a workspace"
