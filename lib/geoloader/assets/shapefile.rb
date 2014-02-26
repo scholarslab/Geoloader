@@ -12,7 +12,7 @@ module Geoloader
     def get_zipfile
 
       # Get the file path, minus the extension.
-      wildcard = "#{File.dirname(@file_path)}/#{@base_name}"
+      wildcard = "#{File.dirname(@file_path)}/#{@file_base}"
 
       # Create the zipfile.
       Zip::File.open("#{wildcard}.zip", Zip::File::CREATE) do |zipfile|

@@ -64,7 +64,7 @@ module Geoloader
     # @param [Geoloader::Geotiff] geotiff
     #
     def create_coveragestore(geotiff)
-      url = "workspaces/#{geotiff.workspace}/coveragestores/#{geotiff.base_name}/file.geotiff"
+      url = "workspaces/#{geotiff.workspace}/coveragestores/#{geotiff.file_base}/file.geotiff"
       @resource[url].put(File.read(geotiff.file_path))
     end
 
@@ -74,7 +74,7 @@ module Geoloader
     # @param [Geoloader::Geotiff] geotiff
     #
     def delete_coveragestore(geotiff)
-      url = "workspaces/#{geotiff.workspace}/coveragestores/#{geotiff.base_name}"
+      url = "workspaces/#{geotiff.workspace}/coveragestores/#{geotiff.file_base}"
       @resource[url].delete({:params => {:recurse => true}})
     end
 
@@ -84,7 +84,7 @@ module Geoloader
     # @param [Geoloader::Shapefile] shapefile
     #
     def create_datastore(shapefile)
-      url = "workspaces/#{shapefile.workspace}/datastores/#{shapefile.base_name}/file.shp"
+      url = "workspaces/#{shapefile.workspace}/datastores/#{shapefile.file_base}/file.shp"
       @resource[url].put(shapefile.get_zipfile, :content_type => :zip)
     end
 
@@ -94,7 +94,7 @@ module Geoloader
     # @param [Geoloader::Shapefile] shapefile
     #
     def delete_datastore(shapefile)
-      url = "workspaces/#{shapefile.workspace}/datastores/#{shapefile.base_name}"
+      url = "workspaces/#{shapefile.workspace}/datastores/#{shapefile.file_base}"
       @resource[url].delete({:params => {:recurse => true}})
     end
 

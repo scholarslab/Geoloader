@@ -6,7 +6,7 @@ require "fileutils"
 module Geoloader
   class Asset
 
-    attr_reader :file_path, :base_name, :workspace, :slug
+    attr_reader :file_path, :file_base, :workspace, :slug
 
     #
     # Set the basename and workspace-prefixed slug.
@@ -22,10 +22,10 @@ module Geoloader
       @metadata  = metadata
 
       # Set the file name without the extension.
-      @base_name = File.basename(@file_path, ".*")
+      @file_base = File.basename(@file_path, ".*")
 
       # Set a workspace-prefixed slug.
-      @slug = "#{@workspace}_#{@base_name}"
+      @slug = "#{@workspace}_#{@file_base}"
 
     end
 
@@ -36,7 +36,7 @@ module Geoloader
       @metadata.merge({
         :LayerId => @slug,
         :WorkspaceName => @workspace,
-        :Name => @base_name
+        :Name => @file_base
       })
     end
 
@@ -92,7 +92,7 @@ module Geoloader
       FileUtils.mkdir(@temp)
 
       # Copy the assets into the archive.
-      files = Dir.glob("#{File.dirname(@file_path)}/#{@base_name}.*")
+      files = Dir.glob("#{File.dirname(@file_path)}/#{@file_base}.*")
       FileUtils.cp(files, @temp)
 
       # Update the working file path, saving the original.
