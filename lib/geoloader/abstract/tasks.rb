@@ -12,14 +12,13 @@ module Geoloader
     # @param [Class] loader
     # @param [String] file_name
     # @param [String] workspace
-    # @param [Hash] metadata
     # @param [Boolean] queue
     #
-    def load_or_enqueue(loader, file_path, workspace, metadata, queue)
+    def load_or_enqueue(loader, file_path, workspace, queue)
       if queue
-        Resque.enqueue(loader, file_path, workspace, metadata)
+        Resque.enqueue(loader, file_path, workspace)
       else
-        loader.perform(file_path, workspace, metadata)
+        loader.perform(file_path, workspace)
       end
     end
 
@@ -28,11 +27,10 @@ module Geoloader
     #
     # @param [String] file_name
     # @param [String] workspace
-    # @param [Hash] metadata
     # @param [Boolean] queue
     #
-    def load_geotiff_geoserver(file_path, workspace, metadata, queue = false)
-      load_or_enqueue(Geoloader::GeotiffGeoserverLoader, file_path, workspace, metadata, queue)
+    def load_geotiff_geoserver(file_path, workspace, queue = false)
+      load_or_enqueue(Geoloader::GeotiffGeoserverLoader, file_path, workspace, queue)
     end
 
     #
@@ -40,11 +38,10 @@ module Geoloader
     #
     # @param [String] file_name
     # @param [String] workspace
-    # @param [Hash] metadata
     # @param [Boolean] queue
     #
-    def load_geotiff_solr(file_path, workspace, metadata, queue = false)
-      load_or_enqueue(Geoloader::GeotiffSolrLoader, file_path, workspace, metadata, queue)
+    def load_geotiff_solr(file_path, workspace, queue = false)
+      load_or_enqueue(Geoloader::GeotiffSolrLoader, file_path, workspace, queue)
     end
 
     #
@@ -52,11 +49,10 @@ module Geoloader
     #
     # @param [String] file_name
     # @param [String] workspace
-    # @param [Hash] metadata
     # @param [Boolean] queue
     #
-    def load_shapefile_geoserver(file_path, workspace, metadata, queue = false)
-      load_or_enqueue(Geoloader::ShapefileGeoserverLoader, file_path, workspace, metadata, queue)
+    def load_shapefile_geoserver(file_path, workspace, queue = false)
+      load_or_enqueue(Geoloader::ShapefileGeoserverLoader, file_path, workspace, queue)
     end
 
     #
@@ -64,11 +60,10 @@ module Geoloader
     #
     # @param [String] file_name
     # @param [String] workspace
-    # @param [Hash] metadata
     # @param [Boolean] queue
     #
-    def load_shapefile_solr(file_path, workspace, metadata, queue = false)
-      load_or_enqueue(Geoloader::ShapefileSolrLoader, file_path, workspace, metadata, queue)
+    def load_shapefile_solr(file_path, workspace, queue = false)
+      load_or_enqueue(Geoloader::ShapefileSolrLoader, file_path, workspace, queue)
     end
 
     #
@@ -76,10 +71,9 @@ module Geoloader
     #
     # @param [String] file_name
     # @param [String] workspace
-    # @param [Hash] metadata
     # @param [Boolean] queue
     #
-    def load_geonetwork(file_path, workspace, metadata, queue = false)
+    def load_geonetwork(file_path, workspace, queue = false)
       load_or_enqueue(Geoloader::GeonetworkLoader, file_path, workspace, metadata, queue)
     end
 
