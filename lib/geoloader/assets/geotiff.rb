@@ -10,7 +10,9 @@ module Geoloader
     # Remove the black borders added by ArcMap.
     #
     def make_borders_transparent
-      `gdalwarp -srcnodata 0 -dstalpha #{@file_path} #{@file_path}`
+      `gdalwarp -srcnodata 0 -dstalpha #{@file_path} #{@file_path}_`
+      FileUtils.rm(@file_path)
+      FileUtils.mv("#{@file_path}_", @file_path)
     end
 
     #

@@ -11,13 +11,15 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["David McClure"]
-  s.date = "2014-02-07"
+  s.date = "2014-02-26"
   s.email = "david.mcclure@virginia.edu"
   s.executables = ["geoloader"]
   s.extra_rdoc_files = [
     "README.md"
   ]
   s.files = [
+    ".ruby-gemset",
+    ".ruby-version",
     "Gemfile",
     "Gemfile.lock",
     "README.md",
@@ -33,6 +35,7 @@ Gem::Specification.new do |s|
     "lib/geoloader/assets/geotiff.rb",
     "lib/geoloader/assets/shapefile.rb",
     "lib/geoloader/cli.rb",
+    "lib/geoloader/loaders/geonetwork.rb",
     "lib/geoloader/loaders/geotiff_geoserver.rb",
     "lib/geoloader/loaders/geotiff_solr.rb",
     "lib/geoloader/loaders/shapefile_geoserver.rb",
@@ -55,12 +58,15 @@ Gem::Specification.new do |s|
     "spec/fixtures/shapefile.shp.xml",
     "spec/fixtures/shapefile.shx",
     "spec/helpers/fixture.rb",
+    "spec/loaders/geonetwork.rb",
     "spec/loaders/geotiff_geoserver.rb",
     "spec/loaders/geotiff_solr.rb",
     "spec/loaders/shapefile_geoserver.rb",
     "spec/loaders/shapefile_solr.rb",
     "spec/spec_helper.rb"
   ]
+  s.homepage = "https://github.com/scholarslab/Geoloader"
+  s.licenses = ["Apache-2.0"]
   s.rubygems_version = "2.2.2"
   s.summary = nil
 
@@ -68,36 +74,42 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<rest-client>, ["~> 1.6.7"])
-      s.add_runtime_dependency(%q<confstruct>, ["~> 0.2.5"])
-      s.add_runtime_dependency(%q<rsolr-ext>, ["~> 1.0.3"])
-      s.add_runtime_dependency(%q<thor>, ["~> 0.18.1"])
-      s.add_runtime_dependency(%q<terminal-table>, ["~> 1.4.5"])
-      s.add_runtime_dependency(%q<resque>, ["~> 1.25.1"])
-      s.add_runtime_dependency(%q<nokogiri>, ["~> 1.6.1"])
-      s.add_runtime_dependency(%q<rubyzip>, ["~> 1.1.0"])
-      s.add_development_dependency(%q<jeweler>, ["~> 2.0.1"])
+      s.add_runtime_dependency(%q<jeweler>, [">= 0"])
+      s.add_runtime_dependency(%q<rest-client>, [">= 0"])
+      s.add_runtime_dependency(%q<confstruct>, [">= 0"])
+      s.add_runtime_dependency(%q<rsolr-ext>, [">= 0"])
+      s.add_runtime_dependency(%q<thor>, [">= 0"])
+      s.add_runtime_dependency(%q<terminal-table>, [">= 0"])
+      s.add_runtime_dependency(%q<resque>, [">= 0"])
+      s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
+      s.add_runtime_dependency(%q<rubyzip>, [">= 0"])
+      s.add_runtime_dependency(%q<redcarpet>, [">= 0"])
+      s.add_runtime_dependency(%q<jekyll>, [">= 0"])
     else
-      s.add_dependency(%q<rest-client>, ["~> 1.6.7"])
-      s.add_dependency(%q<confstruct>, ["~> 0.2.5"])
-      s.add_dependency(%q<rsolr-ext>, ["~> 1.0.3"])
-      s.add_dependency(%q<thor>, ["~> 0.18.1"])
-      s.add_dependency(%q<terminal-table>, ["~> 1.4.5"])
-      s.add_dependency(%q<resque>, ["~> 1.25.1"])
-      s.add_dependency(%q<nokogiri>, ["~> 1.6.1"])
-      s.add_dependency(%q<rubyzip>, ["~> 1.1.0"])
-      s.add_dependency(%q<jeweler>, ["~> 2.0.1"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
+      s.add_dependency(%q<rest-client>, [">= 0"])
+      s.add_dependency(%q<confstruct>, [">= 0"])
+      s.add_dependency(%q<rsolr-ext>, [">= 0"])
+      s.add_dependency(%q<thor>, [">= 0"])
+      s.add_dependency(%q<terminal-table>, [">= 0"])
+      s.add_dependency(%q<resque>, [">= 0"])
+      s.add_dependency(%q<nokogiri>, [">= 0"])
+      s.add_dependency(%q<rubyzip>, [">= 0"])
+      s.add_dependency(%q<redcarpet>, [">= 0"])
+      s.add_dependency(%q<jekyll>, [">= 0"])
     end
   else
-    s.add_dependency(%q<rest-client>, ["~> 1.6.7"])
-    s.add_dependency(%q<confstruct>, ["~> 0.2.5"])
-    s.add_dependency(%q<rsolr-ext>, ["~> 1.0.3"])
-    s.add_dependency(%q<thor>, ["~> 0.18.1"])
-    s.add_dependency(%q<terminal-table>, ["~> 1.4.5"])
-    s.add_dependency(%q<resque>, ["~> 1.25.1"])
-    s.add_dependency(%q<nokogiri>, ["~> 1.6.1"])
-    s.add_dependency(%q<rubyzip>, ["~> 1.1.0"])
-    s.add_dependency(%q<jeweler>, ["~> 2.0.1"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
+    s.add_dependency(%q<rest-client>, [">= 0"])
+    s.add_dependency(%q<confstruct>, [">= 0"])
+    s.add_dependency(%q<rsolr-ext>, [">= 0"])
+    s.add_dependency(%q<thor>, [">= 0"])
+    s.add_dependency(%q<terminal-table>, [">= 0"])
+    s.add_dependency(%q<resque>, [">= 0"])
+    s.add_dependency(%q<nokogiri>, [">= 0"])
+    s.add_dependency(%q<rubyzip>, [">= 0"])
+    s.add_dependency(%q<redcarpet>, [">= 0"])
+    s.add_dependency(%q<jekyll>, [">= 0"])
   end
 end
 
