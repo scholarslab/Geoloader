@@ -30,7 +30,7 @@ module Geoloader
     # @param [Boolean] queue
     #
     def load_geotiff_geoserver(file_path, workspace, queue)
-      load_or_enqueue(Geoloader::GeotiffGeoserverLoader, file_path, workspace, queue)
+      load_or_enqueue(Geoloader::Loaders::GeotiffGeoserver, file_path, workspace, queue)
     end
 
     #
@@ -41,7 +41,7 @@ module Geoloader
     # @param [Boolean] queue
     #
     def load_geotiff_solr(file_path, workspace, queue)
-      load_or_enqueue(Geoloader::GeotiffSolrLoader, file_path, workspace, queue)
+      load_or_enqueue(Geoloader::Loaders::GeotiffSolr, file_path, workspace, queue)
     end
 
     #
@@ -52,7 +52,7 @@ module Geoloader
     # @param [Boolean] queue
     #
     def load_shapefile_geoserver(file_path, workspace, queue)
-      load_or_enqueue(Geoloader::ShapefileGeoserverLoader, file_path, workspace, queue)
+      load_or_enqueue(Geoloader::Loaders::ShapefileGeoserver, file_path, workspace, queue)
     end
 
     #
@@ -63,7 +63,7 @@ module Geoloader
     # @param [Boolean] queue
     #
     def load_shapefile_solr(file_path, workspace, queue)
-      load_or_enqueue(Geoloader::ShapefileSolrLoader, file_path, workspace, queue)
+      load_or_enqueue(Geoloader::Loaders::ShapefileSolr, file_path, workspace, queue)
     end
 
     #
@@ -83,7 +83,7 @@ module Geoloader
     # @param [String] workspace
     #
     def clear_geoserver(workspace)
-      Geoloader::Geoserver.new.delete_workspace(workspace)
+      Geoloader::Services::Geoserver.new.delete_workspace(workspace)
     end
 
     #
@@ -92,7 +92,7 @@ module Geoloader
     # @param [String] workspace
     #
     def clear_geonetwork(workspace)
-      Geoloader::Geonetwork.new.delete_records_by_group(workspace)
+      Geoloader::Services::Geonetwork.new.delete_records_by_group(workspace)
     end
 
     #
@@ -101,7 +101,7 @@ module Geoloader
     # @param [String] workspace
     #
     def clear_solr(workspace)
-      Geoloader::Solr.new.delete_by_workspace(workspace)
+      Geoloader::Services::Solr.new.delete_by_workspace(workspace)
     end
 
   end

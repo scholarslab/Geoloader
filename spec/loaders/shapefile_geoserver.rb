@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe Geoloader::ShapefileGeoserverLoader do
+describe Geoloader::Loaders::ShapefileGeoserver do
 
   include Geoloader::Tasks
   include FixtureHelpers
@@ -13,7 +13,7 @@ describe Geoloader::ShapefileGeoserverLoader do
   }
 
   let(:loader) {
-    Geoloader::ShapefileGeoserverLoader.new(get_fixture_path("shapefile.shp"), workspace)
+    Geoloader::Loaders::ShapefileGeoserver.new(get_fixture_path("shapefile.shp"), workspace)
   }
 
   before do

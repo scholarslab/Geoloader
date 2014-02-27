@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe Geoloader::GeotiffGeoserverLoader do
+describe Geoloader::Loaders::GeotiffGeoserver do
 
   include Geoloader::Tasks
   include FixtureHelpers
@@ -13,7 +13,7 @@ describe Geoloader::GeotiffGeoserverLoader do
   }
 
   let(:loader) {
-    Geoloader::GeotiffGeoserverLoader.new(get_fixture_path("geotiff.tif"), workspace)
+    Geoloader::Loaders::GeotiffGeoserver.new(get_fixture_path("geotiff.tif"), workspace)
   }
 
   before do

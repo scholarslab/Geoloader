@@ -2,21 +2,23 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 module Geoloader
-  class GeonetworkLoader < Loader
+  module Loaders
+    class Geonetwork < Loader
 
-    include Loader::Asset
-    include Loader::Geonetwork
+      include Loader::Asset
+      include Loader::Geonetwork
 
-    @queue = :geoloader
+      @queue = :geoloader
 
-    #
-    # Push an asset to Geonetwork.
-    #
-    def load
-      @asset.stage do
-        @geonetwork.create_record(@asset)
+      #
+      # Push an asset to Geonetwork.
+      #
+      def load
+        @asset.stage do
+          @geonetwork.create_record(@asset)
+        end
       end
-    end
 
+    end
   end
 end

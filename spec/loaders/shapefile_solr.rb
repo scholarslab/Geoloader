@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe Geoloader::ShapefileSolrLoader do
+describe Geoloader::Loaders::ShapefileSolr do
 
   include Geoloader::Tasks
   include FixtureHelpers
@@ -13,7 +13,7 @@ describe Geoloader::ShapefileSolrLoader do
   }
 
   let(:loader) {
-    Geoloader::ShapefileSolrLoader.new(get_fixture_path("shapefile.shp"), workspace)
+    Geoloader::Loaders::ShapefileSolr.new(get_fixture_path("shapefile.shp"), workspace)
   }
 
   before do
