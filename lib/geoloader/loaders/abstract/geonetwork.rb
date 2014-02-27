@@ -3,16 +3,18 @@
 
 module Geoloader
   module Loaders
-    module Geonetwork
+    module Abstract
+      module Geonetwork
 
-      attr_reader :geonetwork
+        attr_reader :geonetwork
 
-      def initialize(*args)
-        super
-        @geonetwork = Geoloader::Services::Geonetwork.new
-        @geonetwork.ensure_group(@workspace)
+        def initialize(*args)
+          super
+          @geonetwork = Geoloader::Services::Geonetwork.new
+          @geonetwork.ensure_group(@workspace)
+        end
+
       end
-
     end
   end
 end

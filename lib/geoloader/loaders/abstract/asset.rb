@@ -3,15 +3,17 @@
 
 module Geoloader
   module Loaders
-    module Asset
+    module Abstract
+      module Asset
 
-      attr_reader :asset
+        attr_reader :asset
 
-      def initialize(*args)
-        super
-        @asset = Geoloader::Asset.new(@file_path, @workspace)
+        def initialize(*args)
+          super
+          @asset = Geoloader::Asset.new(@file_path, @workspace)
+        end
+
       end
-
     end
   end
 end

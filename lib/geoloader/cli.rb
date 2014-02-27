@@ -7,27 +7,18 @@ require "thor"
 module Geoloader
   module CLI
 
-    class Service < Thor
-
-      desc "load [FILES]", "Load files (abstract)"
-      option :workspace,  :aliases => "-w", :type => :string
-      option :queue,      :aliases => "-q", :type => :boolean, :default => false
-      def load(*files)
-
-        # If no workspace is defined, use the default.
-        @workspace = (options[:workspace] or Geoloader.config.workspaces.production)
-
-      end
-
-    end
-
-    class Solr < Service
+    class Solr < Thor
 
       include Tasks
 
       desc "load [FILES]", "Load Solr documents"
+      option :queue,      :aliases => "-q", :type => :boolean, :default => false
+      option :workspace,  :aliases => "-w", :type => :string
       def load(*files)
-        super
+
+        # If no workspace passed, use the default.
+        @workspace = options[:workspace] or Geoloader.config.workspaces.production
+
         files.each { |file_path|
           case File.extname(file_path)
           when ".tif" # GEOTIFF
@@ -36,6 +27,7 @@ module Geoloader
             load_shapefile_solr(file_path, @workspace, options[:queue])
           end
         }
+
       end
 
       desc "clear [WORKSPACE]", "Clear all documents in a workspace"
@@ -45,13 +37,18 @@ module Geoloader
 
     end
 
-    class Geoserver < Service
+    class Geoserver < Thor
 
       include Tasks
 
       desc "load [FILES]", "Load Geoserver stores and layers"
+      option :queue,      :aliases => "-q", :type => :boolean, :default => false
+      option :workspace,  :aliases => "-w", :type => :string
       def load(*files)
-        super
+
+        # If no workspace passed, use the default.
+        @workspace = options[:workspace] or Geoloader.config.workspaces.production
+
         files.each { |file_path|
           case File.extname(file_path)
           when ".tif" # GEOTIFF
@@ -60,6 +57,7 @@ module Geoloader
             load_shapefile_geoserver(file_path, @workspace, options[:queue])
           end
         }
+
       end
 
       desc "clear [WORKSPACE]", "Clear all documents in a workspace"
@@ -69,16 +67,22 @@ module Geoloader
 
     end
 
-    class Geonetwork < Service
+    class Geonetwork < Thor
 
       include Tasks
 
       desc "load [FILES]", "Load Geonetwork metadata records"
+      option :queue,      :aliases => "-q", :type => :boolean, :default => false
+      option :workspace,  :aliases => "-w", :type => :string
       def load(*files)
-        super
+
+        # If no workspace passed, use the default.
+        @workspace = options[:workspace] or Geoloader.config.workspaces.production
+
         files.each { |file_path|
           load_geonetwork(file_path, @workspace, options[:queue])
         }
+
       end
 
       desc "clear [WORKSPACE]", "Clear all records in a group"

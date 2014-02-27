@@ -3,16 +3,18 @@
 
 module Geoloader
   module Loaders
-    module Geoserver
+    module Abstract
+      module Geoserver
 
-      attr_reader :geoserver
+        attr_reader :geoserver
 
-      def initialize(*args)
-        super
-        @geoserver = Geoloader::Services::Geoserver.new
-        @geoserver.ensure_workspace(@workspace)
+        def initialize(*args)
+          super
+          @geoserver = Geoloader::Services::Geoserver.new
+          @geoserver.ensure_workspace(@workspace)
+        end
+
       end
-
     end
   end
 end

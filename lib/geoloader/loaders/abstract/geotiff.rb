@@ -3,15 +3,17 @@
 
 module Geoloader
   module Loaders
-    module Geotiff
+    module Abstract
+      module Geotiff
 
-      attr_reader :geotiff
+        attr_reader :geotiff
 
-      def initialize(*args)
-        super
-        @geotiff = Geoloader::Assets::Geotiff.new(@file_path, @workspace)
+        def initialize(*args)
+          super
+          @geotiff = Geoloader::Assets::Geotiff.new(@file_path, @workspace)
+        end
+
       end
-
     end
   end
 end

@@ -7,10 +7,10 @@ require_relative 'abstract/geoserver'
 
 module Geoloader
   module Loaders
-    class ShapefileGeoserver < Base
+    class ShapefileGeoserver < Abstract::Base
 
-      include Base::Shapefile
-      include Base::Geoserver
+      include Abstract::Shapefile
+      include Abstract::Geoserver
 
       @queue = :geoloader
 

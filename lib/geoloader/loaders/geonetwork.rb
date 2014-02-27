@@ -2,15 +2,15 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 require_relative 'abstract/base'
-require_relative 'abstract/asset'
 require_relative 'abstract/geonetwork'
+require_relative 'abstract/asset'
 
 module Geoloader
   module Loaders
-    class Geonetwork < Base
+    class Geonetwork < Abstract::Base
 
-      include Base::Asset
-      include Base::Geonetwork
+      include Abstract::Asset
+      include Abstract::Geonetwork
 
       @queue = :geoloader
 

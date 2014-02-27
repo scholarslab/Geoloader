@@ -3,15 +3,17 @@
 
 module Geoloader
   module Loaders
-    module Solr
+    module Abstract
+      module Solr
 
-      attr_reader :solr
+        attr_reader :solr
 
-      def initialize(*args)
-        super
-        @solr = Geoloader::Services::Solr.new
+        def initialize(*args)
+          super
+          @solr = Geoloader::Services::Solr.new
+        end
+
       end
-
     end
   end
 end

@@ -3,15 +3,17 @@
 
 module Geoloader
   module Loaders
-    module Shapefile
+    module Abstract
+      module Shapefile
 
-      attr_reader :shapefile
+        attr_reader :shapefile
 
-      def initialize(*args)
-        super
-        @shapefile = Geoloader::Assets::Shapefile.new(@file_path, @workspace)
+        def initialize(*args)
+          super
+          @shapefile = Geoloader::Assets::Shapefile.new(@file_path, @workspace)
+        end
+
       end
-
     end
   end
 end

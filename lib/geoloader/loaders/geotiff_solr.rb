@@ -7,12 +7,12 @@ require_relative 'abstract/solr'
 
 module Geoloader
   module Loaders
-    class GeotiffSolr < Base
+    class GeotiffSolr < Abstract::Base
 
-      include Base::Geotiff
-      include Base::Solr
+      include Abstract::Geotiff
+      include Abstract::Solr
 
-      @queue = :geoBase
+      @queue = :geoloader
 
       #
       # Push a GeoTIFF to Solr.

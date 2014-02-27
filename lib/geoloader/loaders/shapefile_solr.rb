@@ -7,10 +7,10 @@ require_relative 'abstract/solr'
 
 module Geoloader
   module Loaders
-    class ShapefileSolr < Base
+    class ShapefileSolr < Abstract::Base
 
-      include Base::Shapefile
-      include Base::Solr
+      include Abstract::Shapefile
+      include Abstract::Solr
 
       @queue = :geoloader
 
