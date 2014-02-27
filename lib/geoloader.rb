@@ -10,7 +10,7 @@ require "yaml"
 # @param [String] path
 #
 def require_dir(path)
-  Dir["#{File.dirname(__FILE__)}/#{path}/*.rb"].each { |file|
+  Dir["#{File.dirname(__FILE__)}/#{path}/**/*.rb"].each { |file|
     require file
   }
 end
@@ -54,10 +54,6 @@ module Geoloader
 end
 
 # Load assets.
-require_dir("geoloader/abstract")
-require_dir("geoloader/assets")
-require_dir("geoloader/services")
-require_dir("geoloader/loaders")
 require_dir("geoloader")
 
 # Apply default configuration.
