@@ -5,7 +5,7 @@ require "fileutils"
 
 module Geoloader
   module Assets
-    class Geotiff < Asset
+    class Geotiff < Base
 
       #
       # Remove the black borders added by ArcMap.

@@ -10,7 +10,7 @@ module Geoloader
 
         def initialize(*args)
           super
-          @asset = Geoloader::Asset.new(@file_path, @workspace)
+          @asset = Geoloader::Assets::Base.new(@file_path, @workspace)
         end
 
       end
