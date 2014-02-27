@@ -1,16 +1,18 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require 'abstract/base'
+require_relative 'abstract/base'
+require_relative 'abstract/geotiff'
+require_relative 'abstract/solr'
 
 module Geoloader
   module Loaders
-    class GeotiffSolr < Loader
+    class GeotiffSolr < Base
 
-      include Loader::Geotiff
-      include Loader::Solr
+      include Base::Geotiff
+      include Base::Solr
 
-      @queue = :geoloader
+      @queue = :geoBase
 
       #
       # Push a GeoTIFF to Solr.

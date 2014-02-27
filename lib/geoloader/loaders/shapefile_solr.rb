@@ -1,14 +1,16 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require 'abstract/base'
+require_relative 'abstract/base'
+require_relative 'abstract/shapefile'
+require_relative 'abstract/solr'
 
 module Geoloader
   module Loaders
-    class ShapefileSolr < Loader
+    class ShapefileSolr < Base
 
-      include Loader::Shapefile
-      include Loader::Solr
+      include Base::Shapefile
+      include Base::Solr
 
       @queue = :geoloader
 
