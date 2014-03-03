@@ -5,7 +5,7 @@ require "spec_helper"
 
 describe Geoloader::Loaders::ShapefileGeoserver do
 
-  include Geoloader::Tasks
+  include Geoloader::CLI::Tasks
   include FixtureHelpers
 
   let(:workspace) {
