@@ -33,45 +33,6 @@ module Geoloader
       end
 
       #
-      # Get metadata for Solr document.
-      #
-      def get_solr_document
-        {
-          :LayerId => @slug,
-          :WorkspaceName => @workspace,
-          :Name => @file_base
-        }
-      end
-
-      #
-      # Read the raw ESRI XML.
-      #
-      # @return [String]
-      #
-      def get_esri_xml
-        File.read("#{@file_path}.xml")
-      end
-
-      #
-      # Convert the ESRI XML into a iso19139 record.
-      #
-      # @return [String]
-      #
-      def get_iso19139_xml
-        xslt_path = "#{Geoloader.gem_dir}/lib/geoloader/iso19139.xsl"
-        `saxon #{@file_path}.xml #{xslt_path}`
-      end
-
-      #
-      # Get the ESRI uuid.
-      #
-      # @return [String]
-      #
-      def get_esri_uuid
-        Nokogiri::XML(get_esri_xml).at_xpath("//thesaName/@uuidref").value
-      end
-
-      #
       # Create working copies, yield to a block, remove the copies.
       #
       def stage
@@ -99,7 +60,7 @@ module Geoloader
     end
 
 
-    class Geotiff < Asset
+    module Geotiff
 
       #
       # Remove the black borders added by ArcMap.
@@ -132,7 +93,7 @@ module Geoloader
     end
 
 
-    class Shapefile < Asset
+    module Shapefile
 
       #
       # Zip up the Shapefile and its companion files.
@@ -148,6 +109,55 @@ module Geoloader
 
         File.read("#{@file_base}.zip")
 
+      end
+
+    end
+
+
+    module Solr
+
+      #
+      # Get metadata for Solr document.
+      #
+      def get_solr_document
+        {
+          :LayerId => @slug,
+          :WorkspaceName => @workspace,
+          :Name => @file_base
+        }
+      end
+
+    end
+
+
+    module Geonetwork
+
+      #
+      # Read the raw ESRI XML.
+      #
+      # @return [String]
+      #
+      def get_esri_xml
+        File.read("#{@file_path}.xml")
+      end
+
+      #
+      # Get the ESRI uuid.
+      #
+      # @return [String]
+      #
+      def get_esri_uuid
+        Nokogiri::XML(get_esri_xml).at_xpath("//thesaName/@uuidref").value
+      end
+
+      #
+      # Convert the ESRI XML into a iso19139 record.
+      #
+      # @return [String]
+      #
+      def get_iso19139_xml
+        xslt_path = "#{Geoloader.gem_dir}/lib/geoloader/iso19139.xsl"
+        `saxon #{@file_path}.xml #{xslt_path}`
       end
 
     end

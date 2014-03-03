@@ -32,96 +32,27 @@ module Geoloader
     end
 
 
-    module Asset
-
-      attr_reader :asset
-
-      #
-      # Create a generic asset.
-      #
-      def initialize(*args)
-        super
-        @asset = Geoloader::Assets::Asset.new(@file_path, @workspace)
-      end
-
-    end
-
-
-    module Geotiff
-
-      attr_reader :geotiff
-
-      #
-      # Create a GeoTIFF.
-      #
-      def initialize(*args)
-        super
-        @geotiff = Geoloader::Assets::Geotiff.new(@file_path, @workspace)
-      end
-
-    end
-
-
-    module Shapefile
-
-      attr_reader :shapefile
-
-      #
-      # Create a Shapefile.
-      #
-      def initialize(*args)
-        super
-        @shapefile = Geoloader::Assets::Shapefile.new(@file_path, @workspace)
-      end
-
-    end
-
-
-    module Solr
-
-      attr_reader :solr
-
-      #
-      # Connect to Solr.
-      #
-      def initialize(*args)
-        super
-        @solr = Geoloader::Services::Solr.new
-      end
-
-    end
-
-
-    module Geoserver
-
-      attr_reader :geoserver
-
-      #
-      # Connect to Geoserver.
-      #
-      def initialize(*args)
-        super
-        @geoserver = Geoloader::Services::Geoserver.new
-        @geoserver.ensure_workspace(@workspace)
-      end
-
-    end
-
-
     class Geonetwork < Loader
 
-      include Asset
+      attr_reader :asset, :geonetwork
 
-      attr_reader :geonetwork
       @queue = :geoloader
 
       #
-      # Connect to Geonetwork.
+      # Configure the asset, connect to Geonetwork.
       #
       def initialize(*args)
+
         super
+
+        # Create and configure the asset.
+        @asset = Geoloader::Assets::Asset.new(@file_path, @workspace)
+        @asset.extend(Geoloader::Assets::Geonetwork)
+
+        # Connect to Geonetwork, create the group.
         @geonetwork = Geoloader::Services::Geonetwork.new
         @geonetwork.ensure_group(@workspace)
+
       end
 
       #
@@ -138,10 +69,26 @@ module Geoloader
 
     class GeotiffGeoserver < Loader
 
-      include Geotiff
-      include Geoserver
+      attr_reader :geotiff, :geoserver
 
       @queue = :geoloader
+
+      #
+      # Configure the asset, connect to Geoserver.
+      #
+      def initialize(*args)
+
+        super
+
+        # Create and configure the asset.
+        @geotiff = Geoloader::Assets::Asset.new(@file_path, @workspace)
+        @geotiff.extend(Geoloader::Assets::Geotiff)
+
+        # Connect to Geoserver, create the workspace.
+        @geoserver = Geoloader::Services::Geoserver.new
+        @geoserver.ensure_workspace(@workspace)
+
+      end
 
       #
       # Push a GeoTIFF to Geoserver.
@@ -164,10 +111,26 @@ module Geoloader
 
     class GeotiffSolr < Loader
 
-      include Geotiff
-      include Solr
+      attr_reader :geotiff, :solr
 
       @queue = :geoloader
+
+      #
+      # Configure the asset, connect to Solr.
+      #
+      def initialize(*args)
+
+        super
+
+        # Create and configure the asset.
+        @geotiff = Geoloader::Assets::Asset.new(@file_path, @workspace)
+        @geotiff.extend(Geoloader::Assets::Geotiff)
+        @geotiff.extend(Geoloader::Assets::Solr)
+
+        # Connect to Solr.
+        @solr = Geoloader::Services::Solr.new
+
+      end
 
       #
       # Push a GeoTIFF to Solr.
@@ -183,10 +146,26 @@ module Geoloader
 
     class ShapefileGeoserver < Loader
 
-      include Shapefile
-      include Geoserver
+      attr_reader :shapefile, :geoserver
 
       @queue = :geoloader
+
+      #
+      # Configure the asset, connect to Geoserver.
+      #
+      def initialize(*args)
+
+        super
+
+        # Create and configure the asset.
+        @shapefile = Geoloader::Assets::Asset.new(@file_path, @workspace)
+        @shapefile.extend(Geoloader::Assets::Shapefile)
+
+        # Connect to Geoserver, create the workspace.
+        @geoserver = Geoloader::Services::Geoserver.new
+        @geoserver.ensure_workspace(@workspace)
+
+      end
 
       #
       # Push a Shapefile to Geoserver.
@@ -202,10 +181,26 @@ module Geoloader
 
     class ShapefileSolr < Loader
 
-      include Shapefile
-      include Solr
+      attr_reader :shapefile, :solr
 
       @queue = :geoloader
+
+      #
+      # Configure the shapefile, connect to Solr.
+      #
+      def initialize(*args)
+
+        super
+
+        # Create and configure the asset.
+        @shapefile = Geoloader::Assets::Asset.new(@file_path, @workspace)
+        @shapefile.extend(Geoloader::Assets::Shapefile)
+        @shapefile.extend(Geoloader::Assets::Solr)
+
+        # Connect to Solr.
+        @solr = Geoloader::Services::Solr.new
+
+      end
 
       #
       # Push a Shapefile to Solr.
