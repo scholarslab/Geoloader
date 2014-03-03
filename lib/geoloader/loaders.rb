@@ -4,6 +4,7 @@
 module Geoloader
   module Loaders
 
+
     class Loader
 
       #
@@ -30,6 +31,7 @@ module Geoloader
 
     end
 
+
     module Asset
 
       attr_reader :asset
@@ -43,6 +45,7 @@ module Geoloader
       end
 
     end
+
 
     module Geotiff
 
@@ -58,6 +61,7 @@ module Geoloader
 
     end
 
+
     module Shapefile
 
       attr_reader :shapefile
@@ -71,6 +75,7 @@ module Geoloader
       end
 
     end
+
 
     module Solr
 
@@ -86,6 +91,7 @@ module Geoloader
 
     end
 
+
     module Geoserver
 
       attr_reader :geoserver
@@ -100,6 +106,7 @@ module Geoloader
       end
 
     end
+
 
     class Geonetwork < Loader
 
@@ -128,6 +135,7 @@ module Geoloader
 
     end
 
+
     class GeotiffGeoserver < Loader
 
       include Geotiff
@@ -153,6 +161,7 @@ module Geoloader
 
     end
 
+
     class GeotiffSolr < Loader
 
       include Geotiff
@@ -170,6 +179,7 @@ module Geoloader
       end
 
     end
+
 
     class ShapefileGeoserver < Loader
 
@@ -189,6 +199,7 @@ module Geoloader
 
     end
 
+
     class ShapefileSolr < Loader
 
       include Shapefile
@@ -206,6 +217,7 @@ module Geoloader
       end
 
     end
+
 
   end
 end

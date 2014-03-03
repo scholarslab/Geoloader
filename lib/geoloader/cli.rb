@@ -7,6 +7,7 @@ require "thor"
 module Geoloader
   module CLI
 
+
     class Solr < Thor
 
       include Tasks
@@ -36,6 +37,7 @@ module Geoloader
       end
 
     end
+
 
     class Geoserver < Thor
 
@@ -67,6 +69,7 @@ module Geoloader
 
     end
 
+
     class Geonetwork < Thor
 
       include Tasks
@@ -92,6 +95,7 @@ module Geoloader
 
     end
 
+
     class App < Thor
 
       desc "solr [SUBCOMMAND]", "Manage Solr documents"
@@ -109,6 +113,7 @@ module Geoloader
       end
 
     end
+
 
   end
 end

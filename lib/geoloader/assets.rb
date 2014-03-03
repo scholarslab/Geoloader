@@ -5,6 +5,8 @@ require "fileutils"
 
 module Geoloader
   module Assets
+
+
     class Asset
 
       attr_reader :file_path, :file_base, :workspace, :slug
@@ -94,5 +96,61 @@ module Geoloader
       end
 
     end
+
+
+    class Geotiff < Asset
+
+      #
+      # Remove the black borders added by ArcMap.
+      #
+      def make_borders_transparent
+        gdal_command("gdalwarp -srcnodata 0 -dstalpha", @file_name)
+      end
+
+      #
+      # (Re)build a EPSG:4326 header.
+      #
+      def project_to_4326
+        gdal_command("gdal_translate -of GTiff -a_srs EPSG:4326", @file_name)
+      end
+
+      private
+
+      #
+      # Run a gdal command on a file, replacing the original file.
+      #
+      # @param [String] command
+      # @param [String] file_path
+      #
+      def gdal_command(command, file_path)
+        `#{command} #{file_path} #{file_path}_`
+        FileUtils.rm(file_path)
+        FileUtils.mv("#{file_path}_", file_path)
+      end
+
+    end
+
+
+    class Shapefile < Asset
+
+      #
+      # Zip up the Shapefile and its companion files.
+      #
+      def get_zipfile
+
+        # Create the zipfile.
+        Zip::File.open("#{@file_base}.zip", Zip::File::CREATE) do |zipfile|
+          Dir.glob("#{@file_base}.*") do |file|
+            zipfile.add(File.basename(file), file)
+          end
+        end
+
+        File.read("#{@file_base}.zip")
+
+      end
+
+    end
+
+
   end
 end
