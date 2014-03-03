@@ -4,7 +4,7 @@
 module Geoloader
   module Loaders
     module Abstract
-      class Base
+      class Loader
 
         #
         # Perform an upload (used by Resque).

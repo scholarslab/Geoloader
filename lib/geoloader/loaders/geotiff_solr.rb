@@ -7,7 +7,7 @@ require_relative 'abstract/solr'
 
 module Geoloader
   module Loaders
-    class GeotiffSolr < Abstract::Base
+    class GeotiffSolr < Abstract::Loader
 
       include Abstract::Geotiff
       include Abstract::Solr

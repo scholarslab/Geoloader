@@ -7,7 +7,7 @@ require_relative 'abstract/asset'
 
 module Geoloader
   module Loaders
-    class Geonetwork < Abstract::Base
+    class Geonetwork < Abstract::Loader
 
       include Abstract::Asset
       include Abstract::Geonetwork

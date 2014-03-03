@@ -7,7 +7,7 @@ require_relative 'abstract/geotiff'
 
 module Geoloader
   module Loaders
-    class GeotiffGeoserver < Abstract::Base
+    class GeotiffGeoserver < Abstract::Loader
 
       include Abstract::Geotiff
       include Abstract::Geoserver

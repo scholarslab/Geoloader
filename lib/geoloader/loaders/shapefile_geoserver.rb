@@ -7,7 +7,7 @@ require_relative 'abstract/geoserver'
 
 module Geoloader
   module Loaders
-    class ShapefileGeoserver < Abstract::Base
+    class ShapefileGeoserver < Abstract::Loader
 
       include Abstract::Shapefile
       include Abstract::Geoserver

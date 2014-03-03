@@ -7,7 +7,7 @@ require_relative 'abstract/solr'
 
 module Geoloader
   module Loaders
-    class ShapefileSolr < Abstract::Base
+    class ShapefileSolr < Abstract::Loader
 
       include Abstract::Shapefile
       include Abstract::Solr
