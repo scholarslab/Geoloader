@@ -5,7 +5,7 @@ require "fileutils"
 
 module Geoloader
   module Assets
-    class Base
+    class Asset
 
       attr_reader :file_path, :file_base, :workspace, :slug
 

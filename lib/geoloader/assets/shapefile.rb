@@ -5,7 +5,7 @@ require "zip"
 
 module Geoloader
   module Assets
-    class Shapefile < Base
+    class Shapefile < Asset
 
       #
       # Zip up the Shapefile and its companion files.
