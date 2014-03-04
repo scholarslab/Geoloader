@@ -7,6 +7,7 @@ require "nokogiri"
 
 module Geoloader
   module Services
+
     class Geoserver
 
       attr_reader :resource
@@ -100,5 +101,6 @@ module Geoloader
       end
 
     end
+
   end
 end

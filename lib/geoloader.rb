@@ -53,6 +53,11 @@ module Geoloader
 
 end
 
+# Services:
+require 'geoloader/services/solr'
+require 'geoloader/services/geoserver'
+require 'geoloader/services/geonetwork'
+
 # Loaders:
 require 'geoloader/loaders/loader'
 require 'geoloader/loaders/geonetwork'

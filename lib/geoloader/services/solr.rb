@@ -5,6 +5,7 @@ require "rsolr-ext"
 
 module Geoloader
   module Services
+
     class Solr
 
       attr_reader :resource
@@ -58,5 +59,6 @@ module Geoloader
       end
 
     end
+
   end
 end
