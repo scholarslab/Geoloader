@@ -8,7 +8,7 @@ require "nokogiri"
 module Geoloader
   module Assets
 
-    class Manifest
+    class Description
 
       attr_reader :title, :abstract
 
@@ -17,7 +17,7 @@ module Geoloader
       #
       # @param [String] file_path
       #
-      def initialize(file_path = nil)
+      def initialize(file_path)
 
         @file_path = file_path
 

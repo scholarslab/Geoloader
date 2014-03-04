@@ -18,7 +18,7 @@ module Geoloader
         super
 
         # Create and configure the asset.
-        @asset = Geoloader::Assets::Asset.new(@file_path, @workspace)
+        @asset = Geoloader::Assets::Asset.new(@file_path, @workspace, @desc_path)
         @asset.extend(Geoloader::Assets::Geonetwork)
 
         # Connect to Geonetwork, create the group.

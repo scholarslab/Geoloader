@@ -11,15 +11,17 @@ module Geoloader
       attr_reader :file_path, :file_base, :workspace, :slug
 
       #
-      # Set the basename and workspace-prefixed slug.
+      # Set the basename and workspace-prefixed slug, parse the description.
       #
       # @param [String] file_path
       # @param [String] workspace
+      # @param [String] desc_path
       #
-      def initialize(file_path, workspace)
+      def initialize(file_path, workspace, desc_path)
 
         @file_path = file_path
         @workspace = workspace
+        @desc_path = desc_path
 
         # File name, with and without extension.
         @file_base = File.basename(@file_path, ".*")

@@ -12,8 +12,9 @@ module Geoloader
       include Tasks
 
       desc "load [FILES]", "Load Solr documents"
-      option :queue,      :aliases => "-q", :type => :boolean, :default => false
-      option :workspace,  :aliases => "-w", :type => :string
+      option :queue,        :aliases => "-q", :type => :boolean, :default => false
+      option :description,  :aliases => "-d", :type => :string
+      option :workspace,    :aliases => "-w", :type => :string
       def load(*files)
 
         # Get the active workspace.
@@ -22,9 +23,13 @@ module Geoloader
         files.each { |file_path|
           case File.extname(file_path)
           when ".tif" # GEOTIFF
-            load_geotiff_solr(file_path, workspace, options[:queue])
+            load_geotiff_solr(
+              file_path, workspace, options[:description], options[:queue]
+            )
           when ".shp" # SHAPEFILE
-            load_shapefile_solr(file_path, workspace, options[:queue])
+            load_shapefile_solr(
+              file_path, workspace, options[:description], options[:queue]
+            )
           end
         }
 
