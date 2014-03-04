@@ -53,12 +53,20 @@ module Geoloader
 
 end
 
+# Loaders:
 require 'geoloader/loaders/loader'
 require 'geoloader/loaders/geonetwork'
 require 'geoloader/loaders/geotiff_geoserver'
 require 'geoloader/loaders/geotiff_solr'
 require 'geoloader/loaders/shapefile_geoserver'
 require 'geoloader/loaders/shapefile_solr'
+
+# CLI:
+require 'geoloader/cli/tasks'
+require 'geoloader/cli/solr'
+require 'geoloader/cli/geoserver'
+require 'geoloader/cli/geonetwork'
+require 'geoloader/cli/app'
 
 # Load assets.
 require_dir("geoloader")
