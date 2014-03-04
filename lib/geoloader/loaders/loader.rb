@@ -13,7 +13,7 @@ module Geoloader
       # @param [String] workspace
       # @param [String] desc_path
       #
-      def self.perform(file_path, workspace, desc_path)
+      def self.perform(file_path, workspace, desc_path = nil)
         new(file_path, workspace, desc_path).load
         puts "Loaded #{File.basename(file_path)}."
       end

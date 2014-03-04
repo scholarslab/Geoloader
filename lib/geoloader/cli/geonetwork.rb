@@ -13,7 +13,6 @@ module Geoloader
 
       desc "load [FILES]", "Load Geonetwork metadata records"
       option :queue,        :aliases => "-q", :type => :boolean, :default => false
-      option :description,  :aliases => "-d", :type => :string
       option :workspace,    :aliases => "-w", :type => :string
       def load(*files)
 
@@ -21,9 +20,7 @@ module Geoloader
         workspace = resolve_workspace(options[:workspace])
 
         files.each { |file_path|
-          load_geonetwork(
-            file_path, workspace, options[:description], options[:queue]
-          )
+          load_geonetwork(file_path, workspace, options[:queue])
         }
 
       end

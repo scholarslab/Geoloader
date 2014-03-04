@@ -27,6 +27,9 @@ module Geoloader
         @file_base = File.basename(@file_path, ".*")
         @file_name = File.basename(@file_path)
 
+        # Parse the description markdown.
+        @description = Description.new(desc_path)
+
         # Set a workspace-prefixed slug.
         @slug = "#{@workspace}_#{@file_base}"
 

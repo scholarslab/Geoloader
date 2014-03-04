@@ -15,17 +15,17 @@ module Geoloader
       #
       # Parse the markdown and extract the header.
       #
-      # @param [String] file_path
+      # @param [String] desc_path
       #
-      def initialize(file_path)
+      def initialize(desc_path)
 
-        @file_path = file_path
+        @desc_path = desc_path
 
-        if @file_path
+        if @desc_path
 
           # Parse the markdown.
           markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-          document = Nokogiri::HTML::fragment(markdown.render(File.read(@file_path)))
+          document = Nokogiri::HTML::fragment(markdown.render(File.read(@desc_path)))
 
           # Set the title.
           header = document.at_css('h1')

@@ -13,7 +13,6 @@ module Geoloader
 
       desc "load [FILES]", "Load Geoserver stores and layers"
       option :queue,        :aliases => "-q", :type => :boolean, :default => false
-      option :description,  :aliases => "-d", :type => :string
       option :workspace,    :aliases => "-w", :type => :string
       def load(*files)
 
@@ -23,13 +22,9 @@ module Geoloader
         files.each { |file_path|
           case File.extname(file_path)
           when ".tif" # GEOTIFF
-            load_geotiff_geoserver(
-              file_path,workspace, options[:description], options[:queue]
-            )
+            load_geotiff_geoserver(file_path, workspace, options[:queue])
           when ".shp" # SHAPEFILE
-            load_shapefile_geoserver(
-              file_path, workspace, options[:description], options[:queue]
-            )
+            load_shapefile_geoserver(file_path, workspace, options[:queue])
           end
         }
 
