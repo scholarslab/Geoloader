@@ -26,7 +26,7 @@ describe Geoloader::Loaders::GeotiffSolr do
 
   it "should add a Solr document" do
 
-    response = loader.solr.resource.find({ :queries => "LayerId:#{loader.geotiff.slug}" })
+    response = loader.solr.resource.find({ :queries => "LayerId:#{loader.geotiff.uuid}" })
     response.total.must_equal 1
 
     # Should point to the correct workspace.

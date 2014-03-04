@@ -8,24 +8,24 @@ require "nokogiri"
 module Geoloader
   module Assets
 
-    class Description
+    class Metadata
 
       attr_reader :title, :abstract
 
       #
       # Parse the markdown and extract the header.
       #
-      # @param [String] desc_path
+      # @param [String] file_path
       #
-      def initialize(desc_path)
+      def initialize(file_path)
 
-        if desc_path
+        if file_path
 
-          @desc_path = File.expand_path(desc_path)
+          @file_path = File.expand_path(file_path)
 
           # Parse the markdown.
           markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-          document = Nokogiri::HTML::fragment(markdown.render(File.read(@desc_path)))
+          document = Nokogiri::HTML::fragment(markdown.render(File.read(@file_path)))
 
           # Set the title.
           header = document.at_css('h1')

@@ -25,10 +25,10 @@ module Geoloader
       #
       # @param [String] file_path
       # @param [String] workspace
-      # @param [String] desc_path
+      # @param [String] metadata_path
       #
-      def self.perform(file_path, workspace, desc_path = nil)
-        new(file_path, workspace, desc_path).load
+      def self.perform(file_path, workspace, metadata_path = nil)
+        new(file_path, workspace, metadata_path).load
         puts "Loaded #{File.basename(file_path)}."
       end
 
@@ -37,12 +37,12 @@ module Geoloader
       #
       # @param [String] file_path
       # @param [String] workspace
-      # @param [String] desc_path
+      # @param [String] metadata_path
       #
-      def initialize(file_path, workspace, desc_path = nil)
+      def initialize(file_path, workspace, metadata_path = nil)
 
         @file_path = file_path
-        @desc_path = desc_path
+        @metadata_path = metadata_path
         
         # If no workspace is provided, revert to the default.
         @workspace = (workspace or Geoloader.config.workspaces.production)

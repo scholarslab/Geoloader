@@ -8,16 +8,16 @@ module Geoloader
 
     class Asset
 
-      attr_reader :file_path, :file_base, :workspace, :slug
+      attr_reader :file_path, :file_base, :workspace, :uuid
 
       #
-      # Set the basename and workspace-prefixed slug, parse the description.
+      # Set the basename and workspace-prefixed uuid, parse the description.
       #
       # @param [String] file_path
       # @param [String] workspace
-      # @param [String] desc_path
+      # @param [String] metadata_path
       #
-      def initialize(file_path, workspace, desc_path)
+      def initialize(file_path, workspace, metadata_path)
 
         @file_path = File.expand_path(file_path)
         @workspace = workspace
@@ -26,11 +26,11 @@ module Geoloader
         @file_base = File.basename(@file_path, ".*")
         @file_name = File.basename(@file_path)
 
-        # Parse the description markdown.
-        @description = Description.new(desc_path)
+        # Parse the markdown metadata.
+        @metadata = Metadata.new(metadata_path)
 
-        # Set a workspace-prefixed slug.
-        @slug = "#{@workspace}_#{@file_base}"
+        # Set a workspace-prefixed uuid.
+        @uuid = "#{@workspace}_#{@file_base}"
 
       end
 

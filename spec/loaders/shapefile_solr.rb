@@ -26,7 +26,7 @@ describe Geoloader::Loaders::ShapefileSolr do
 
   it "should add a Solr document" do
 
-    response = loader.solr.resource.find({ :queries => "LayerId:#{loader.shapefile.slug}" })
+    response = loader.solr.resource.find({ :queries => "LayerId:#{loader.shapefile.uuid}" })
     response.total.must_equal 1
 
     # Should point to the correct workspace.
