@@ -12,20 +12,17 @@ module Geoloader
       include Tasks
 
       desc "load [FILES]", "Load Geoserver stores and layers"
-      option :queue,      :aliases => "-q", :type => :boolean, :default => false
-      option :workspace,  :aliases => "-w", :type => :string
+      option :queue,        :aliases => "-q", :type => :boolean, :default => false
+      option :description,  :aliases => "-d", :type => :string
+      option :workspace,    :aliases => "-w", :type => :string
       def load(*files)
 
         files.each { |file_path|
           case File.extname(file_path)
           when ".tif" # GEOTIFF
-            Geoloader::Loaders::GeotiffGeoserver.load_or_enqueue(
-              file_path, options[:workspace], options[:queue]
-            )
+            Geoloader::Loaders::GeotiffGeoserver.load_or_enqueue(file_path, options)
           when ".shp" # SHAPEFILE
-            Geoloader::Loaders::ShapefileGeoserver.load_or_enqueue(
-              file_path, options[:workspace], options[:queue]
-            )
+            Geoloader::Loaders::ShapefileGeoserver.load_or_enqueue(file_path, options)
           end
         }
 

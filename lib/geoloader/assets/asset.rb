@@ -19,15 +19,12 @@ module Geoloader
       #
       def initialize(file_path, workspace, desc_path)
 
-        @file_path = file_path
-        @desc_path = desc_path
+        @file_path = File.expand_path(file_path)
+        @workspace = workspace
 
         # File name, with and without extension.
         @file_base = File.basename(@file_path, ".*")
         @file_name = File.basename(@file_path)
-
-        # If no workspace is provided, revert to the default.
-        @workspace = (workspace or Geoloader.config.workspaces.production)
 
         # Parse the description markdown.
         @description = Description.new(desc_path)

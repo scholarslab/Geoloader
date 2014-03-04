@@ -45,7 +45,7 @@ module Geoloader
       # @param [Hash] params
       #
       def xslt_params(params)
-        params.map { |k, v| "#{k}=#{v}" }.join(" ")
+        params.map { |k, v| "#{k}='#{v}'" }.join(" ")
       end
 
     end

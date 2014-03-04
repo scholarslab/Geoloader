@@ -10,14 +10,13 @@ module Geoloader
       # Perform or enqueue an upload.
       #
       # @param [String] file_path
-      # @param [String] workspace
-      # @param [Boolean] queue
+      # @param [Hash] options
       #
-      def self.load_or_enqueue(file_path, workspace, queue = false)
-        if queue
-          Resque.enqueue(self, file_path, workspace)
+      def self.load_or_enqueue(file_path, options)
+        if options[:queue]
+          Resque.enqueue(self, file_path, options[:workspace], options[:description])
         else
-          self.perform(file_path, workspace)
+          self.perform(file_path, options[:workspace], options[:description])
         end
       end
 
@@ -41,9 +40,13 @@ module Geoloader
       # @param [String] desc_path
       #
       def initialize(file_path, workspace, desc_path = nil)
+
         @file_path = file_path
-        @workspace = workspace
         @desc_path = desc_path
+        
+        # If no workspace is provided, revert to the default.
+        @workspace = (workspace or Geoloader.config.workspaces.production)
+
       end
 
     end

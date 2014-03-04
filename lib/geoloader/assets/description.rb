@@ -19,9 +19,9 @@ module Geoloader
       #
       def initialize(desc_path)
 
-        @desc_path = desc_path
+        if desc_path
 
-        if @desc_path
+          @desc_path = File.expand_path(desc_path)
 
           # Parse the markdown.
           markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
