@@ -108,6 +108,15 @@ module Geoloader
         Geoloader::Services::Solr.new.delete_by_workspace(workspace)
       end
 
+      #
+      # Use the passed workspace or revert to the global default.
+      #
+      # @param [String] workspace
+      #
+      def resolve_workspace(workspace)
+        (workspace or Geoloader.config.workspaces.production)
+      end
+
     end
 
 
@@ -120,8 +129,8 @@ module Geoloader
       option :workspace,  :aliases => "-w", :type => :string
       def load(*files)
 
-        # If no workspace passed, use the default.
-        workspace = (options[:workspace] or Geoloader.config.workspaces.production)
+        # Get the active workspace.
+        workspace = resolve_workspace(options[:workspace])
 
         files.each { |file_path|
           case File.extname(file_path)
@@ -151,8 +160,8 @@ module Geoloader
       option :workspace,  :aliases => "-w", :type => :string
       def load(*files)
 
-        # If no workspace passed, use the default.
-        workspace = (options[:workspace] or Geoloader.config.workspaces.production)
+        # Get the active workspace.
+        workspace = resolve_workspace(options[:workspace])
 
         files.each { |file_path|
           case File.extname(file_path)
@@ -182,8 +191,8 @@ module Geoloader
       option :workspace,  :aliases => "-w", :type => :string
       def load(*files)
 
-        # If no workspace passed, use the default.
-        workspace = (options[:workspace] or Geoloader.config.workspaces.production)
+        # Get the active workspace.
+        workspace = resolve_workspace(options[:workspace])
 
         files.each { |file_path|
           load_geonetwork(file_path, workspace, options[:queue])
