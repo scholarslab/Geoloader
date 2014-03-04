@@ -53,8 +53,7 @@
                             <gmd:address>
                                 <gmd:CI_Address>
                                     <gmd:deliveryPoint>
-                                        <gco:CharacterString>Alderman Library, PO Box
-                                            400113</gco:CharacterString>
+                                        <gco:CharacterString>Alderman Library, PO Box 400113</gco:CharacterString>
                                     </gmd:deliveryPoint>
                                     <gmd:city>
                                         <gco:CharacterString>Charlottesville</gco:CharacterString>
@@ -85,7 +84,6 @@
 
             <gmd:dateStamp>
                 <gco:DateTime xmlns:srv="http://www.isotc211.org/2005/srv">
-                    <!-- may need to calculate this from the Esri/CreaDate and Esri/CreaTime -->
                     <xsl:value-of select="current-dateTime()"/>
                 </gco:DateTime>
             </gmd:dateStamp>
@@ -162,8 +160,7 @@
                         <gmd:CI_ResponsibleParty>
 
                             <gmd:organisationName>
-                                <gco:CharacterString>Scholars' Lab, Alderman Library, University of
-                                    Virginia Library</gco:CharacterString>
+                                <gco:CharacterString>Scholars' Lab, Alderman Library, University of Virginia Library</gco:CharacterString>
                             </gmd:organisationName>
 
                             <gmd:contactInfo>
@@ -178,8 +175,7 @@
                                     <gmd:address>
                                         <gmd:CI_Address>
                                             <gmd:deliveryPoint>
-                                                <gco:CharacterString>Alderman Library, PO Box
-                                                  400113</gco:CharacterString>
+                                                <gco:CharacterString>Alderman Library, PO Box 400113</gco:CharacterString>
                                             </gmd:deliveryPoint>
                                             <gmd:city>
                                                 <gco:CharacterString>Charlottesville</gco:CharacterString>
