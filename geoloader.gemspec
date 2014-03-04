@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["David McClure"]
-  s.date = "2014-02-26"
+  s.date = "2014-03-04"
   s.email = "david.mcclure@virginia.edu"
   s.executables = ["geoloader"]
   s.extra_rdoc_files = [
@@ -29,21 +29,13 @@ Gem::Specification.new do |s|
     "config.yaml",
     "geoloader.gemspec",
     "lib/geoloader.rb",
-    "lib/geoloader/abstract/asset.rb",
-    "lib/geoloader/abstract/loaders.rb",
-    "lib/geoloader/abstract/tasks.rb",
-    "lib/geoloader/assets/geotiff.rb",
-    "lib/geoloader/assets/shapefile.rb",
+    "lib/geoloader/assets.rb",
     "lib/geoloader/cli.rb",
-    "lib/geoloader/loaders/geonetwork.rb",
-    "lib/geoloader/loaders/geotiff_geoserver.rb",
-    "lib/geoloader/loaders/geotiff_solr.rb",
-    "lib/geoloader/loaders/shapefile_geoserver.rb",
-    "lib/geoloader/loaders/shapefile_solr.rb",
-    "lib/geoloader/services/geonetwork.rb",
-    "lib/geoloader/services/geoserver.rb",
-    "lib/geoloader/services/solr.rb",
-    "lib/geoloader/stylesheets/iso19139.xsl",
+    "lib/geoloader/geonetwork.rb",
+    "lib/geoloader/geoserver.rb",
+    "lib/geoloader/iso19139.xsl",
+    "lib/geoloader/loaders.rb",
+    "lib/geoloader/solr.rb",
     "spec/fixtures/geotiff.tfw",
     "spec/fixtures/geotiff.tif",
     "spec/fixtures/geotiff.tif.aux.xml",

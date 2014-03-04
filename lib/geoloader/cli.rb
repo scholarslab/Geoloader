@@ -78,7 +78,7 @@ module Geoloader
       # @param [Boolean] queue
       #
       def load_geonetwork(file_path, workspace, queue)
-        load_or_enqueue(Geoloader::GeonetworkLoader, file_path, workspace, queue)
+        load_or_enqueue(Geoloader::Loaders::Geonetwork, file_path, workspace, queue)
       end
 
       #

@@ -98,7 +98,7 @@ module Geoloader
       def create_record(asset, style_sheet = "_none_", category = "_none_")
         post("metadata.insert", self.class.xml_doc.request { |r|
           r.group get_group_id(asset.workspace)
-          r.data { |d| d.cdata! asset.get_iso19139_xml }
+          r.data { |d| d.cdata! asset.iso19139_xml }
           r.category category
           r.styleSheet style_sheet
         })
@@ -111,7 +111,7 @@ module Geoloader
       #
       def get_record(asset)
         post("xml.metadata.get", self.class.xml_doc.request { |r|
-          r.uuid asset.get_esri_uuid
+          r.uuid asset.esri_uuid
         })
       end
 
@@ -133,7 +133,7 @@ module Geoloader
       #
       def delete_record(asset)
         post("metadata.delete", self.class.xml_doc.request { |r|
-          r.uuid asset.get_esri_uuid
+          r.uuid asset.esri_uuid
         })
       end
 

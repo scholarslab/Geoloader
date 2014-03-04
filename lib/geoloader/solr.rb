@@ -22,7 +22,7 @@ module Geoloader
       # @param [Geoloader::Asset] asset
       #
       def create_document(asset)
-        @resource.add(asset.get_solr_document)
+        @resource.add(asset.solr_document)
         @resource.commit
       end
 
@@ -34,7 +34,7 @@ module Geoloader
         workspaces = []
 
         # Select all documents, 0 rows, faceting on workspace.
-        query = { :queries => "*:*", :facets => {:fields => "WorkspaceName"}, :rows => 0 }
+        query = { :queries => "*:*", :facets => { :fields => "WorkspaceName" }, :rows => 0 }
 
         # Flatted out the counts.
         @resource.find(query).facets.each do |facet|

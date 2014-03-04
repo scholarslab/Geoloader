@@ -12,8 +12,8 @@
 
     <xsl:param name="title"/>
     <xsl:param name="abstract"/>
-    <xsl:param name="wmsAddress"/>
-    <xsl:param name="wmsLayers"/>
+    <xsl:param name="wms_address"/>
+    <xsl:param name="wms_layers"/>
 
     <xsl:template match="/">
         <gmd:MD_Metadata>
@@ -394,7 +394,7 @@
                                 <gmd:CI_OnlineResource>
                                     <gmd:linkage>
                                         <gmd:URL>
-                                            <xsl:value-of select="$wmsAddress"/>
+                                            <xsl:value-of select="$wms_address"/>
                                         </gmd:URL>
                                     </gmd:linkage>
                                     <gmd:protocol>
@@ -402,7 +402,7 @@
                                     </gmd:protocol>
                                     <gmd:name>
                                         <gco:CharacterString>
-                                            <xsl:value-of select="$wmsLayers"/>
+                                            <xsl:value-of select="$wms_layers"/>
                                         </gco:CharacterString>
                                     </gmd:name>
                                     <gmd:description>

@@ -119,7 +119,7 @@ module Geoloader
       #
       # Get metadata for Solr document.
       #
-      def get_solr_document
+      def solr_document
         {
           :LayerId => @slug,
           :WorkspaceName => @workspace,
@@ -135,29 +135,39 @@ module Geoloader
       #
       # Read the raw ESRI XML.
       #
-      # @return [String]
-      #
-      def get_esri_xml
+      def esri_xml
         File.read("#{@file_path}.xml")
       end
 
       #
       # Get the ESRI uuid.
       #
-      # @return [String]
-      #
-      def get_esri_uuid
-        Nokogiri::XML(get_esri_xml).at_xpath("//thesaName/@uuidref").value
+      def esri_uuid
+        Nokogiri::XML(esri_xml).at_xpath("//thesaName/@uuidref").value
       end
 
       #
       # Convert the ESRI XML into a iso19139 record.
       #
-      # @return [String]
-      #
-      def get_iso19139_xml
+      def iso19139_xml
+
+        params = xslt_params({
+          :wms_address => "#{Geoloader.config.geoserver.url}/wms",
+          :wms_layers => "#{@workspace}:#{@file_base}"
+        })
+
         xslt_path = "#{Geoloader.gem_dir}/lib/geoloader/iso19139.xsl"
         `saxon #{@file_path}.xml #{xslt_path}`
+
+      end
+
+      #
+      # Convert a hash to a Saxon XSLT parameter string.
+      #
+      # @param [Hash] params
+      #
+      def xslt_params(params)
+        params.map { |k, v| "#{k}=#{v}" }.join(" ")
       end
 
     end

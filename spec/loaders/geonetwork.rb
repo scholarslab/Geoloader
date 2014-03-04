@@ -17,7 +17,7 @@ describe Geoloader::Loaders::Geonetwork do
   }
 
   let(:uuid) {
-    loader.asset.get_esri_uuid
+    loader.asset.esri_uuid
   }
 
   before do
