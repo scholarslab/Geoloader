@@ -25,7 +25,7 @@ module Geoloader
       # @param [String] workspace
       # @param [String] desc_path
       #
-      def initialize(file_path, workspace, desc_path)
+      def initialize(file_path, workspace, desc_path = nil)
         @file_path = file_path
         @workspace = workspace
         @desc_path = desc_path
