@@ -53,6 +53,9 @@ module Geoloader
 
 end
 
+# Assets:
+require_dir("geoloader/assets")
+
 # Services:
 require_dir("geoloader/services")
 
@@ -70,9 +73,6 @@ require "geoloader/cli/solr"
 require "geoloader/cli/geoserver"
 require "geoloader/cli/geonetwork"
 require "geoloader/cli/app"
-
-# Load assets.
-require_dir("geoloader")
 
 # Apply default configuration.
 Geoloader.configure_from_yaml("#{Geoloader.gem_dir}/config.yaml")
