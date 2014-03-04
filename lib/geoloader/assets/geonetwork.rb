@@ -29,8 +29,9 @@ module Geoloader
       def iso19139_xml
 
         params = xslt_params({
-          :abstract     => @description.abstract,
+          :identifier   => @slug,
           :title        => @description.title,
+          :abstract     => @description.abstract,
           :wms_address  => "#{Geoloader.config.geoserver.url}/wms",
           :wms_layers   => "#{@workspace}:#{@file_base}"
         })

@@ -13,6 +13,7 @@
     <xsl:output method="xml" indent="yes"/>
 
     <xsl:param name="title"/>
+    <xsl:param name="identifier"/>
     <xsl:param name="abstract"/>
     <xsl:param name="wms_address"/>
     <xsl:param name="wms_layers"/>
@@ -22,7 +23,7 @@
 
             <gmd:fileIdentifier>
                 <gco:CharacterString>
-                    <xsl:value-of select="/metadata/dataIdInfo/descKeys/thesaName/@uuidref"/>
+                    <xsl:value-of select="$identifier"/>
                 </gco:CharacterString>
             </gmd:fileIdentifier>
 
