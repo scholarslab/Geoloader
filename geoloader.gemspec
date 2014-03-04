@@ -35,27 +35,7 @@ Gem::Specification.new do |s|
     "lib/geoloader/geoserver.rb",
     "lib/geoloader/iso19139.xsl",
     "lib/geoloader/loaders.rb",
-    "lib/geoloader/solr.rb",
-    "spec/fixtures/geotiff.tfw",
-    "spec/fixtures/geotiff.tif",
-    "spec/fixtures/geotiff.tif.aux.xml",
-    "spec/fixtures/geotiff.tif.ovr",
-    "spec/fixtures/geotiff.tif.vat.dbf",
-    "spec/fixtures/geotiff.tif.xml",
-    "spec/fixtures/shapefile.dbf",
-    "spec/fixtures/shapefile.prj",
-    "spec/fixtures/shapefile.sbn",
-    "spec/fixtures/shapefile.sbx",
-    "spec/fixtures/shapefile.shp",
-    "spec/fixtures/shapefile.shp.xml",
-    "spec/fixtures/shapefile.shx",
-    "spec/helpers/fixture.rb",
-    "spec/loaders/geonetwork.rb",
-    "spec/loaders/geotiff_geoserver.rb",
-    "spec/loaders/geotiff_solr.rb",
-    "spec/loaders/shapefile_geoserver.rb",
-    "spec/loaders/shapefile_solr.rb",
-    "spec/spec_helper.rb"
+    "lib/geoloader/solr.rb"
   ]
   s.homepage = "https://github.com/scholarslab/Geoloader"
   s.licenses = ["Apache-2.0"]

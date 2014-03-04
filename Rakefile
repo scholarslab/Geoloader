@@ -7,11 +7,16 @@ require "jeweler"
 task :default => [:install, :test]
 
 Jeweler::Tasks.new do |gem|
+
   gem.name      = "geoloader"
   gem.author    = "David McClure"
   gem.homepage  = "https://github.com/scholarslab/Geoloader"
   gem.email     = "david.mcclure@virginia.edu"
   gem.license   = "Apache-2.0"
+
+  # Don't ship the tests.
+  gem.files.exclude "spec/**/*"
+
 end
 
 Rake::TestTask.new do |t|
