@@ -7,6 +7,21 @@ module Geoloader
     class Loader
 
       #
+      # Perform or enqueue an upload.
+      #
+      # @param [String] file_path
+      # @param [String] workspace
+      # @param [Boolean] queue
+      #
+      def self.load_or_enqueue(file_path, workspace, queue = false)
+        if queue
+          Resque.enqueue(self, file_path, workspace)
+        else
+          self.perform(file_path, workspace)
+        end
+      end
+
+      #
       # Perform an upload (used by Resque).
       #
       # @param [String] file_path

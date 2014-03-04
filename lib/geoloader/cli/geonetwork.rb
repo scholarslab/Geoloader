@@ -12,15 +12,14 @@ module Geoloader
       include Tasks
 
       desc "load [FILES]", "Load Geonetwork metadata records"
-      option :queue,        :aliases => "-q", :type => :boolean, :default => false
-      option :workspace,    :aliases => "-w", :type => :string
+      option :queue,      :aliases => "-q", :type => :boolean, :default => false
+      option :workspace,  :aliases => "-w", :type => :string
       def load(*files)
 
-        # Get the active workspace.
-        workspace = resolve_workspace(options[:workspace])
-
         files.each { |file_path|
-          load_geonetwork(file_path, workspace, options[:queue])
+          Geoloader::Loaders::Geonetwork.load_or_enqueue(
+            file_path, options[:workspace], options[:queue]
+          )
         }
 
       end
