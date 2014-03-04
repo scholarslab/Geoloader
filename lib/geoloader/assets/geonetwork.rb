@@ -10,10 +10,11 @@ module Geoloader
     module Geonetwork
 
       #
-      # Read the raw ESRI XML.
+      # Set the WMS address and layers.
       #
-      def esri_xml
-        File.read("#{@file_path}.xml")
+      def extended
+        @wms_address  = "#{Geoloader.config.geoserver.url}/wms"
+        @wms_layers   = "#{@workspace}:#{@file_base}"
       end
 
       #
@@ -21,6 +22,13 @@ module Geoloader
       #
       def esri_uuid
         Nokogiri::XML(esri_xml).at_xpath("//thesaName/@uuidref").value
+      end
+
+      #
+      # Read the raw ESRI XML.
+      #
+      def esri_xml
+        File.open("#{@file_path}.xml")
       end
 
       #
@@ -32,8 +40,8 @@ module Geoloader
           :identifier   => @uuid,
           :title        => @metadata.title,
           :abstract     => @matadata.abstract,
-          :wms_address  => "#{Geoloader.config.geoserver.url}/wms",
-          :wms_layers   => "#{@workspace}:#{@file_base}"
+          :wms_address  => @wms_address,
+          :wms_layers   => @wms_layers
         })
 
         `saxon #{@file_path}.xml #{Geoloader.gem_dir}/iso19139.xsl #{params}`
@@ -46,7 +54,7 @@ module Geoloader
       # @param [Hash] params
       #
       def xslt_params(params)
-        params.map { |k, v| "#{k}='#{v}'" }.join(" ")
+        params.map { |k, v| "#{k}='#{v.inspect}'" }.join(" ")
       end
 
     end

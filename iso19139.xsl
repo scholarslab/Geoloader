@@ -85,12 +85,6 @@
                 </gmd:CI_ResponsibleParty>
             </gmd:contact>
 
-            <gmd:dateStamp>
-                <gco:DateTime xmlns:srv="http://www.isotc211.org/2005/srv">
-                    <xsl:value-of select="current-dateTime()"/>
-                </gco:DateTime>
-            </gmd:dateStamp>
-
             <gmd:metadataStandardName>
                 <gco:CharacterString xmlns:srv="http://www.isotc211.org/2005/srv">ISO
                     19115:2003/19139</gco:CharacterString>
