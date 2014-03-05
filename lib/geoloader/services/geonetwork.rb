@@ -112,7 +112,7 @@ module Geoloader
       #
       def get_record(asset)
         post("xml.metadata.get", self.class.xml_doc.request { |r|
-          r.uuid asset.esri_uuid
+          r.uuid asset.uuid
         })
       end
 
@@ -134,7 +134,7 @@ module Geoloader
       #
       def delete_record(asset)
         post("metadata.delete", self.class.xml_doc.request { |r|
-          r.uuid asset.esri_uuid
+          r.uuid asset.uuid
         })
       end
 

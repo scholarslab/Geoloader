@@ -139,7 +139,7 @@
 
                     <gmd:abstract>
                         <gco:CharacterString>
-                            <xsl:value-of select="$abstract"/>
+                            <xsl:value-of select="$abstract" disable-output-escaping="yes"/>
                         </gco:CharacterString>
                     </gmd:abstract>
 

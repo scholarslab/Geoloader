@@ -2,7 +2,7 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 require "fileutils"
-require "zip"
+require "cgi"
 
 module Geoloader
   module Assets
@@ -24,20 +24,6 @@ module Geoloader
       end
 
       #
-      # Get the ESRI uuid.
-      #
-      def esri_uuid
-        Nokogiri::XML(esri_xml).at_xpath("//thesaName/@uuidref").value
-      end
-
-      #
-      # Read the raw ESRI XML.
-      #
-      def esri_xml
-        File.open("#{@file_path}.xml")
-      end
-
-      #
       # Convert the ESRI XML into a iso19139 record.
       #
       def iso19139_xml
@@ -45,8 +31,8 @@ module Geoloader
           :identifier   => @uuid,
           :title        => @description.title.to_s,
           :abstract     => @description.abstract.to_s,
-          :wms_address  => @wms_address,
-          :wms_layers   => @wms_layers
+          :wms_address  => wms_address,
+          :wms_layers   => wms_layers
         )}`
       end
 
@@ -56,7 +42,7 @@ module Geoloader
       # @param [Hash] params
       #
       def xslt_params(params)
-        params.map { |k, v| "#{k}='#{v.inspect}'" }.join(" ")
+        params.map { |k, v| "#{k}='#{CGI::escapeHTML(v)}'" }.join(" ")
       end
 
     end
