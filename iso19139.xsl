@@ -282,7 +282,7 @@
                                     <gmd:code>
                                         <gco:CharacterString>
                                             <xsl:value-of
-                                                select="/metadata/refSysInfo/RefSystem/refSysID/identCode[@code]"
+                                                select="/metadata/refSysInfo/RefSystem/refSysID/identCode/@code"
                                             />
                                         </gco:CharacterString>
                                     </gmd:code>
