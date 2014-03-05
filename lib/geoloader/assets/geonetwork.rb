@@ -10,14 +10,6 @@ module Geoloader
     module Geonetwork
 
       #
-      # Set the WMS address and layers.
-      #
-      def extended
-        @wms_address  = "#{Geoloader.config.geoserver.url}/wms"
-        @wms_layers   = "#{@workspace}:#{@file_base}"
-      end
-
-      #
       # Get the ESRI uuid.
       #
       def esri_uuid
@@ -36,14 +28,19 @@ module Geoloader
       #
       def iso19139_xml
 
+        # Get the WMS connection parameters.
+        wms_address = "#{Geoloader.config.geoserver.url}/wms"
+        wms_layers  = "#{@workspace}:#{@file_base}"
+
         params = xslt_params({
           :identifier   => @uuid,
-          :title        => @metadata.title,
-          :abstract     => @matadata.abstract,
-          :wms_address  => @wms_address,
-          :wms_layers   => @wms_layers
+          :title        => @description.title.to_s,
+          :abstract     => @description.abstract.to_s,
+          :wms_address  => wms_address,
+          :wms_layers   => wms_layers
         })
 
+        # Generate a iso19139 record.
         `saxon #{@file_path}.xml #{Geoloader.gem_dir}/iso19139.xsl #{params}`
 
       end
@@ -54,7 +51,7 @@ module Geoloader
       # @param [Hash] params
       #
       def xslt_params(params)
-        params.map { |k, v| "#{k}='#{v.inspect}'" }.join(" ")
+        params.map { |k, v| "#{k}='#{v}'" }.join(" ")
       end
 
     end

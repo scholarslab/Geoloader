@@ -12,8 +12,8 @@ module Geoloader
       def solr_document
         {
           :LayerId          => @uuid,
-          :LayerDisplayName => @metadata.title,
-          :Abstract         => @metadata.abstract,
+          :LayerDisplayName => @description.title,
+          :Abstract         => @description.abstract,
           :WorkspaceName    => @workspace,
           :Name             => @file_base
         }

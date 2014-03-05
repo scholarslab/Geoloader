@@ -12,9 +12,9 @@ module Geoloader
       include Tasks
 
       desc "load [FILES]", "Load Solr documents"
-      option :queue,      :aliases => "-q", :type => :boolean, :default => false
-      option :workspace,  :aliases => "-w", :type => :string
-      option :metadata,   :aliases => "-m", :type => :string
+      option :queue,        :aliases => "-q", :type => :boolean, :default => false
+      option :description,  :aliases => "-d", :type => :string
+      option :workspace,    :aliases => "-w", :type => :string
       def load(*files)
 
         files.each { |file_path|

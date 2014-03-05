@@ -8,7 +8,7 @@ require "nokogiri"
 module Geoloader
   module Assets
 
-    class Metadata
+    class Description
 
       attr_reader :title, :abstract
 

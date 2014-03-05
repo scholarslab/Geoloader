@@ -18,7 +18,7 @@ module Geoloader
         super
 
         # Create and configure the asset.
-        @geotiff = Geoloader::Assets::Asset.new(@file_path, @workspace, @metadata_path)
+        @geotiff = Geoloader::Assets::Asset.new(@file_path, @workspace, @desc_path)
         @geotiff.extend(Geoloader::Assets::Geotiff)
 
         # Connect to Geoserver, create the workspace.

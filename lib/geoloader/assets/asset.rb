@@ -15,9 +15,9 @@ module Geoloader
       #
       # @param [String] file_path
       # @param [String] workspace
-      # @param [String] metadata_path
+      # @param [String] desc_path
       #
-      def initialize(file_path, workspace, metadata_path)
+      def initialize(file_path, workspace, desc_path)
 
         @file_path = File.expand_path(file_path)
         @workspace = workspace
@@ -27,7 +27,7 @@ module Geoloader
         @file_name = File.basename(@file_path)
 
         # Parse the markdown metadata.
-        @metadata = Metadata.new(metadata_path)
+        @description = Description.new(desc_path)
 
         # Set a workspace-prefixed uuid.
         @uuid = "#{@workspace}_#{@file_base}"
