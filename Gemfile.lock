@@ -1,63 +1,40 @@
+PATH
+  remote: .
+  specs:
+    geoloader (0.0.1)
+      confstruct (~> 0.2, >= 0.2.5)
+      nokogiri (~> 1.6, >= 1.6.1)
+      redcarpet (~> 3.1, >= 3.1.1)
+      resque (~> 1.25, >= 1.25.1)
+      rest-client (~> 1.6, >= 1.6.7)
+      rsolr-ext (~> 1.0, >= 1.0.3)
+      rubyzip (~> 1.1, >= 1.1.0)
+      thor (~> 0.18, >= 0.18.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.3.5)
     builder (3.2.2)
-    confstruct (0.2.5)
-    descendants_tracker (0.0.3)
-    faraday (0.9.0)
-      multipart-post (>= 1.2, < 3)
-    git (1.2.6)
-    github_api (0.11.2)
-      addressable (~> 2.3)
-      descendants_tracker (~> 0.0.1)
-      faraday (~> 0.8, < 0.10)
-      hashie (>= 1.2)
-      multi_json (>= 1.7.5, < 2.0)
-      nokogiri (~> 1.6.0)
-      oauth2
-    hashie (2.0.5)
-    highline (1.6.20)
-    jeweler (2.0.1)
-      builder
-      bundler (>= 1.0)
-      git (>= 1.2.5)
-      github_api
-      highline (>= 1.6.15)
-      nokogiri (>= 1.5.10)
-      rake
-      rdoc
-    json (1.8.1)
-    jwt (0.1.11)
-      multi_json (>= 1.5)
+    confstruct (0.2.7)
+    diff-lcs (1.2.5)
     mime-types (2.1)
     mini_portile (0.5.2)
     mono_logger (1.1.0)
-    multi_json (1.8.4)
-    multi_xml (0.5.5)
-    multipart-post (2.0.0)
+    multi_json (1.9.0)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
-    oauth2 (0.9.3)
-      faraday (>= 0.8, < 0.10)
-      jwt (~> 0.1.8)
-      multi_json (~> 1.3)
-      multi_xml (~> 0.5)
-      rack (~> 1.2)
     rack (1.5.2)
     rack-protection (1.5.2)
       rack
     rake (10.1.1)
-    rdoc (4.1.1)
-      json (~> 1.4)
-    redcarpet (2.3.0)
+    redcarpet (3.1.1)
     redis (3.0.7)
     redis-namespace (1.4.1)
       redis (~> 3.0.4)
-    resque (1.25.1)
+    resque (1.25.2)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
-      redis-namespace (~> 1.2)
+      redis-namespace (~> 1.3)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
     rest-client (1.6.7)
@@ -66,12 +43,19 @@ GEM
       builder (>= 2.1.2)
     rsolr-ext (1.0.3)
       rsolr (>= 1.0.2)
+    rspec (2.14.1)
+      rspec-core (~> 2.14.0)
+      rspec-expectations (~> 2.14.0)
+      rspec-mocks (~> 2.14.0)
+    rspec-core (2.14.8)
+    rspec-expectations (2.14.5)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.14.6)
     rubyzip (1.1.0)
     sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
-    terminal-table (1.4.5)
     thor (0.18.1)
     tilt (1.4.1)
     vegas (0.1.11)
@@ -81,13 +65,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  confstruct
-  jeweler
-  nokogiri
-  redcarpet
-  resque
-  rest-client
-  rsolr-ext
-  rubyzip
-  terminal-table
-  thor
+  bundler (~> 1.5, >= 1.5.3)
+  geoloader!
+  rake (~> 10.1, >= 10.1.1)
+  rspec (~> 2.14, >= 2.14.1)
