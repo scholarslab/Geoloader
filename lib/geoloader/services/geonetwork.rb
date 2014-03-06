@@ -97,6 +97,7 @@ module Geoloader
       # @param [String] category
       #
       def create_record(asset, style_sheet = "_none_", category = "_none_")
+        delete_record(asset)
         post("metadata.insert", self.class.xml_doc.request { |r|
           r.group get_group_id(asset.workspace)
           r.data { |d| d.cdata! asset.iso19139_xml }
@@ -135,7 +136,7 @@ module Geoloader
       def delete_record(asset)
         post("metadata.delete", self.class.xml_doc.request { |r|
           r.uuid asset.uuid
-        })
+        }) rescue nil # Geonetwork 500's if the record doesn't exist...
       end
 
       #
