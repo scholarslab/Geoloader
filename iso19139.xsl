@@ -391,7 +391,7 @@
                                         </gmd:URL>
                                     </gmd:linkage>
                                     <gmd:protocol>
-                                        <gco:CharacterString>OGC:WMS-1.1.1-http-get-map</gco:CharacterString>
+                                        <gco:CharacterString>WMS-1.1.1-http-get-capabilities</gco:CharacterString>
                                     </gmd:protocol>
                                     <gmd:name>
                                         <gco:CharacterString>
