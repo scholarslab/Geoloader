@@ -5,7 +5,6 @@ require "spec_helper"
 
 describe Geoloader::Loaders::ShapefileSolr do
 
-  include Geoloader::CLI::Tasks
   include FixtureHelpers
 
   let(:workspace) {
@@ -21,7 +20,7 @@ describe Geoloader::Loaders::ShapefileSolr do
   end
 
   after do
-    clear_solr(workspace)
+    Geoloader::Tasks::Solr.clear(workspace)
   end
 
   it "should add a Solr document" do

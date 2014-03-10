@@ -5,7 +5,6 @@ require "spec_helper"
 
 describe Geoloader::Loaders::GeotiffGeoserver do
 
-  include Geoloader::CLI::Tasks
   include FixtureHelpers
 
   let(:workspace) {
@@ -21,7 +20,7 @@ describe Geoloader::Loaders::GeotiffGeoserver do
   end
 
   after do
-    clear_geoserver(workspace)
+    Geoloader::Tasks::Geoserver.clear(workspace)
   end
 
   it "should create a coveragestore on Geoserver" do

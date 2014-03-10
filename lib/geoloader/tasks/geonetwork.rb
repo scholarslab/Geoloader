@@ -11,7 +11,7 @@ module Geoloader
       #
       # @param [String] workspace
       #
-      def clear(workspace)
+      def self.clear(workspace)
         Geoloader::Services::Geonetwork.new.delete_records_by_group(workspace)
       end
 

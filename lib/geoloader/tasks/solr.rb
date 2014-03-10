@@ -11,7 +11,7 @@ module Geoloader
       #
       # @param [String] workspace
       #
-      def clear(workspace)
+      def self.clear(workspace)
         Geoloader::Services::Solr.new.delete_by_workspace(workspace)
       end
 

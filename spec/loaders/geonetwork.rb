@@ -5,7 +5,6 @@ require "spec_helper"
 
 describe Geoloader::Loaders::Geonetwork do
 
-  include Geoloader::CLI::Tasks
   include FixtureHelpers
 
   let(:workspace) {
