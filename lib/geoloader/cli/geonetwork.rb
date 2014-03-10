@@ -24,7 +24,7 @@ module Geoloader
 
       desc "clear [WORKSPACE]", "Clear all records in a group"
       def clear(workspace)
-        clear_geonetwork(workspace) rescue nil
+        Geoloader::Tasks::Geonetwork.clear(workspace) rescue nil
       end
 
     end

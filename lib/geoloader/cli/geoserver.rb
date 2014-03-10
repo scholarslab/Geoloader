@@ -29,7 +29,7 @@ module Geoloader
 
       desc "clear [WORKSPACE]", "Clear all documents in a workspace"
       def clear(workspace)
-        clear_geoserver(workspace) rescue nil
+        Geoloader::Tasks::Geoserver.clear(workspace) rescue nil
       end
 
     end

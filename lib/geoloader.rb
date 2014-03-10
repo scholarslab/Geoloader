@@ -60,6 +60,9 @@ require_dir("geoloader/assets")
 # Services:
 require_dir("geoloader/services")
 
+# Tasks:
+require_dir("geoloader/tasks")
+
 # Loaders:
 require "geoloader/loaders/loader"
 require "geoloader/loaders/geonetwork"
@@ -69,7 +72,6 @@ require "geoloader/loaders/shapefile_geoserver"
 require "geoloader/loaders/shapefile_solr"
 
 # CLI:
-require "geoloader/cli/tasks"
 require "geoloader/cli/solr"
 require "geoloader/cli/geoserver"
 require "geoloader/cli/geonetwork"

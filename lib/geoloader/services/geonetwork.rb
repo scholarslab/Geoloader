@@ -78,6 +78,17 @@ module Geoloader
       end
 
       #
+      # Set all metadata records in a group public.
+      #
+      # @param [String] group
+      #
+      def publish_group(group)
+        post("xml.metadata.batch.update.privileges",  self.class.xml_doc.request { |r|
+          r.tag!("_#{get_group_id(group)}_0")
+        })
+      end
+
+      #
       # Delete group with a given name.
       #
       # @param [String] group
