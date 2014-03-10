@@ -22,6 +22,11 @@ module Geoloader
 
       end
 
+      desc "publish [WORKSPACE]", "Publish all records in a group"
+      def publish(workspace)
+        Geoloader::Tasks::Geonetwork.publish(workspace)
+      end
+
       desc "clear [WORKSPACE]", "Clear all records in a group"
       def clear(workspace)
         Geoloader::Tasks::Geonetwork.clear(workspace) rescue nil

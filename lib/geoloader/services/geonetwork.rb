@@ -83,7 +83,7 @@ module Geoloader
       # @param [String] group
       #
       def publish_group(group)
-        post("xml.metadata.batch.update.privileges",  self.class.xml_doc.request { |r|
+        puts post("xml.metadata.batch.update.privileges", self.class.xml_doc.request { |r|
           r.tag!("_#{get_group_id(group)}_0")
         })
       end

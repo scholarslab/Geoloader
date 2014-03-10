@@ -7,6 +7,15 @@ module Geoloader
     module Geonetwork
 
       #
+      # Publish all records in a Geonetwork group.
+      #
+      # @param [String] workspace
+      #
+      def self.publish(workspace)
+        Geoloader::Services::Geonetwork.new.publish_group(workspace)
+      end
+
+      #
       # Delete all stores from a Geonetwork group.
       #
       # @param [String] workspace
