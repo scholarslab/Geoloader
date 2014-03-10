@@ -78,14 +78,27 @@ module Geoloader
       end
 
       #
+      # TODO|dev
       # Set all metadata records in a group public.
       #
       # @param [String] group
       #
       def publish_group(group)
+        select_records_by_group(group)
         puts post("xml.metadata.batch.update.privileges", self.class.xml_doc.request { |r|
           r.tag!("_#{get_group_id(group)}_0")
         })
+      end
+
+      #
+      # Get a list of the ids of all records in a group.
+      #
+      # @param [String] group
+      #
+      def get_ids_in_group(group)
+        Nokogiri::XML(search_records_by_group(group)).xpath("//metadata//id").map do |m|
+          m.content.to_i
+        end
       end
 
       #
@@ -133,7 +146,21 @@ module Geoloader
       #
       # @param [String] group
       #
-      def get_records_by_group(group)
+      def select_records_by_group(group)
+        post("xml.metadata.select", self.class.xml_doc.request { |r|
+          r.selected "add"
+          get_ids_in_group(group).each do |id|
+            r.id id
+          end
+        })
+      end
+
+      #
+      # Get all records in a given group.
+      #
+      # @param [String] group
+      #
+      def search_records_by_group(group)
         post("xml.search", self.class.xml_doc.request { |r|
           r.group get_group_id(group)
         })
@@ -167,8 +194,8 @@ module Geoloader
       # @param [Integer] group
       #
       def delete_records_by_group(group)
-        Nokogiri::XML(get_records_by_group(group)).xpath("//metadata//id").each do |m|
-          delete_record_by_id(m.content.to_i)
+        get_ids_in_group(group).each do |id|
+          delete_record_by_id(id)
         end
       end
 
