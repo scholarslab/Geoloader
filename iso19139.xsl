@@ -376,6 +376,20 @@
                         </gmd:EX_Extent>
                     </gmd:extent>
 
+                    <!-- TODO -->
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            <gmd:keyword>
+                                <gco:CharacterString>keyword</gco:CharacterString>
+                            </gmd:keyword>
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+
+                    <!-- TODO -->
+                    <gmd:topicCategory>
+                        <gmd:MD_TopicCategoryCode>category</gmd:MD_TopicCategoryCode>
+                    </gmd:topicCategory>
+
                 </gmd:MD_DataIdentification>
             </gmd:identificationInfo>
 
