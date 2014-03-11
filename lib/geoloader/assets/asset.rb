@@ -8,7 +8,7 @@ module Geoloader
 
     class Asset
 
-      attr_reader :file_path, :file_base, :workspace, :uuid
+      attr_reader :file_path, :file_base, :file_name, :workspace, :uuid
 
       #
       # Set the basename and workspace-prefixed uuid, parse the description.

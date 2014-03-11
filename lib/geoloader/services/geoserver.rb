@@ -67,7 +67,7 @@ module Geoloader
       #
       def create_coveragestore(geotiff)
         url = "workspaces/#{geotiff.workspace}/coveragestores/#{geotiff.file_base}/file.geotiff"
-        @resource[url].put(File.read(geotiff.file_path))
+        @resource[url].put(File.read(geotiff.file_name))
       end
 
       #

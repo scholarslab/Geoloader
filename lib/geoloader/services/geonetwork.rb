@@ -78,7 +78,7 @@ module Geoloader
       end
 
       ##
-      ## TODO: Not working...
+      ## TODO: Geonetwork 403's.
       ## Set all metadata records in a group public.
       ##
       ## @param [String] group
