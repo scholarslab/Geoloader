@@ -1,16 +1,18 @@
 
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
-require "fileutils"
 require "redcarpet"
+require "jekyll"
 require "nokogiri"
+require "fileutils"
+require "ostruct"
 
 module Geoloader
   module Assets
 
     class Description
 
-      attr_reader :title, :abstract
+      attr_reader :title, :abstract, :metadata
 
       #
       # Parse the markdown and extract the header.
@@ -23,9 +25,16 @@ module Geoloader
 
           @file_path = File.expand_path(file_path)
 
-          # Parse the markdown.
-          markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-          document = Nokogiri::HTML::fragment(markdown.render(File.read(@file_path)))
+          # Read the YAML front matter.
+          convertible = OpenStruct.new.extend(Jekyll::Convertible)
+          @metadata = convertible.read_yaml(File.dirname(@file_path), File.basename(@file_path))
+
+          # Scrub the YAML out of the markdown.
+          markdown = File.read(@file_path).sub(/---(.|\n)*---/, '')
+
+          # Parse the cleaned markdown.
+          renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+          document = Nokogiri::HTML::fragment(renderer.render(markdown))
 
           # Set the title.
           header = document.at_css('h1')

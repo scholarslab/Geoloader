@@ -21,8 +21,8 @@ geoloader solr load /path/to/shapefile.sh
 # Load files to a custom workspace:
 geoloader solr load /path/to/files/* --workspace aerials
 
-# Merge YAML-defined metadata into the Solr documents:
-geoloader solr load /path/to/files/* --metadata /path/to/yaml
+# Merge markdown metadata into the Solr documents:
+geoloader solr load /path/to/files/* --description /path/to/markdown
 
 # Push the jobs onto a Resque queue:
 geoloader solr load /path/to/files/* --queue
@@ -72,6 +72,9 @@ geoloader geonetwork load /path/to/shapefile.sh
 # Load files to a custom workspace:
 geoloader geonetwork load /path/to/files/* --workspace aerials
 
+# Merge markdown metadata into the ISO19139 records:
+geoloader geonetwork load /path/to/files/* --description /path/to/markdown
+
 # Push the jobs onto a Resque queue:
 geoloader geonetwork load /path/to/files/* --queue
 
@@ -83,27 +86,27 @@ geoloader geonetwork clear workspace
 
 ```ruby
 # Load a Geotiff to Geoserver:
-Geoloader::GeotiffGeoserverLoader.new("/path/to/file", "workspace", {:solr => "metadata"}).load
+Geoloader::GeotiffGeoserverLoader.new("/path/to/file", "workspace", "/path/to/desc.md"}).load
 
 # Load a Geotiff to Solr:
-Geoloader::GeotiffSolrLoader.new("/path/to/file", "workspace", {:solr => "metadata"}).load
+Geoloader::GeotiffSolrLoader.new("/path/to/file", "workspace", "/path/to/desc.md"}).load
 
 # Load a Shapefile to Geoserver:
-Geoloader::ShapefileGeotiffLoader.new("/path/to/file", "workspace", {:solr => "metadata"}).load
+Geoloader::ShapefileGeotiffLoader.new("/path/to/file", "workspace", "/path/to/desc.md"}).load
 
 # Load a Shapefile to Solr:
-Geoloader::ShapefileSolrLoader.new("/path/to/file", "workspace", {:solr => "metadata"}).load
+Geoloader::ShapefileSolrLoader.new("/path/to/file", "workspace", "/path/to/desc.md").load
 
 # Load a Geotiff or Shapefile to Geonetwork:
-Geoloader::GeonetworkLoader.new("/path/to/file", "workspace", {:solr => "metadata"}).load
+Geoloader::GeonetworkLoader.new("/path/to/file", "workspace", "/path/to/desc.md").load
 
 # Or use any of the loader classes as a Resque job:
-Resque.enqueue(Geoloader::GeotiffSolrLoader, "/path/to/file", "workspace", {:solr => "metadata"})
+Resque.enqueue(Geoloader::GeotiffSolrLoader, "/path/to/file", "workspace", "/path/to/desc.md")
 ```
 
 ## Installation and Configuration
 
-To get started, clone the repo and install the gem with the [Jeweler][jeweler] task:
+To get started, clone the repo and install the gem:
 
 ```
 rake install
@@ -123,7 +126,7 @@ geoserver:
   url:        http://localhost:8080/geoserver
   username:   admin
   password:   geoserver
-  srs:        EPSG:900913
+  srs:        EPSG:3857
 
 geonetwork:
   url:        http://localhost:8080/geonetwork/srv/en
@@ -157,12 +160,34 @@ geoserver:
   password: gs_password
 ```
 
-And apply them with `configure_from_yaml`:
+Which are automatically applied to the configuration when the gem is loaded.
 
-```ruby
-require "geoloader"
+#### Descriptive Metadata
 
-Geoloader.configure_from_yaml("/path/to/geoloader.yaml")
+Geoloader also makes it possible to provide text metadata about assets in Markdown files, which are parsed and merged into the records that are pushed out to the services. These files have three parts:
+
+  1. A YAML "front matter" section, delimited by `---` dividers. This makes it possible to provide arbitrary key-value metadata, which can be merged into records created by the concrete asset modules.
+
+  2. A leading `<h1>` element, represented in Markdown as a line that starts with a single `#` - eg, `# Testing Title`. This value is used as the generic title for the asset(s).
+
+  3. The rest of the Markdown document, which is used as an "abstract" or "description."
+
+For example, here's what a description file for an upload to Geonetwork might look like:
+
+```markdown
+---
+categories:
+  - category1
+  - category2
+
+keywords:
+  - keyword1
+  - keyword2
+---
+
+# Testing Title
+
+A testing abstract!
 ```
 
 #### CLI Application

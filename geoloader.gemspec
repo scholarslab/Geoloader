@@ -27,7 +27,6 @@ Gem::Specification.new do |s|
   s.add_dependency "resque",              "~> 1.25",  ">= 1.25.1"
   s.add_dependency "nokogiri",            "~> 1.6",   ">= 1.6.1"
   s.add_dependency "rubyzip",             "~> 1.1",   ">= 1.1.0"
-  #s.add_dependency "redcarpet",           "~> 3.1",   ">= 3.1.1"
   s.add_dependency "jekyll",              "~> 1.4",   ">= 1.4.3"
 
   s.add_development_dependency "bundler", "~> 1.5",   ">= 1.5.3"

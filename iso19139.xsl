@@ -13,6 +13,8 @@
     <xsl:output method="xml" indent="yes"/>
 
     <xsl:param name="title"/>
+    <xsl:param name="categories"/>
+    <xsl:param name="keywords"/>
     <xsl:param name="identifier"/>
     <xsl:param name="abstract"/>
     <xsl:param name="wms_address"/>
@@ -376,19 +378,25 @@
                         </gmd:EX_Extent>
                     </gmd:extent>
 
-                    <!-- TODO -->
-                    <gmd:descriptiveKeywords>
-                        <gmd:MD_Keywords>
-                            <gmd:keyword>
-                                <gco:CharacterString>keyword</gco:CharacterString>
-                            </gmd:keyword>
-                        </gmd:MD_Keywords>
-                    </gmd:descriptiveKeywords>
+                    <xsl:for-each select="tokenize($categories,',')">
+                        <gmd:topicCategory>
+                            <gmd:MD_TopicCategoryCode>
+                                <xsl:value-of select="normalize-space(.)"/>
+                            </gmd:MD_TopicCategoryCode>
+                        </gmd:topicCategory>
+                    </xsl:for-each>
 
-                    <!-- TODO -->
-                    <gmd:topicCategory>
-                        <gmd:MD_TopicCategoryCode>category</gmd:MD_TopicCategoryCode>
-                    </gmd:topicCategory>
+                    <xsl:for-each select="tokenize($keywords,',')">
+                        <gmd:descriptiveKeywords>
+                            <gmd:MD_Keywords>
+                                <gmd:keyword>
+                                    <gco:CharacterString>
+                                        <xsl:value-of select="normalize-space(.)"/>
+                                    </gco:CharacterString>
+                                </gmd:keyword>
+                            </gmd:MD_Keywords>
+                        </gmd:descriptiveKeywords>
+                    </xsl:for-each>
 
                 </gmd:MD_DataIdentification>
             </gmd:identificationInfo>

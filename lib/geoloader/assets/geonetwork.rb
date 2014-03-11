@@ -29,6 +29,8 @@ module Geoloader
       def iso19139_xml
         `saxon #{@file_path}.xml #{Geoloader.gem_dir}/iso19139.xsl #{xslt_params(
           :identifier   => @uuid,
+          :categories   => @description.metadata["categories"].join(','),
+          :keywords     => @description.metadata["keywords"].join(','),
           :title        => @description.title.to_s,
           :abstract     => @description.abstract.to_s,
           :wms_address  => wms_address,
