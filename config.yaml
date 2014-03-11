@@ -9,7 +9,7 @@ geoserver:
   url:        http://localhost:8080/geoserver
   username:   admin
   password:   geoserver
-  srs:        EPSG:900913
+  srs:        EPSG:3857
 
 geonetwork:
   url:        http://localhost:8080/geonetwork/srv/en
