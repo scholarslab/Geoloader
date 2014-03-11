@@ -77,18 +77,18 @@ module Geoloader
         create_group(group) unless group_exists?(group)
       end
 
-      #
-      # TODO|dev
-      # Set all metadata records in a group public.
-      #
-      # @param [String] group
-      #
-      def publish_group(group)
-        select_records_by_group(group)
-        puts post("xml.metadata.batch.update.privileges", self.class.xml_doc.request { |r|
-          r.tag!("_#{get_group_id(group)}_0")
-        })
-      end
+      ##
+      ## TODO: Not working...
+      ## Set all metadata records in a group public.
+      ##
+      ## @param [String] group
+      ##
+      #def publish_group(group)
+        #select_records_by_group(group)
+        #post("xml.metadata.batch.update.privileges", self.class.xml_doc.request { |r|
+          #r.tag!("_#{get_group_id(group)}_0")
+        #})
+      #end
 
       #
       # Get a list of the ids of all records in a group.
@@ -141,19 +141,19 @@ module Geoloader
         })
       end
 
-      #
-      # Get all records in a given group.
-      #
-      # @param [String] group
-      #
-      def select_records_by_group(group)
-        post("xml.metadata.select", self.class.xml_doc.request { |r|
-          r.selected "add"
-          get_ids_in_group(group).each do |id|
-            r.id id
-          end
-        })
-      end
+      ##
+      ## Get all records in a given group.
+      ##
+      ## @param [String] group
+      ##
+      #def select_records_by_group(group)
+        #post("metadata.select", self.class.xml_doc.request { |r|
+          #r.selected "add"
+          #get_ids_in_group(group).each do |id|
+            #r.id id
+          #end
+        #})
+      #end
 
       #
       # Get all records in a given group.
