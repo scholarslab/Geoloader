@@ -21,6 +21,9 @@ module Geoloader
       #
       def initialize(file_path)
 
+        @title, @abstract = "", ""
+        @metadata = {}
+
         if file_path
 
           @file_path = File.expand_path(file_path)
