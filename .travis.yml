@@ -1,0 +1,15 @@
+language: ruby
+rvm:
+  - 2.1.1
+  - 2.1.0
+  - 1.9.3
+  - ruby-head
+  - jruby-head
+before_script:
+  curl https://raw.github.com/moliware/travis-solr/master/travis-solr.sh | SOLR_VERSION=4.6.1 bash
+before_install:
+  - gem update --system
+  - gem --version
+addons:
+    code_climate:
+        repo_token: 0044b6b84906ccfd19a40fdd47a1ffd37221bdaf79fd0831c108dd8c8e0f1625
