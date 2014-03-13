@@ -6,3 +6,6 @@ require "minitest/autorun"
 require "minitest/pride"
 require "helpers/fixture"
 require "nokogiri"
+
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
