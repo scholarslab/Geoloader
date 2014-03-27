@@ -2,19 +2,8 @@
 # vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
 
 require "confstruct"
+require "require_all"
 require "yaml"
-
-
-#
-# Require all files in a directory.
-#
-# @param [String] path
-#
-def require_dir(path)
-  Dir["#{File.dirname(__FILE__)}/#{path}/**/*.rb"].each { |file|
-    require file
-  }
-end
 
 module Geoloader
 
@@ -54,28 +43,7 @@ module Geoloader
 
 end
 
-# Assets:
-require_dir("geoloader/assets")
-
-# Services:
-require_dir("geoloader/services")
-
-# Tasks:
-require_dir("geoloader/tasks")
-
-# Loaders:
-require "geoloader/loaders/loader"
-require "geoloader/loaders/geonetwork"
-require "geoloader/loaders/geotiff_geoserver"
-require "geoloader/loaders/geotiff_solr"
-require "geoloader/loaders/shapefile_geoserver"
-require "geoloader/loaders/shapefile_solr"
-
-# CLI:
-require "geoloader/cli/solr"
-require "geoloader/cli/geoserver"
-require "geoloader/cli/geonetwork"
-require "geoloader/cli/app"
+require_rel("geoloader")
 
 # Apply default configuration.
 Geoloader.configure_from_yaml("#{Geoloader.gem_dir}/config.yaml")
