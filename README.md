@@ -1,5 +1,7 @@
 # Geoloader
 
+[![Code Climate](https://codeclimate.com/github/scholarslab/Geoloader.png)](https://codeclimate.com/github/scholarslab/Geoloader)
+
 Geoloader automates the process of loading [GeoTIFFs][geotiff] and [Shapfiles][shapefile] into [Geoserver][geoserver], [Geonetwork][geonetwork], and [Solr][solr], the services that power the geospatial search interface at the University of Virginia Library.
 
 ## Quick Examples
