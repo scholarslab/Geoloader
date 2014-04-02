@@ -39,16 +39,16 @@ Load files to Geoserver.
 
 ```bash
 # Load files matched by wildcard:
-geoloader geoserver load /path/to/files/*
+geoloader geoserver load /path/to/files/*.tif
 
 # Load an individual Geotiff:
 geoloader geoserver load /path/to/geotiff.tif
 
 # Load an individual Shapefile:
-geoloader geoserver load /path/to/shapefile.sh
+geoloader geoserver load /path/to/shapefile.shp
 
 # Load files to a custom workspace:
-geoloader geoserver load /path/to/files/* --workspace aerials
+geoloader geoserver load /path/to/files/*.shp --workspace aerials
 
 # Push the jobs onto a Resque queue:
 geoloader geoserver load /path/to/files/* --queue
