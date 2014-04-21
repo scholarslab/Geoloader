@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    geoloader (0.0.1)
+    geoloader (0.1.0)
       confstruct (~> 0.2, >= 0.2.5)
       jekyll (~> 1.4, >= 1.4.3)
       nokogiri (~> 1.6, >= 1.6.1)
