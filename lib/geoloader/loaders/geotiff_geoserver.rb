@@ -33,7 +33,7 @@ module Geoloader
 
           # Prepare the file.
           @geotiff.make_borders_transparent
-          @geotiff.project_to_4326
+          @geotiff.reproject
 
           # Push to Geoserver.
           @geoserver.create_coveragestore(@geotiff)
