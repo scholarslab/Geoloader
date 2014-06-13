@@ -2,6 +2,7 @@
 
 [![Code Climate](https://codeclimate.com/github/scholarslab/Geoloader.png)](https://codeclimate.com/github/scholarslab/Geoloader)
 [![Gem Version](https://badge.fury.io/rb/geoloader.svg)](http://badge.fury.io/rb/geoloader)
+[![Inline docs](http://inch-ci.org/github/scholarslab/Geoloader.png?branch=master)](http://inch-ci.org/github/scholarslab/Geoloader)
 
 Geoloader automates the process of loading [GeoTIFFs][geotiff] and [Shapfiles][shapefile] into [Geoserver][geoserver], [Geonetwork][geonetwork], and [Solr][solr] (using the [OpenGeoPortal schema][ogp-schema]), the services that power the geospatial search interface at the University of Virginia Library.
 
