@@ -1,6 +1,4 @@
 
-# vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
-
 module Geoloader
   module Loaders
 
@@ -35,7 +33,7 @@ module Geoloader
 
           # Prepare the file.
           @geotiff.make_borders_transparent
-          @geotiff.project_to_4326
+          @geotiff.reproject
 
           # Push to Geoserver.
           @geoserver.create_coveragestore(@geotiff)

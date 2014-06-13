@@ -2,7 +2,7 @@
 
 [![Code Climate](https://codeclimate.com/github/scholarslab/Geoloader.png)](https://codeclimate.com/github/scholarslab/Geoloader)
 
-Geoloader automates the process of loading [GeoTIFFs][geotiff] and [Shapfiles][shapefile] into [Geoserver][geoserver], [Geonetwork][geonetwork], and [Solr][solr], the services that power the geospatial search interface at the University of Virginia Library.
+Geoloader automates the process of loading [GeoTIFFs][geotiff] and [Shapfiles][shapefile] into [Geoserver][geoserver], [Geonetwork][geonetwork], and [Solr][solr] (using the [OpenGeoPortal schema][ogp-schema]), the services that power the geospatial search interface at the University of Virginia Library.
 
 ## Quick Examples
 
@@ -114,7 +114,7 @@ To get started, clone the repo and install the gem:
 rake install
 ```
 
-Then, you'll need to point Geoloader at running instances of Geoserver and Solr. By default, Geoloader starts by applying the configuration settings in the top-level `config.yaml` file:
+Then, you'll need to point Geoloader at running instances of Geoserver / Solr / Geonetwork (or any combination thereof). By default, Geoloader starts by applying the configuration settings in the top-level `config.yaml` file:
 
 ```yaml
 workspaces:
@@ -209,4 +209,4 @@ geoserver:
 [geoserver]: http://geoserver.org/
 [geonetwork]: http://geonetwork-opensource.org/
 [solr]: http://lucene.apache.org/solr/
-[jeweler]: https://github.com/technicalpickles/jeweler
+[ogp-schema]: https://github.com/OpenGeoportal/ogpSolrConfig

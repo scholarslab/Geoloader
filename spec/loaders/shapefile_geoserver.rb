@@ -1,6 +1,4 @@
 
-# vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
-
 require "spec_helper"
 
 describe Geoloader::Loaders::ShapefileGeoserver do
@@ -28,7 +26,7 @@ describe Geoloader::Loaders::ShapefileGeoserver do
     response = loader.geoserver.resource["workspaces/#{workspace}/datastores/shapefile"].get
     document = Nokogiri::XML(response)
 
-    # Should have the correct name and type 
+    # Should have the correct name and type
     document.at_xpath("/dataStore/name").content.must_equal "shapefile"
     document.at_xpath("/dataStore/type").content.must_equal "Shapefile"
 

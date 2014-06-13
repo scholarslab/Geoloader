@@ -1,6 +1,4 @@
 
-# vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
-
 require "fileutils"
 
 module Geoloader
@@ -18,7 +16,7 @@ module Geoloader
       #
       # (Re)build a EPSG:4326 header.
       #
-      def project_to_4326
+      def reproject
         srs = Geoloader.config.geoserver.srs
         gdal_command("gdal_translate -of GTiff -a_srs #{srs}", @file_name)
       end

@@ -1,6 +1,4 @@
 
-# vim: set tabstop=2 shiftwidth=2 softtabstop=2 cc=100;
-
 module Geoloader
   module Loaders
 
@@ -43,7 +41,7 @@ module Geoloader
 
         @file_path = file_path
         @desc_path = desc_path
-        
+
         # If no workspace is provided, revert to the default.
         @workspace = (workspace or Geoloader.config.workspaces.production)
 
