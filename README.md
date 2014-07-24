@@ -151,7 +151,7 @@ require "geoloader"
 Geoloader.configure({
   :geoserver => {
     :username => "gs_username",
-    :username => "gs_password"
+    :password => "gs_password"
   }
 })
 ```
