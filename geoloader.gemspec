@@ -32,6 +32,6 @@ Gem::Specification.new do |s|
   s.add_dependency "resque",      "~> 1.25",  ">= 1.25.1"
   s.add_dependency "nokogiri",    "~> 1.6",   ">= 1.6.1"
   s.add_dependency "rubyzip",     "~> 1.1",   ">= 1.1.0"
-  s.add_dependency "jekyll",      "~> 1.4",   ">= 1.4.3"
+  s.add_dependency "jekyll",      "~> 3.3",   ">= 3.3.1"
 
 end
